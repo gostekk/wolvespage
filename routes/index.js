@@ -3,8 +3,12 @@ var router = express.Router();
 
 // Get Homepage
 router.get('/', ensureAuthenticated, function (req, res) {
-  console.log(req.user._id);
+  console.log(req.user);
   res.render('index');
+});
+
+router.get('/profile', ensureAuthenticated, function (req, res) {
+  res.render('profile', req.user);
 });
 
 function ensureAuthenticated(req, res, next) {
