@@ -35,7 +35,6 @@ router.post('/register', function (req, res) {
   req.checkBody('username', 'Username jest wymagany').notEmpty();
   req.checkBody('name', 'Imię jest wymagane').notEmpty();
   req.checkBody('surname', 'Nazwisko jest wymagane').notEmpty();
-  req.checkBody('shirtnumber', 'Numer koszulki musi być liczbą').isInt();
   req.checkBody('password', 'Hasło jest wymagane').notEmpty();
   req.checkBody('password',
   'Hasło musi zawierać co najmniej 6 znaków oraz nie wiecej niż 20').len(6, 20);
