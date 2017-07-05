@@ -1,0 +1,25 @@
+{
+  "name": "wolvestest",
+  "version": "1.0.0",
+  "description": "Simple statistics page for team",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app"
+  },
+  "author": "gostekk",
+  "license": "ISC",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.17.2",
+    "cookie-parser": "^1.4.3",
+    "express": "^4.15.3",
+    "express-handlebars": "^3.0.0",
+    "express-messages": "^1.0.1",
+    "express-session": "^1.15.3",
+    "express-validator": "^3.2.0",
+    "mongoose": "^4.11.1",
+    "passport": "^0.3.2",
+    "passport-http": "^0.3.0",
+    "passport-local": "^1.0.0"
+  }
+}
