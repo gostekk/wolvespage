@@ -1,0 +1,2 @@
+# wolvespage
+Simple statistics page
