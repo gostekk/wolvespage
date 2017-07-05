@@ -4,11 +4,11 @@ var router = express.Router();
 // Get Homepage
 router.get('/', ensureAuthenticated, function (req, res) {
   console.log(req.user);
-  res.render('index');
+  res.render('index', { title: 'Wolves page' });
 });
 
 router.get('/profile', ensureAuthenticated, function (req, res) {
-  res.render('profile', req.user);
+  res.render('profile', { user: req.user, title: 'Profile - Wolves page' });
 });
 
 function ensureAuthenticated(req, res, next) {

@@ -5,12 +5,12 @@ var User = require('../models/user');
 
 // Admin
 router.get('/admin', ensureAuthenticated, function (req, res) {
-  res.render('admin', { layout: 'admin' });
+  res.render('admin', { layout: 'admin', title: 'admin - Wolves page' });
 });
 
 // Register
 router.get('/register', ensureAuthenticated, function (req, res) {
-  res.render('register', { layout: 'admin' });
+  res.render('register', { layout: 'admin', title: 'Register - Wolves page' });
 });
 
 function ensureAuthenticated(req, res, next) {
