@@ -13,6 +13,20 @@ router.get('/register', ensureAuthenticated, function (req, res) {
   res.render('register', { layout: 'admin', title: 'Register - Wolves page' });
 });
 
+// Users
+router.get('/users', function (req, res) {
+  User.find({}, function (err, users) {
+    var userMap = {};
+
+    users.forEach(function (user) {
+      userMap[user._id] = user;
+    });
+
+    //res.send(userMap);
+    res.render('users', { layout: 'admin', title: 'Users - Wolves Page', userMap: userMap });
+  });
+});
+
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated() && req.user.adminflag) {
     return next();

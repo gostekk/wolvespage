@@ -1,0 +1,24 @@
+{{#if userMap}}
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr class="info">
+      <th>#</th>
+      <th>username</th>
+      <th>Imię</th>
+      <th>Nazwisko</th>
+      <th>Numer</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each userMap}}
+      <tr>
+        <td>{{@index}}</td>
+        <td>{{this.username}}</td>
+        <td>{{this.name}}</td>
+        <td>{{this.surname}}</td>
+        <td>{{this.shirtnumber}}</td>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+{{/if}}
