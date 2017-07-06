@@ -1,0 +1,26 @@
+<h2 class="page-header">{{user.username}}</h2>
+{{#if errors}}
+  {{#each errors}}
+    <div class="alert alert-danger">{{msg}}</div>
+  {{/each}}
+{{/if}}
+<form method="post" action="/uc/editprofile">
+  <div class="form-group">
+    <label>Imie</label>
+    <input type="text" class="form-control" value="{{user.name}}" name="name">
+  </div>
+
+  <div class="form-group">
+    <label>Nazwisko</label>
+    <input type="text" class="form-control" value="{{user.surname}}" name="surname">
+  </div>
+
+  <div class="form-group">
+    <label>Numer koszulki</label>
+    <input type="number" class="form-control" value="{{user.shirtnumber}}" name="shirtnumber" min="0" max="99">
+  </div>
+
+  <div class="form-group">
+    <button type="submit" class="btn btn-success pull-right">Zapisz</button>
+  </div>
+</form>

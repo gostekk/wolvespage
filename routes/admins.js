@@ -6,7 +6,7 @@ var User = require('../models/user');
 // Admin panel
 router.get('/', ensureAuthenticated, function (req, res) {
   res.render('admin', { layout: 'admin', title: 'admin - Wolves page' });
-})
+});
 
 // Admin
 router.get('/admin', ensureAuthenticated, function (req, res) {
@@ -44,6 +44,7 @@ router.get('/delete/:id', ensureAuthenticated, function (req, res) {
   res.redirect(req.get('referer'));
 });
 
+// TODO: if !isAuthenticated redirect to /login | if isAuthenticated refresh page and info
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated() && req.user.adminflag) {
     return next();
@@ -91,6 +92,7 @@ router.post('/register', function (req, res) {
     res.render('register', {
       layout: 'admin',
       errors: errors,
+      title: 'Register - Wolves page',
     });
   } else {
     var newUser = new User({
