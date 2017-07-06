@@ -14,7 +14,7 @@ router.get('/register', ensureAuthenticated, function (req, res) {
 });
 
 // Users
-router.get('/users', function (req, res) {
+router.get('/users', ensureAuthenticated, function (req, res) {
   User.find({}, function (err, users) {
     var userMap = {};
 
@@ -25,6 +25,18 @@ router.get('/users', function (req, res) {
     //res.send(userMap);
     res.render('users', { layout: 'admin', title: 'Users - Wolves Page', userMap: userMap });
   });
+});
+
+// Delete user
+router.get('/delete/:id', ensureAuthenticated, function (req, res) {
+  //User.findOne({ _id: req.params.id }).remove().exec();
+  User.remove({ _id: req.params.id }, function (err) {
+    if (err) throw err;
+
+    // TODO: Message after correct remove user
+  });
+
+  res.redirect(req.get('referer'));
 });
 
 function ensureAuthenticated(req, res, next) {
@@ -90,7 +102,7 @@ router.post('/register', function (req, res) {
       console.log(user);
     });
 
-    res.redirect('/users/login');
+    res.redirect(req.get('referer'));
   }
 });
 

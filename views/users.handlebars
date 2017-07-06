@@ -7,6 +7,7 @@
       <th>Imię</th>
       <th>Nazwisko</th>
       <th>Numer</th>
+      <th colspan="red">Delete</th>
     </tr>
   </thead>
   <tbody>
@@ -17,6 +18,7 @@
         <td>{{this.name}}</td>
         <td>{{this.surname}}</td>
         <td>{{this.shirtnumber}}</td>
+        <td><a href="/admins/delete/{{this._id}}" class="btn btn-danger">Delete</a>
       </tr>
     {{/each}}
   </tbody>
