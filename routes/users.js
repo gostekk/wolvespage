@@ -14,14 +14,14 @@ router.get('/login', function (req, res) {
 // TODO: Message after succesful logout
 router.get('/logout', function (req, res) {
   req.logout();
-  res.redirect('/users/login');
+  res.redirect('/login');
 });
 
 // POST login
 // TODO: Message after succesful login
 router.post('/login',
   passport.authenticate('local',
-  { successRedirect: '/', fauilureRedirect: '/users/login' }),
+  { successRedirect: '/', fauilureRedirect: '/login' }),
 
   function (req, res) {
     res.redirect('/');

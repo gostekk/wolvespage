@@ -3,6 +3,11 @@ var router = express.Router();
 
 var User = require('../models/user');
 
+// Admin panel
+router.get('/', ensureAuthenticated, function (req, res) {
+  res.render('admin', { layout: 'admin', title: 'admin - Wolves page' });
+})
+
 // Admin
 router.get('/admin', ensureAuthenticated, function (req, res) {
   res.render('admin', { layout: 'admin', title: 'admin - Wolves page' });
@@ -43,7 +48,7 @@ function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated() && req.user.adminflag) {
     return next();
   } else {
-    res.redirect('/users/login');
+    res.redirect('/login');
   }
 }
 

@@ -75,8 +75,8 @@ app.use(function (req, res, next) {
 });
 
 app.use('/', routes);
-app.use('/users', users);
-app.use('/admins', admins);
+app.use('/', users);
+app.use('/ap', admins);
 
 // Set Port
 app.set('port', (process.env.PORT || 3004));
