@@ -5,7 +5,6 @@ var User = require('../models/user');
 
 // Get Homepage
 router.get('/', ensureAuthenticated, function (req, res) {
-  console.log(req.user);
   res.render('index', { title: 'Wolves page' });
 });
 

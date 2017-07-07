@@ -44,6 +44,11 @@ router.get('/delete/:id', ensureAuthenticated, function (req, res) {
   res.redirect(req.get('referer'));
 });
 
+// Add game
+router.get('/addgame', function (req, res) {
+  res.render('addgame', { layout: 'admin', title: 'Add Game - Wolves Page' });
+});
+
 // TODO: if !isAuthenticated redirect to /login | if isAuthenticated refresh page and info
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated() && req.user.adminflag) {
@@ -85,7 +90,6 @@ router.post('/register', function (req, res) {
       }
     }
   );
-
   var errors = req.validationErrors();
 
   if (errors) {
