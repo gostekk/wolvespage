@@ -1,0 +1,24 @@
+{{#if gameMap}}
+<table class="table table-striped table-hover ">
+  <thead>
+    <tr class="info">
+      <th>#</th>
+      <th>Nazwa drużyny</th>
+      <th>Logo</th>
+      <th>Data spotkania</th>
+      <th colspan="red">Delete</th>
+    </tr>
+  </thead>
+  <tbody>
+    {{#each gameMap}}
+      <tr>
+        <td>{{@index}}</td>
+        <td>{{this.teamname}}</td>
+        <td><img src="{{this.teamlogo}}" height="32" width="32"></td>
+        <td>{{this.fdate}}</td>
+        <td><a href="/ap/delete/game/{{this._id}}" class="btn btn-danger">Delete</a>
+      </tr>
+    {{/each}}
+  </tbody>
+</table>
+{{/if}}

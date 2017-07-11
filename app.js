@@ -10,6 +10,7 @@ var LocalStrategy = require('passport-local').Strategy;
 var mongodb = require('mongodb');
 var mongoose = require('mongoose');
 var config = require('./config/database');
+var moment = require('moment');
 
 // Connect to database
 mongoose.connect(config.database, {

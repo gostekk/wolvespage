@@ -1,3 +1,15 @@
+<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+$( function() {
+  $( "#datepicker" ).datepicker({
+    showWeek: true,
+    firstDay: 1
+  });
+} );
+</script>
+
 <h2 class="page-header">Add Game</h2>
 {{#if errors}}
   {{#each errors}}
@@ -5,49 +17,40 @@
   {{/each}}
 {{/if}}
 <form method="post" action="/ap/addgame">
-  <input size="16" type="text" value="2012-06-15 14:45" readonly class="form_datetime">
-
-  <script type="text/javascript">
-      $(".form_datetime").datetimepicker({format: 'yyyy-mm-dd hh:ii'});
-  </script>            
-
   <div class="form-group">
-    <label>Imie</label>
-    <input type="text" class="form-control" placeholder="Imie" name="name">
+    <label>Nazwa drużyny</label>
+    <input type="text" required="true" class="form-control" placeholder="Wolves Tychy" name="name">
   </div>
 
   <div class="form-group">
-    <label>Nazwisko</label>
-    <input type="text" class="form-control" placeholder="Nazwisko" name="surname">
+    <label>Logo drużyny</label>
+    <input type="url" class="form-control" name="logo">
   </div>
 
   <div class="form-group">
-    <label>Numer koszulki</label>
-    <input type="number" class="form-control" placeholder="0 - 99" name="shirtnumber" min="0" max="99">
+    <label>Data spotkania</label>
+    <input type="text" name="date" id="datepicker" placeholder="MM/DD/YYYY">
   </div>
 
   <div class="form-group">
-    <label>Password</label>
-    <input type="password" class="form-control" placeholder="Password" name="password">
+    <label>Miejsce meczu</label>
+    <input type="text" class="form-control" value="Stadion Zimowy, de Gaulle'a, Tychy" name="place">
   </div>
 
   <div class="form-group">
-    <label style="">Confirm Password</label>
-    <input type="password" class="form-control" placeholder="Password" name="password2">
-  </div>
-
-  <div class="form-group">
-    <input type="checkbox" name="adminflag" id="adminflag" autocomplete="off" />
-    <div class="btn-group">
-      <label for="adminflag" class="btn btn-default">
+    <input type="checkbox" name="away" id="away" autocomplete="off" />
+    <div class="btn-group pull-right">
+      <label for="away" class="btn btn-default">
         <span class="glyphicon glyphicon-ok"></span>
         <span> </span>
       </label>
-      <label for="adminflag" class="btn btn-default active">
-        Admin
+      <label for="away" class="btn btn-default active">
+        Mecz wyjazdowy
       </label>
     </div>
+  </div>
 
+  <div class="form-group">
     <button type="submit" class="btn btn-success pull-right">Submit</button>
   </div>
 </form>

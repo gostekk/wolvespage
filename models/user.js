@@ -18,6 +18,9 @@ var UserSchema = mongoose.Schema({
     type: Number,
     unique: true,
   },
+  position: {
+    type: String,
+  },
   password: {
     type: String,
   },
