@@ -12,12 +12,43 @@ var GameSchema = mongoose.Schema({
   date: {
     type: Date,
   },
-  away: {
-    type: Boolean,
-  },
-  place: {
-    type: String,
-  },
+  goals: [
+    {
+      score: {
+        type: String,
+      },
+      goal: {
+        username: {
+          type: String,
+        },
+        name: {
+          type: String,
+        },
+        surname: {
+          type: String,
+        },
+        shirtnumber: {
+          type: Number,
+        },
+      },
+      assist: [
+          {
+          username: {
+            type: String,
+          },
+          name: {
+            type: String,
+          },
+          surname: {
+            type: String,
+          },
+          shirtnumber: {
+            type: Number,
+          },
+        },
+      ],
+    },
+  ],
 });
 
 var Game = module.exports = mongoose.model('Game', GameSchema);

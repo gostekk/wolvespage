@@ -21,16 +21,14 @@ router.get('/register', ensureAuthenticated, function (req, res) {
 });
 
 // Users
-router.get('/users', ensureAuthenticated, function (req, res) {
+router.post('/users', ensureAuthenticated, function (req, res) {
   User.find({}, function (err, users) {
-    var userMap = {};
-
-    users.forEach(function (user) {
-      userMap[user._id] = user;
-    });
-
-    res.render('users', { layout: 'admin', title: 'Users - Wolves Page', userMap: userMap });
+    res.json(users);
   });
+});
+
+router.get('/users', ensureAuthenticated, function (req, res) {
+  res.render('users', { layout: 'admin', title: 'Users - Wolves Page' });
 });
 
 // Delete user
@@ -51,8 +49,6 @@ router.get('/delete/game/:id', ensureAuthenticated, function (req, res) {
 
     // TODO: Message after correct remove user
   });
-
-  res.redirect(req.get('referer'));
 });
 
 // Add game
@@ -61,20 +57,14 @@ router.get('/addgame', ensureAuthenticated, function (req, res) {
 });
 
 // Games
-router.get('/games', ensureAuthenticated, function (req, res) {
+router.post('/games', ensureAuthenticated, function (req, res) {
   Game.find({}, function (err, games) {
-    var gameMap = {};
-
-    games.forEach(function (game) {
-      if (game.date) {
-        game.fdate = moment(game.date).format('DD.MM.YYYY');
-      }
-
-      gameMap[game._id] = game;
-    });
-
-    res.render('games', { layout: 'admin', title: 'Games - Wolves Page', gameMap: gameMap });
+    res.json(games);
   });
+});
+
+router.get('/games', ensureAuthenticated, function (req, res) {
+  res.render('games', { layout: 'admin', title: 'Games - Wolves Page' });
 });
 
 // Register user
@@ -142,10 +132,7 @@ router.post('/register', ensureAuthenticated, function (req, res) {
 router.post('/addgame', ensureAuthenticated, function (req, res) {
   var teamname = req.body.name;
   var teamlogo = req.body.logo;
-  console.log(req.body.date);
   var date = new Date(moment(req.body.date, 'MM-DD-YYYY').format('MM-DD-YYYY'));
-  var place = req.body.place;
-  var away = req.body.away;
 
   // Validation
   req.checkBody('name', 'Nazwa drużyny przeciwnej jest wymagana').notEmpty();
@@ -163,8 +150,6 @@ router.post('/addgame', ensureAuthenticated, function (req, res) {
       teamname: teamname,
       teamlogo: teamlogo,
       date: date,
-      place: place,
-      away: away,
     });
 
     Game.addGame(newGame, function (err, game) {

@@ -108,3 +108,8 @@ footer{
 .form-group input[type="checkbox"]:checked + .btn-group > label span:last-child {
     display: none;
 }
+
+/* Action column in users */
+.ml10 {
+    margin-left: 10px;
+}
