@@ -49,6 +49,8 @@ router.get('/delete/game/:id', ensureAuthenticated, function (req, res) {
 
     // TODO: Message after correct remove user
   });
+
+  res.redirect(req.get('referer'));
 });
 
 // Add game
@@ -65,6 +67,21 @@ router.post('/games', ensureAuthenticated, function (req, res) {
 
 router.get('/games', ensureAuthenticated, function (req, res) {
   res.render('games', { layout: 'admin', title: 'Games - Wolves Page' });
+});
+
+// Game overview
+router.get('/game/:id', ensureAuthenticated, function (req, res) {
+  Game.findById(req.params.id, function (err, gameOverview) {
+    res.render('game', { layout: 'admin',
+                        title: 'Game - Wolves Page',
+                        gameOverview: gameOverview, });
+  });
+});
+
+router.post('/game/:id', ensureAuthenticated, function (req, res) {
+  Game.findById(req.params.id, function (err, gameOverview) {
+    res.json(gameOverview.players);
+  });
 });
 
 // Register user
@@ -130,26 +147,26 @@ router.post('/register', ensureAuthenticated, function (req, res) {
 
 // Add game
 router.post('/addgame', ensureAuthenticated, function (req, res) {
-  var teamname = req.body.name;
-  var teamlogo = req.body.logo;
+  var teamname = req.body.teamname;
+  var teamlogo = req.body.teamlogo;
   var date = new Date(moment(req.body.date, 'MM-DD-YYYY').format('MM-DD-YYYY'));
+  var players = req.body.players;
 
   // Validation
-  req.checkBody('name', 'Nazwa drużyny przeciwnej jest wymagana').notEmpty();
+  req.checkBody('teamname', 'Nazwa drużyny przeciwnej jest wymagana').notEmpty();
+  req.checkBody('date', 'Nazwa data').notEmpty();
 
   var errors = req.validationErrors();
 
   if (errors) {
-    res.render('addgame', {
-      layout: 'admin',
-      errors: errors,
-      title: 'Add game - Wolves page',
-    });
+    res.send({ redirect: 'reload' });
   } else {
+
     var newGame = new Game({
       teamname: teamname,
       teamlogo: teamlogo,
       date: date,
+      players: players,
     });
 
     Game.addGame(newGame, function (err, game) {
@@ -157,7 +174,7 @@ router.post('/addgame', ensureAuthenticated, function (req, res) {
       console.log(game);
     });
 
-    res.redirect(req.get('referer'));
+    res.send({ redirect: '/ap/games' });
   }
 });
 

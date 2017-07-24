@@ -12,41 +12,35 @@ var GameSchema = mongoose.Schema({
   date: {
     type: Date,
   },
-  goals: [
+  players: [
     {
-      score: {
+      username: {
         type: String,
       },
-      goal: {
-        username: {
-          type: String,
-        },
-        name: {
-          type: String,
-        },
-        surname: {
-          type: String,
-        },
-        shirtnumber: {
-          type: Number,
-        },
+      name: {
+        type: String,
       },
-      assist: [
-          {
-          username: {
-            type: String,
-          },
-          name: {
-            type: String,
-          },
-          surname: {
-            type: String,
-          },
-          shirtnumber: {
-            type: Number,
-          },
-        },
-      ],
+      surname: {
+        type: String,
+      },
+      shirtnumber: {
+        type: Number,
+      },
+      position: {
+        type: String,
+      },
+      goals: {
+        type: Number,
+        default: 0,
+      },
+      assists: {
+        type: Number,
+        default: 0,
+      },
+      pim: {
+        type: Number,
+        default: 0,
+      },
     },
   ],
 });

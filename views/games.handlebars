@@ -19,7 +19,7 @@
 
 <script>
 function idFormatter(value) {
-    return '<a href="/profile/' + value + '">' + value + '</a>';
+    return '<a href="/ap/game/' + value + '">' + value + '</a>';
 }
 function teamlogoFormatter(value) {
     return '<img src="' + value + '" height="32" width="32">';
@@ -39,7 +39,7 @@ function actionFormatter(value, row, index) {
 }
 window.actionEvents = {
   'click .like': function (e, value, row, index) {
-    window.location.href = "/profile/" + row._id;
+    window.location.href = "/ap/game/" + row._id;
   },
   'click .edit': function (e, value, row, index) {
     alert('You click edit icon, row: ' + JSON.stringify(row));

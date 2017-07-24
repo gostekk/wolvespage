@@ -1,38 +1,50 @@
-<link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-<script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-<script>
-$( function() {
-  $( "#datepicker" ).datepicker({
-    showWeek: true,
-    firstDay: 1
-  });
-} );
-</script>
-
 <h2 class="page-header">Add Game</h2>
 {{#if errors}}
   {{#each errors}}
     <div class="alert alert-danger">{{msg}}</div>
   {{/each}}
 {{/if}}
-<form method="post" action="/ap/addgame">
-  <div class="form-group">
+<form id="addgameForm" method="post" action="/ap/addgame">
+  <div id="name" class="form-group">
     <label>Nazwa drużyny</label>
     <input type="text" required="true" class="form-control" placeholder="Wolves Tychy" name="name">
   </div>
 
-  <div class="form-group">
+  <div id="logo" class="form-group">
     <label>Logo drużyny</label>
     <input type="url" class="form-control" name="logo">
   </div>
 
-  <div class="form-group">
+  <div id="date" class="form-group">
     <label>Data spotkania</label>
     <input type="text" name="date" id="datepicker" placeholder="MM/DD/YYYY">
   </div>
 
+  <table id="statsTable"
+         data-toggle="table"
+         data-search="true"
+         data-toolbar="#toolbar"
+         data-click-To-Select="true"
+         data-id-Field="_id"
+         data-method="post"
+         data-url="/ap/users">
+    <thead>
+      <tr>
+        <th data-field="state" data-checkbox="true"></th>
+        <th data-field="_id" data-visible="false">username</th>
+        <th data-field="username" data-visible="false">username</th>
+        <th data-field="name" data-sortable="true">Imię</th>
+        <th data-field="surname" data-sortable="true">Nazwisko</th>
+        <th data-field="shirtnumber" data-sortable="true">Numer</th>
+        <th data-field="position" data-sortable="true">Pozycja</th>
+      </tr>
+    </thead>
+  </table>
+
+  <div id="toolbar">
+    Zawodnicy
+  </div>
   <div class="form-group">
-    <button type="submit" class="btn btn-success pull-right">Submit</button>
+    <button id="getAllSelections" type="submit" class="btn btn-success pull-right">Submit</button>
   </div>
 </form>
