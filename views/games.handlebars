@@ -1,4 +1,5 @@
-<table data-toggle="table"
+<table id="gamesTable"
+       data-toggle="table"
        data-method="post"
        data-classes="table table-striped table-hover"
        data-search="true"
@@ -42,11 +43,11 @@ window.actionEvents = {
     window.location.href = "/ap/game/" + row._id;
   },
   'click .edit': function (e, value, row, index) {
-    alert('You click edit icon, row: ' + JSON.stringify(row));
-    console.log(value, row, index);
+    console.log('obj');
   },
   'click .remove': function (e, value, row, index) {
-    window.location.href = "/ap/delete/game/" + row._id;
+    deleteGame(row._id);
+    $('#gamesTable').bootstrapTable('refresh');
   }
 };
 </script>

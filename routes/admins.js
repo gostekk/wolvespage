@@ -32,25 +32,12 @@ router.get('/users', ensureAuthenticated, function (req, res) {
 });
 
 // Delete user
-router.get('/delete/user/:id', ensureAuthenticated, function (req, res) {
+router.delete('/user/:id', ensureAuthenticated, function (req, res) {
   User.remove({ _id: req.params.id }, function (err) {
     if (err) throw err;
 
     // TODO: Message after correct remove user
   });
-
-  res.redirect(req.get('referer'));
-});
-
-// Delete game
-router.get('/delete/game/:id', ensureAuthenticated, function (req, res) {
-  Game.remove({ _id: req.params.id }, function (err) {
-    if (err) throw err;
-
-    // TODO: Message after correct remove user
-  });
-
-  res.redirect(req.get('referer'));
 });
 
 // Add game
@@ -81,6 +68,14 @@ router.get('/game/:id', ensureAuthenticated, function (req, res) {
 router.post('/game/:id', ensureAuthenticated, function (req, res) {
   Game.findById(req.params.id, function (err, gameOverview) {
     res.json(gameOverview.players);
+  });
+});
+
+router.delete('/game/:id', ensureAuthenticated, function (req, res) {
+  Game.remove({ _id: req.params.id }, function (err) {
+    if (err) throw err;
+
+    // TODO: Message after correct remove user
   });
 });
 

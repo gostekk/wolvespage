@@ -26,3 +26,25 @@ $(function () {
     e.preventDefault();
   });
 });
+
+function deleteUser(value) {
+  $.ajax({
+    type: 'DELETE',
+    url: '/ap/user/' + value,
+    success: function (result) {
+      // Do something with the result
+      console.log('obj');
+    },
+  });
+}
+
+function deleteGame(value) {
+  $.ajax({
+    type: 'DELETE',
+    url: '/ap/game/' + value,
+    success: function (result) {
+      // Do something with the result
+      console.log('obj');
+    },
+  });
+}
