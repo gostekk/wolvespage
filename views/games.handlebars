@@ -33,10 +33,20 @@ function actionFormatter(value, row, index) {
         '<a class="edit ml10" href="javascript:void(0)" title="Edit">',
         '<i class="glyphicon glyphicon-edit"></i>',
         '</a>',
-        '<a class="remove ml10" href="javascript:void(0)" title="Remove">',
+        '<a class="remove ml10" nohref onclick="javascript:void(0)" title="Remove">',
         '<i class="glyphicon glyphicon-remove"></i>',
         '</a>'
     ].join('');
+}
+function deleteGame(value) {
+  $.ajax({
+    type: 'DELETE',
+    url: '/ap/game/' + value,
+    success: function (result) {
+      // Do something with the result
+      console.log('obj');
+    },
+  });
 }
 window.actionEvents = {
   'click .like': function (e, value, row, index) {

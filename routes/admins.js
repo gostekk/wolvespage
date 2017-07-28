@@ -71,6 +71,48 @@ router.post('/game/:id', ensureAuthenticated, function (req, res) {
   });
 });
 
+// Inc/dec goals
+router.put('/game/:id', ensureAuthenticated, function (req, res) {
+  Game.findOneAndUpdate({ _id: req.params.id,
+                  'players._id': req.body.player._id, },
+  {
+    $inc:
+    {
+      'players.$.goals': req.body.value,
+    },
+  }, function (err, user) {
+    if (err) throw err;
+  });
+});
+
+// Inc/dec assists
+router.purge('/game/:id', ensureAuthenticated, function (req, res) {
+  Game.findOneAndUpdate({ _id: req.params.id,
+                  'players._id': req.body.player._id, },
+  {
+    $inc:
+    {
+      'players.$.assists': req.body.value,
+    },
+  }, function (err, user) {
+    if (err) throw err;
+  });
+});
+
+// Inc/dec pims
+router.merge('/game/:id', ensureAuthenticated, function (req, res) {
+  Game.findOneAndUpdate({ _id: req.params.id,
+                  'players._id': req.body.player._id, },
+  {
+    $inc:
+    {
+      'players.$.pim': req.body.value,
+    },
+  }, function (err, user) {
+    if (err) throw err;
+  });
+});
+
 router.delete('/game/:id', ensureAuthenticated, function (req, res) {
   Game.remove({ _id: req.params.id }, function (err) {
     if (err) throw err;

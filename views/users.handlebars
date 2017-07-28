@@ -37,6 +37,16 @@ function actionFormatter(value, row, index) {
         '</a>'
     ].join('');
 }
+function deleteUser(value) {
+  $.ajax({
+    type: 'DELETE',
+    url: '/ap/user/' + value,
+    success: function (result) {
+      // Do something with the result
+      console.log('obj');
+    },
+  });
+}
 window.actionEvents = {
   'click .like': function (e, value, row, index) {
     window.location.href = "/profile/" + row._id;

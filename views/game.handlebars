@@ -27,7 +27,8 @@
   <div class="row">
 
     <!-- Score table ! -->
-    <table data-toggle="table"
+    <table id="playersTable"
+           data-toggle="table"
            data-method="post"
            data-classes="table table-striped table-hover"
            data-url="/ap/game/{{gameOverview._id}}">
@@ -39,12 +40,105 @@
           <th data-field="surname" data-sortable="true">Nazwisko</th>
           <th data-field="shirtnumber" data-sortable="true">Numer</th>
           <th data-field="position" data-sortable="true">Pozycja</th>
-          <th data-field="goals" data-sortable="true">Gole</th>
-          <th data-field="assists" data-sortable="true">Asysty</th>
-          <th data-field="pim" data-sortable="true">Minuty Karne</th>
+          <th data-field="goals" data-sortable="true" data-formatter="goalsFormatter" data-events="goalsEvents">Gole</th>
+          <th data-field="assists" data-sortable="true" data-formatter="goalsFormatter" data-events="assistsEvents">Asysty</th>
+          <th data-field="pim" data-sortable="true" data-formatter="pimsFormatter" data-events="pimsEvents">Minuty Karne</th>
         </tr>
       </thead>
     </table>
   </div>
-</body>
-</html>
+
+<script>
+function goalsFormatter(value) {
+  return '<a class="minus" nohref><i class="glyphicon glyphicon-minus-sign"></i></a> ' + value + ' <a class="plus" nohref><i class="glyphicon glyphicon-plus-sign"></i></a>';
+}
+function pimsFormatter(value) {
+  return '<a class="minus" nohref><i class="glyphicon glyphicon-minus-sign"></i></a> ' + value + ' <a class="2" nohref>2</a> <a class="4" nohref>4</a> <a class="5" nohref>5</a> <a class="10" nohref>10</a>';
+}
+
+function incGoals(row, value) {
+  var data = {};
+  data.value = value;
+  data.player = row;
+  $.ajax({
+    type: 'PUT',
+    data: JSON.stringify(data),
+    contentType: 'application/json',
+    url: window.location.pathname,
+    success: function (data, textStatus, jqXHR) {
+      console.log(data);
+    },
+  });
+}
+function incAssists(row, value) {
+  var data = {};
+  data.value = value;
+  data.player = row;
+  $.ajax({
+    type: 'PURGE',
+    data: JSON.stringify(data),
+    contentType: 'application/json',
+    url: window.location.pathname,
+    success: function (data, textStatus, jqXHR) {
+      console.log(data);
+    },
+  });
+}
+function incPims(row, value) {
+  var data = {};
+  data.value = value;
+  data.player = row;
+  $.ajax({
+    type: 'MERGE',
+    data: JSON.stringify(data),
+    contentType: 'application/json',
+    url: window.location.pathname,
+    success: function (data, textStatus, jqXHR) {
+      console.log(data);
+    },
+  });
+}
+
+window.goalsEvents = {
+  'click .plus': function (e, value, row, index) {
+    incGoals(row, 1);
+    refreshTable();
+  },
+  'click .minus': function (e, value, row, index) {
+    incGoals(row, -1);
+    refreshTable();
+  },
+};
+window.assistsEvents = {
+  'click .plus': function (e, value, row, index) {
+    incAssists(row, 1);
+    refreshTable();
+  },
+  'click .minus': function (e, value, row, index) {
+    incAssists(row, -1);
+    refreshTable();
+  },
+};
+window.pimsEvents = {
+  'click .2': function (e, value, row, index) {
+    incPims(row, 2);
+    refreshTable();
+  },
+  'click .4': function (e, value, row, index) {
+    incPims(row, 4);
+    refreshTable();
+  },
+  'click .5': function (e, value, row, index) {
+    incPims(row, 5);
+    refreshTable();
+  },
+  'click .10': function (e, value, row, index) {
+    incPims(row, 10);
+    refreshTable();
+  },
+  'click .reset': function (e, value, row, index) {
+    incPims(row, -1);
+    refreshTable();
+  },
+};
+</script>
