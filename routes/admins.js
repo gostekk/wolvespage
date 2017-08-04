@@ -5,6 +5,27 @@ var moment = require('moment');
 var User = require('../models/user');
 var Game = require('../models/game');
 
+router.get('/test1', function (req, res) {
+  Game.aggregate([
+    { $unwind: '$players' },
+    { $match: { 'players.username': 'napastnik2' } },
+    { $group: { _id: '$players._id',
+                username: { $first: '$players.username' },
+                name: { $first: '$players.name' },
+                surname: { $first: '$players.surname' },
+                shirtnumber: { $first: '$players.shirtnumber' },
+                position: { $first: '$players.position' },
+                gp: { $sum: 1 },
+                goals: { $sum: '$players.goals' },
+                assists: { $sum: '$players.assists' },
+                pim: { $sum: '$players.pim' }, }, },
+  ], function (err, user) {
+    if (err) throw err;
+    console.log(user);
+    res.json(user);
+  });
+});
+
 // Admin panel
 router.get('/', ensureAuthenticated, function (req, res) {
   res.render('admin', { layout: 'admin', title: 'admin - Wolves page' });

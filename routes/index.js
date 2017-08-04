@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 
 var User = require('../models/user');
+var Game = require('../models/game');
 
 // Get Homepage
 router.get('/', ensureAuthenticated, function (req, res) {
@@ -11,7 +12,20 @@ router.get('/', ensureAuthenticated, function (req, res) {
 // Profile
 router.get('/profile/:id', ensureAuthenticated, function (req, res) {
   User.findById(req.params.id, function (err, userProfile) {
-    res.render('profile', { userProfile: userProfile, title: 'Profile - Wolves page' });
+    Game.aggregate([
+      { $unwind: '$players' },
+      { $match: { 'players._id': userProfile._id } },
+      { $group: { _id: '$players._id',
+                  gp: { $sum: 1 },
+                  goals: { $sum: '$players.goals' },
+                  assists: { $sum: '$players.assists' },
+                  pim: { $sum: '$players.pim' }, }, },
+    ], function (err, userStats) {
+      if (err) throw err;
+      res.render('profile', { userProfile: userProfile,
+                              userStats: userStats[0],
+                              title: 'Profile - Wolves page', });
+    });
   });
 });
 
