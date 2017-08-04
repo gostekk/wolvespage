@@ -2,10 +2,10 @@
 <ul class="list-group">
   <li class="list-group-item">Imię: {{userProfile.name}}</li>
   <li class="list-group-item">Nazwisko: {{userProfile.surname}}</li>
-  <li class="list-group-item">Numer: {{userProfile.shirtnumber}}</li>
-  <li class="list-group-item">Pozycja: {{userProfile.position}}</li>
-  <li class="list-group-item">Rozegrane mecze: {{userStats.gp}}</li>
-  <li class="list-group-item">Gole: {{userStats.goals}}</li>
-  <li class="list-group-item">Asysty: {{userStats.assists}}</li>
-  <li class="list-group-item">Minuty karne: {{userStats.pim}}</li>
+  <li class="list-group-item">Numer: {{#if userProfile.shirtnumber}} {{userProfile.shirtnumber}} {{else}} Brak {{/if}}</li>
+  <li class="list-group-item">Pozycja: {{#if userProfile.position}} {{userProfile.position}} {{else}} Brak {{/if}}</li>
+  <li class="list-group-item">Rozegrane mecze: {{#if userStats.gp}} {{userStats.gp}} {{else}} 0 {{/if}}</li>
+  <li class="list-group-item">Gole: {{#if userStats.goals}} {{userStats.goals}} {{else}} 0 {{/if}}</li>
+  <li class="list-group-item">Asysty: {{#if userStats.assists}} {{userStats.assists}} {{else}} 0 {{/if}}</li>
+  <li class="list-group-item">Minuty karne: {{#if userStats.pim}} {{userStats.pim}} {{else}} 0 {{/if}}</li>
 </ul>
