@@ -19,6 +19,7 @@ router.get('/profile/:id', ensureAuthenticated, function (req, res) {
                   gp: { $sum: 1 },
                   goals: { $sum: '$players.goals' },
                   assists: { $sum: '$players.assists' },
+                  points: { $sum: { $add: ['$players.goals', '$players.assists'] } },
                   pim: { $sum: '$players.pim' }, }, },
     ], function (err, userStats) {
       if (err) throw err;
@@ -26,6 +27,33 @@ router.get('/profile/:id', ensureAuthenticated, function (req, res) {
                               userStats: userStats[0],
                               title: 'Profile - Wolves page', });
     });
+  });
+});
+
+// Statistics page
+router.get('/stats', ensureAuthenticated, function (req, res) {
+  res.render('stats', { title: 'Stats - Wolves page', });
+});
+
+// Statistics page POST
+router.post('/stats', ensureAuthenticated, function (req, res) {
+  Game.aggregate([
+    { $unwind: '$players' },
+    { $group: { _id: '$players._id',
+                username: { $first: '$players.username' },
+                name: { $first: '$players.name' },
+                surname: { $first: '$players.surname' },
+                shirtnumber: { $first: '$players.shirtnumber' },
+                position: { $first: '$players.position' },
+                gp: { $sum: 1 },
+                goals: { $sum: '$players.goals' },
+                assists: { $sum: '$players.assists' },
+                points: { $sum: { $add: ['$players.goals', '$players.assists'] } },
+                pim: { $sum: '$players.pim' }, }, },
+  ], function (err, users) {
+    if (err) throw err;
+    console.log(users);
+    res.json(users);
   });
 });
 
