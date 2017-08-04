@@ -9,8 +9,8 @@
        data-url="/ap/users">
     <thead>
     <tr>
-      <th data-field="_id" data-formatter="nameFormatter" data-visible="false">ID</th>
-      <th data-field="username" data-sortable="true">username</th>
+      <th data-field="_id" data-formatter="idFormatter" data-visible="false">ID</th>
+      <th data-field="username" data-formatter="usernameFormatter" data-sortable="true" data-events="actionEvents">username</th>
       <th data-field="name" data-sortable="true">Imię</th>
       <th data-field="surname" data-sortable="true">Nazwisko</th>
       <th data-field="shirtnumber" data-sortable="true">Numer</th>
@@ -21,18 +21,21 @@
 </table>
 
 <script>
-function nameFormatter(value) {
+function idFormatter(value) {
     return '<a href="/profile/' + value + '">' + value + '</a>';
+}
+function usernameFormatter(value) {
+    return '<a class="profile" href="" onclick="return false;" title="Profile">' + value + '</a>';
 }
 function actionFormatter(value, row, index) {
     return [
-        '<a class="like" nohref onclick="return false;" title="Like">',
+        '<a class="like" href="" onclick="return false;" title="Like">',
         '<i class="glyphicon glyphicon-heart"></i>',
         '</a>',
         '<a class="edit ml10" nohref onclick="return false;" title="Edit">',
         '<i class="glyphicon glyphicon-edit"></i>',
         '</a>',
-        '<a class="remove ml10" nohref onclick="return false;" title="Remove">',
+        '<a class="remove ml10" href="" onclick="return false;" title="Remove">',
         '<i class="glyphicon glyphicon-remove"></i>',
         '</a>'
     ].join('');
@@ -48,6 +51,9 @@ function deleteUser(value) {
   });
 }
 window.actionEvents = {
+  'click .profile': function (e, value, row, index) {
+    window.location.href = "/profile/" + row._id;
+  },
   'click .like': function (e, value, row, index) {
     window.location.href = "/profile/" + row._id;
   },
