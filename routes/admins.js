@@ -217,8 +217,13 @@ router.post('/addgame', ensureAuthenticated, function (req, res) {
 
 // TODO: if !isAuthenticated redirect to /login | if isAuthenticated refresh page and info
 function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated() && req.user.adminflag) {
-    return next();
+  console.log(req.get('referer'));
+  if (req.isAuthenticated()) {
+    if (req.user.adminflag) {
+      return next();
+    } else {
+      res.redirect('/404');
+    }
   } else {
     res.redirect('/login');
   }

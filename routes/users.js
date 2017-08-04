@@ -5,6 +5,11 @@ var LocalStrategy = require('passport-local').Strategy;
 
 var User = require('../models/user');
 
+// 404
+router.get('/404', function (req, res) {
+  res.render('404', { layout: false });
+});
+
 // Login
 router.get('/login', function (req, res) {
   res.render('login', { layout: false });
@@ -56,6 +61,10 @@ passport.deserializeUser(function (id, done) {
   User.getUserById(id, function (err, user) {
     done(err, user);
   });
+});
+
+router.get('*', function (req, res) {
+  res.redirect('/404');
 });
 
 module.exports = router;
