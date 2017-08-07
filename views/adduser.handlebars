@@ -1,10 +1,15 @@
-<h2 class="page-header">Register</h2>
+<h2 class="page-header">Add User</h2>
+
 {{#if errors}}
   {{#each errors}}
     <div class="alert alert-danger">{{msg}}</div>
   {{/each}}
 {{/if}}
-<form method="post" action="/ap/register">
+{{#if success}}
+  <div class="alert alert-success">{{success}}</div>
+{{/if}}
+
+<form method="post" action="/ap/adduser">
   <div class="form-group">
     <label>Username</label>
     <input type="text" class="form-control" placeholder="Username" name="username">

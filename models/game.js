@@ -12,6 +12,14 @@ var GameSchema = mongoose.Schema({
   date: {
     type: Date,
   },
+  score: {
+    opponent: {
+      type: Number,
+    },
+    our: {
+      type: Number,
+    },
+  },
   players: [
     {
       username: {

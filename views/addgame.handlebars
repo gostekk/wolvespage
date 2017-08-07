@@ -15,6 +15,20 @@
     <input type="url" class="form-control" name="logo">
   </div>
 
+  <div id="scoreOur" class="form-group">
+    <label>Wynik</label>
+    <div class="row">
+      <div class="col-sm-6">
+        <label>Wolves Tychy</label>
+        <input type="number" class="form-control" value="0" placeholder="0" name="scoreOur">
+      </div>
+      <div class="col-sm-6">
+        <label>Przeciwnik</label>
+        <input type="number" class="form-control" value="0" placeholder="0" name="scoreOpponent">
+      </div>
+    </div>
+  </div>
+
   <div id="date" class="form-group">
     <label>Data spotkania</label>
     <input type="text" name="date" id="datepicker" placeholder="MM/DD/YYYY">
@@ -58,6 +72,9 @@ $(function () {
     data.teamname = $('input[name=name]').val();
     data.teamlogo = $('input[name=logo]').val();
     data.date = $('input[name=date]').val();
+    data.score = {};
+    data.score.our = $('input[name=scoreOur]').val();
+    data.score.opponent = $('input[name=scoreOpponent]').val();
     data.players = $('#statsTable').bootstrapTable('getAllSelections');
     $.ajax({
       type: 'POST',

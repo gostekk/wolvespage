@@ -52,7 +52,6 @@ router.post('/stats', ensureAuthenticated, function (req, res) {
                 pim: { $sum: '$players.pim' }, }, },
   ], function (err, users) {
     if (err) throw err;
-    console.log(users);
     res.json(users);
   });
 });

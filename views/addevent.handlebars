@@ -1,0 +1,24 @@
+<h2 class="page-header">Add Event</h2>
+{{#if errors}}
+  {{#each errors}}
+    <div class="alert alert-danger">{{msg}}</div>
+  {{/each}}
+{{/if}}
+{{#if success}}
+  <div class="alert alert-success">{{success}}</div>
+{{/if}}
+<form method="post" action="/ap/addevent">
+  <div class="form-group">
+    <label>name</label>
+    <input type="text" class="form-control" placeholder="Nazwa rozgrywek" name="name">
+  </div>
+
+  <div class="form-group">
+    <label class="radio-inline"><input type="radio" name="level" checked="checked" value="Amator">Amator</label>
+    <label class="radio-inline"><input type="radio" name="level" value="2 liga">2 liga</label>
+  </div>
+
+  <div class="form-group">
+    <button type="submit" class="btn btn-success pull-right">Submit</button>
+  </div>
+</form>

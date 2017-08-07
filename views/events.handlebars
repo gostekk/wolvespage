@@ -1,0 +1,66 @@
+<table id="eventsTable"
+       data-toggle="table"
+       data-method="post"
+       data-classes="table table-striped table-hover"
+       data-search="true"
+       data-show-refresh="true"
+       data-show-toggle="true"
+       data-show-columns="true"
+       data-url="/ap/events">
+    <thead>
+    <tr>
+      <th data-field="_id" data-formatter="idFormatter" data-visible="false">ID</th>
+      <th data-field="name" data-formatter="nameFormatter" data-sortable="true" data-events="actionEvents">Nazwa</th>
+      <th data-field="level" data-sortable="true">Poziom</th>
+      <th data-field="action" data-formatter="actionFormatter" data-events="actionEvents">Action</th>
+    </tr>
+  </thead>
+</table>
+
+<script>
+function idFormatter(value) {
+    return '<a href="/event/' + value + '">' + value + '</a>';
+}
+function nameFormatter(value) {
+    return '<a class="event" href="" onclick="return false;" title="Event">' + value + '</a>';
+}
+function actionFormatter(value, row, index) {
+    return [
+        '<a class="like" href="" onclick="return false;" title="Like">',
+        '<i class="glyphicon glyphicon-heart"></i>',
+        '</a>',
+        '<a class="edit ml10" nohref onclick="return false;" title="Edit">',
+        '<i class="glyphicon glyphicon-edit"></i>',
+        '</a>',
+        '<a class="remove ml10" href="" onclick="return false;" title="Remove">',
+        '<i class="glyphicon glyphicon-remove"></i>',
+        '</a>'
+    ].join('');
+}
+function deleteEvent(value) {
+  $.ajax({
+    type: 'DELETE',
+    url: '/ap/event/' + value,
+    success: function (result) {
+      // Do something with the result
+      console.log('obj');
+    },
+  });
+}
+window.actionEvents = {
+  'click .event': function (e, value, row, index) {
+    window.location.href = "/event/" + row._id;
+  },
+  'click .like': function (e, value, row, index) {
+    window.location.href = "/event/" + row._id;
+  },
+  'click .edit': function (e, value, row, index) {
+    alert('You click edit icon, row: ' + JSON.stringify(row));
+    console.log(value, row, index);
+  },
+  'click .remove': function (e, value, row, index) {
+    deleteEvent(row._id);
+    $('#eventsTable').bootstrapTable('refresh');
+  }
+};
+</script>

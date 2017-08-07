@@ -4,6 +4,7 @@ var moment = require('moment');
 
 var User = require('../models/user');
 var Game = require('../models/game');
+var Event = require('../models/event');
 
 // Admin panel
 router.get('/', ensureAuthenticated, function (req, res) {
@@ -15,20 +16,22 @@ router.get('/admin', ensureAuthenticated, function (req, res) {
   res.render('admin', { layout: 'admin', title: 'admin - Wolves page' });
 });
 
-// Register
-router.get('/register', ensureAuthenticated, function (req, res) {
-  res.render('register', { layout: 'admin', title: 'Register - Wolves page' });
+//\\//\\//\\//\\  USERs //\\//\\//\\//\\
+
+// Add user
+router.get('/adduser', ensureAuthenticated, function (req, res) {
+  res.render('adduser', { layout: 'admin', title: 'Add User - Wolves page' });
 });
 
 // Users
+router.get('/users', ensureAuthenticated, function (req, res) {
+  res.render('users', { layout: 'admin', title: 'Users - Wolves Page' });
+});
+
 router.post('/users', ensureAuthenticated, function (req, res) {
   User.find({}, function (err, users) {
     res.json(users);
   });
-});
-
-router.get('/users', ensureAuthenticated, function (req, res) {
-  res.render('users', { layout: 'admin', title: 'Users - Wolves Page' });
 });
 
 // Delete user
@@ -39,6 +42,8 @@ router.delete('/user/:id', ensureAuthenticated, function (req, res) {
     // TODO: Message after correct remove user
   });
 });
+
+//\\//\\//\\//\\  GAMEs //\\//\\//\\//\\
 
 // Add game
 router.get('/addgame', ensureAuthenticated, function (req, res) {
@@ -121,8 +126,37 @@ router.delete('/game/:id', ensureAuthenticated, function (req, res) {
   });
 });
 
-// Register user
-router.post('/register', ensureAuthenticated, function (req, res) {
+//\\//\\//\\//\\  EVENTs //\\//\\//\\//\\
+
+// Add event
+router.get('/addevent', ensureAuthenticated, function (req, res) {
+  res.render('addevent', { layout: 'admin', title: 'Add Event - Wolves Page' });
+});
+
+// Users
+router.get('/events', ensureAuthenticated, function (req, res) {
+  res.render('events', { layout: 'admin', title: 'Events - Wolves Page' });
+});
+
+router.post('/events', ensureAuthenticated, function (req, res) {
+  Event.find({}, function (err, events) {
+    res.json(events);
+  });
+});
+
+// Delete user
+router.delete('/event/:id', ensureAuthenticated, function (req, res) {
+  Event.remove({ _id: req.params.id }, function (err) {
+    if (err) throw err;
+
+    // TODO: Message after correct remove user
+  });
+});
+
+//\\//\\//\\//\\  POSTs //\\//\\//\\//\\
+
+// Add user
+router.post('/adduser', ensureAuthenticated, function (req, res) {
   var username = req.body.username;
   var name = req.body.name;
   var surname = req.body.surname;
@@ -157,10 +191,10 @@ router.post('/register', ensureAuthenticated, function (req, res) {
   var errors = req.validationErrors();
 
   if (errors) {
-    res.render('register', {
+    res.render('adduser', {
       layout: 'admin',
       errors: errors,
-      title: 'Register - Wolves page',
+      title: 'Add User - Wolves page',
     });
   } else {
     var newUser = new User({
@@ -178,15 +212,21 @@ router.post('/register', ensureAuthenticated, function (req, res) {
       console.log(user);
     });
 
-    res.redirect(req.get('referer'));
+    res.render('adduser', {
+      layout: 'admin',
+      success: 'Poprawnie dodano nowego użytkownika',
+      title: 'Add User - Wolves page',
+    });
   }
 });
 
 // Add game
+// TODO: repair error reload page and show errors
 router.post('/addgame', ensureAuthenticated, function (req, res) {
   var teamname = req.body.teamname;
   var teamlogo = req.body.teamlogo;
   var date = new Date(moment(req.body.date, 'MM-DD-YYYY').format('MM-DD-YYYY'));
+  var score = req.body.score;
   var players = req.body.players;
 
   // Validation
@@ -203,6 +243,7 @@ router.post('/addgame', ensureAuthenticated, function (req, res) {
       teamname: teamname,
       teamlogo: teamlogo,
       date: date,
+      score: score,
       players: players,
     });
 
@@ -215,9 +256,7 @@ router.post('/addgame', ensureAuthenticated, function (req, res) {
   }
 });
 
-// TODO: if !isAuthenticated redirect to /login | if isAuthenticated refresh page and info
 function ensureAuthenticated(req, res, next) {
-  console.log(req.get('referer'));
   if (req.isAuthenticated()) {
     if (req.user.adminflag) {
       return next();
@@ -228,5 +267,52 @@ function ensureAuthenticated(req, res, next) {
     res.redirect('/login');
   }
 }
+
+// Add event
+router.post('/addevent', ensureAuthenticated, function (req, res) {
+  var name = req.body.name;
+  var level = req.body.level;
+
+  // Validation
+  req.checkBody('name', 'Nazwa rozgrywek jest wymagana').notEmpty();
+  req.checkBody('level', 'Poziom rozgrywek jest wymagany').notEmpty();
+
+  // TODO: Add Validationerror if name already exists in db
+  Event.findOne({
+    name: name, }, function (err, event_) {
+      if (err) throw err;
+      if (event_) {
+        console.log('event exist');
+      } else {
+        console.log('event doesn\'t exist');
+      }
+    }
+  );
+  var errors = req.validationErrors();
+
+  if (errors) {
+    res.render('addevent', {
+      layout: 'admin',
+      errors: errors,
+      title: 'Add Event - Wolves page',
+    });
+  } else {
+    var newEvent = new Event({
+      name: name,
+      level: level,
+    });
+
+    Event.addEvent(newEvent, function (err, event) {
+      if (err) throw err;
+      console.log(event);
+    });
+
+    res.render('addevent', {
+      layout: 'admin',
+      success: 'Poprawnie dodano nowy rodzaj rozgrywek',
+      title: 'Add Event - Wolves page',
+    });
+  }
+});
 
 module.exports = router;
