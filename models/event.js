@@ -4,10 +4,15 @@ var mongoose = require('mongoose');
 var EventSchema = mongoose.Schema({
   name: {
     type: String,
-    index: true,
   },
   level: {
     type: String,
+  },
+  shortname: {
+    type: String,
+  },
+  active: {
+    type: Boolean,
   },
 });
 

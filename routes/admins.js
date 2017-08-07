@@ -134,13 +134,30 @@ router.get('/addevent', ensureAuthenticated, function (req, res) {
 });
 
 // Users
-router.get('/events', ensureAuthenticated, function (req, res) {
+router.get('/events', function (req, res) {
   res.render('events', { layout: 'admin', title: 'Events - Wolves Page' });
 });
 
-router.post('/events', ensureAuthenticated, function (req, res) {
-  Event.find({}, function (err, events) {
-    res.json(events);
+router.post('/events', function (req, res) {
+  if (req.query.active == 'true') {
+    Event.find({ active: true }, function (err, events) {
+      res.json(events);
+    });
+  } else if (req.query.active == 'false') {
+    Event.find({ active: false }, function (err, events) {
+      res.json(events);
+    });
+  }
+});
+
+// Activate/Deactivate event
+router.put('/events', function (req, res) {
+  Event.findOne({ _id: req.query.id, },
+  function (err, events) {
+    events.active = !events.active;
+    events.save(function (err, updatedEvent) {
+      if (err) throw err;
+    });
   });
 });
 
@@ -256,25 +273,16 @@ router.post('/addgame', ensureAuthenticated, function (req, res) {
   }
 });
 
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    if (req.user.adminflag) {
-      return next();
-    } else {
-      res.redirect('/404');
-    }
-  } else {
-    res.redirect('/login');
-  }
-}
-
 // Add event
 router.post('/addevent', ensureAuthenticated, function (req, res) {
   var name = req.body.name;
+  var shortname = req.body.shortname;
   var level = req.body.level;
+  var active = false;
 
   // Validation
   req.checkBody('name', 'Nazwa rozgrywek jest wymagana').notEmpty();
+  req.checkBody('shortname', 'Krótka nazwa rozgrywek jest wymagana').notEmpty();
   req.checkBody('level', 'Poziom rozgrywek jest wymagany').notEmpty();
 
   // TODO: Add Validationerror if name already exists in db
@@ -299,7 +307,9 @@ router.post('/addevent', ensureAuthenticated, function (req, res) {
   } else {
     var newEvent = new Event({
       name: name,
+      shortname: shortname,
       level: level,
+      active: active,
     });
 
     Event.addEvent(newEvent, function (err, event) {
@@ -314,5 +324,17 @@ router.post('/addevent', ensureAuthenticated, function (req, res) {
     });
   }
 });
+
+function ensureAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    if (req.user.adminflag) {
+      return next();
+    } else {
+      res.redirect('/404');
+    }
+  } else {
+    res.redirect('/login');
+  }
+}
 
 module.exports = router;
