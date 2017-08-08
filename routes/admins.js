@@ -6,6 +6,13 @@ var User = require('../models/user');
 var Game = require('../models/game');
 var Event = require('../models/event');
 
+// Test1
+router.get('/test1', ensureAuthenticated, function (req, res) {
+  Game.find({ 'event._id': '598979fd871c901ddf2eb29e' }, function (err, games) {
+    res.json(games);
+  });
+});
+
 // Admin panel
 router.get('/', ensureAuthenticated, function (req, res) {
   res.render('admin', { layout: 'admin', title: 'admin - Wolves page' });
@@ -133,7 +140,39 @@ router.get('/addevent', ensureAuthenticated, function (req, res) {
   res.render('addevent', { layout: 'admin', title: 'Add Event - Wolves Page' });
 });
 
-// Users
+// Event page
+router.get('/event/:id', function (req, res) {
+  Event.findById(req.params.id, function (err, eventOverview) {
+    res.render('event', { layout: 'admin',
+                        title: 'Event - Wolves Page',
+                        eventOverview: eventOverview, });
+  });
+});
+
+router.post('/event/:id', function (req, res) {
+  Event.findById(req.params.id, function (err, eventValue) {
+    Game.aggregate([
+      { $unwind: '$players' },
+      { $match: { 'event._id': eventValue._id } },
+      { $group: { _id: '$players._id',
+                  username: { $first: '$players.username' },
+                  name: { $first: '$players.name' },
+                  surname: { $first: '$players.surname' },
+                  shirtnumber: { $first: '$players.shirtnumber' },
+                  position: { $first: '$players.position' },
+                  gp: { $sum: 1 },
+                  goals: { $sum: '$players.goals' },
+                  assists: { $sum: '$players.assists' },
+                  points: { $sum: { $add: ['$players.goals', '$players.assists'] } },
+                  pim: { $sum: '$players.pim' }, }, },
+    ], function (err, eventStats) {
+      if (err) throw err;
+      res.json(eventStats);
+    });
+  });
+});
+
+// Events
 router.get('/events', ensureAuthenticated, function (req, res) {
   res.render('events', { layout: 'admin', title: 'Events - Wolves Page' });
 });
@@ -243,6 +282,7 @@ router.post('/addgame', ensureAuthenticated, function (req, res) {
   var teamname = req.body.teamname;
   var teamlogo = req.body.teamlogo;
   var date = new Date(moment(req.body.date, 'MM-DD-YYYY').format('MM-DD-YYYY'));
+  var event = req.body.event[0];
   var score = req.body.score;
   var players = req.body.players;
 
@@ -260,6 +300,7 @@ router.post('/addgame', ensureAuthenticated, function (req, res) {
       teamname: teamname,
       teamlogo: teamlogo,
       date: date,
+      event: event,
       score: score,
       players: players,
     });

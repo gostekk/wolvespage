@@ -34,6 +34,27 @@
     <input type="text" name="date" id="datepicker" placeholder="MM/DD/YYYY">
   </div>
 
+  <table id="eventsTable"
+         data-toggle="table"
+         data-method="post"
+         data-classes="table table-striped table-hover"
+         data-sort-name="season"
+         data-sort-order="desc"
+         data-click-to-select="true"
+         data-single-select="true"
+         data-url="/ap/events/?active=true">
+      <thead>
+      <tr>
+        <th data-field="state" data-checkbox="true"></th>
+        <th data-field="_id" data-formatter="idFormatter" data-visible="false">ID</th>
+        <th data-field="season" data-sortable="true">Sezon</th>
+        <th data-field="shortname" data-sortable="true">K.Nazwa</th>
+        <th data-field="type" data-sortable="true">Rodzaj</th>
+        <th data-field="level" data-sortable="true">Poziom</th>
+      </tr>
+    </thead>
+  </table>
+
   <table id="statsTable"
          data-toggle="table"
          data-search="true"
@@ -72,6 +93,7 @@ $(function () {
     data.teamname = $('input[name=name]').val();
     data.teamlogo = $('input[name=logo]').val();
     data.date = $('input[name=date]').val();
+    data.event = $('#eventsTable').bootstrapTable('getAllSelections');
     data.score = {};
     data.score.our = $('input[name=scoreOur]').val();
     data.score.opponent = $('input[name=scoreOpponent]').val();

@@ -12,6 +12,23 @@ var GameSchema = mongoose.Schema({
   date: {
     type: Date,
   },
+  event: {
+    _id: {
+      type: mongoose.Schema.Types.ObjectId,
+    },
+    shortname: {
+      type: String,
+    },
+    season: {
+      type: String,
+    },
+    type: {
+      type: String,
+    },
+    level: {
+      type: String,
+    },
+  },
   score: {
     opponent: {
       type: Number,

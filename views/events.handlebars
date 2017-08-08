@@ -6,12 +6,13 @@
        data-show-refresh="true"
        data-show-toggle="true"
        data-show-columns="true"
+       data-sort-name="season"
+       data-sort-order="desc"
        data-url="/ap/events/?active=true">
     <thead>
     <tr>
       <th data-field="_id" data-formatter="idFormatter" data-visible="false">ID</th>
-      <th data-field="season" data-sortable="true">Sezon</th>
-      <th data-field="name" data-formatter="nameFormatter" data-sortable="true" data-events="actionEvents" data-visible="false">Nazwa</th>
+      <th data-field="season" data-formatter="seasonFormatter" data-sortable="true" data-events="actionEvents">Sezon</th>
       <th data-field="shortname" data-sortable="true">K.Nazwa</th>
       <th data-field="type" data-sortable="true">Rodzaj</th>
       <th data-field="level" data-sortable="true">Poziom</th>
@@ -28,12 +29,13 @@
        data-show-refresh="true"
        data-show-toggle="true"
        data-show-columns="true"
+       data-sort-name="season"
+       data-sort-order="desc"
        data-url="/ap/events/?active=false">
     <thead>
     <tr>
       <th data-field="_id" data-formatter="idFormatter" data-visible="false">ID</th>
-      <th data-field="season" data-sortable="true">Sezon</th>
-      <th data-field="name" data-formatter="nameFormatter" data-sortable="true" data-events="actionEvents" data-visible="false">Nazwa</th>
+      <th data-field="season" data-formatter="seasonFormatter" data-sortable="true" data-events="actionEvents">Sezon</th>
       <th data-field="shortname" data-sortable="true">K.Nazwa</th>
       <th data-field="type" data-sortable="true">Rodzaj</th>
       <th data-field="level" data-sortable="true">Poziom</th>
@@ -44,9 +46,9 @@
 
 <script>
 function idFormatter(value) {
-    return '<a href="/event/' + value + '">' + value + '</a>';
+    return '<a href="/ap/event/' + value + '">' + value + '</a>';
 }
-function nameFormatter(value) {
+function seasonFormatter(value) {
     return '<a class="event" href="" onclick="return false;" title="Event">' + value + '</a>';
 }
 function actionFormatter(value, row, index) {
@@ -84,10 +86,10 @@ function activeChangeEvent(value) {
 }
 window.actionEvents = {
   'click .event': function (e, value, row, index) {
-    window.location.href = "/event/" + row._id;
+    window.location.href = "/ap/event/" + row._id;
   },
   'click .like': function (e, value, row, index) {
-    window.location.href = "/event/" + row._id;
+    window.location.href = "/ap/event/" + row._id;
   },
   'click .edit': function (e, value, row, index) {
     //alert('You click edit icon, row: ' + JSON.stringify(row));
