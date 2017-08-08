@@ -37,8 +37,8 @@ passport.use(new LocalStrategy(
   function (username, password, done) {
     User.getUserByUsername(username, function (err, user) {
       if (err) throw err;
-      if (!user) {
-        return done(null, false, { message: 'Unknown User' });
+      if (!user || !user.active) {
+        return done(null, false, { message: 'Unknown User or Deactivated' });
       }
 
       User.comparePassword(password, user.password, function (err, isMatch) {

@@ -25,13 +25,23 @@ router.get('/adduser', ensureAuthenticated, function (req, res) {
 
 // Users
 router.get('/users', ensureAuthenticated, function (req, res) {
-  res.render('users', { layout: 'admin', title: 'Users - Wolves Page' });
+  if (req.query.show == 'inactive') {
+    res.render('usersinactive', { layout: 'admin', title: 'Inactive users - Wolves Page' });
+  } else {
+    res.render('users', { layout: 'admin', title: 'Users - Wolves Page' });
+  }
 });
 
 router.post('/users', ensureAuthenticated, function (req, res) {
-  User.find({}, function (err, users) {
-    res.json(users);
-  });
+  if (req.query.show == 'inactive') {
+    User.find({ active: false }, function (err, users) {
+      res.json(users);
+    });
+  } else {
+    User.find({}, function (err, users) {
+      res.json(users);
+    });
+  }
 });
 
 // Delete user
@@ -40,6 +50,18 @@ router.delete('/user/:id', ensureAuthenticated, function (req, res) {
     if (err) throw err;
 
     // TODO: Message after correct remove user
+  });
+});
+
+// Activate/Inactivate user
+router.put('/users/:id', ensureAuthenticated, function (req, res) {
+  User.findOne({ _id: req.params.id, },
+  function (err, user) {
+    user.active = !user.active;
+    console.log(user);
+    user.save(function (err, updatedUser) {
+      if (err) throw err;
+    });
   });
 });
 
@@ -214,6 +236,7 @@ router.post('/adduser', ensureAuthenticated, function (req, res) {
   var password = req.body.password;
   var password2 = req.body.password2;
   var adminflag = (req.body.adminflag == 'on' ? true : false);
+  var active = false;
 
   // Validation
   req.checkBody('username', 'Username jest wymagany').notEmpty();
@@ -254,6 +277,7 @@ router.post('/adduser', ensureAuthenticated, function (req, res) {
       position: position,
       password: password,
       adminflag: adminflag,
+      active: active,
     });
 
     User.createUser(newUser, function (err, user) {

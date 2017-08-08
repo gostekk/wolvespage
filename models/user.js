@@ -27,6 +27,9 @@ var UserSchema = mongoose.Schema({
   adminflag: {
     type: Boolean,
   },
+  active: {
+    type: Boolean,
+  },
 });
 
 var User = module.exports = mongoose.model('User', UserSchema);

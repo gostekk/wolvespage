@@ -1,0 +1,57 @@
+<table id="inactiveUsersTable"
+       data-toggle="table"
+       data-method="post"
+       data-classes="table table-striped table-hover"
+       data-search="true"
+       data-show-refresh="true"
+       data-show-toggle="true"
+       data-show-columns="true"
+       data-url="/ap/users?show=inactive">
+    <thead>
+    <tr>
+      <th data-field="_id" data-formatter="idFormatter" data-visible="false">ID</th>
+      <th data-field="username" data-formatter="usernameFormatter" data-sortable="true" data-events="actionEvents">username</th>
+      <th data-field="name" data-sortable="true">Imię</th>
+      <th data-field="surname" data-sortable="true">Nazwisko</th>
+      <th data-field="shirtnumber" data-sortable="true">Numer</th>
+      <th data-field="position" data-sortable="true">Pozycja</th>
+      <th data-field="action" data-formatter="actionFormatter" data-events="actionEvents">Action</th>
+    </tr>
+  </thead>
+</table>
+
+<script>
+function idFormatter(value) {
+    return '<a href="/profile/' + value + '">' + value + '</a>';
+}
+function usernameFormatter(value) {
+    return '<a class="profile" href="" onclick="return false;" title="Profile">' + value + '</a>';
+}
+function actionFormatter(value, row, index) {
+    return [
+        '<a class="edit ml10" nohref onclick="return false;" title="Edit">',
+        '<i class="glyphicon glyphicon-edit"></i>',
+        '</a>',
+    ].join('');
+}
+function activateUser(value) {
+  $.ajax({
+    type: 'PUT',
+    url: '/ap/users/' + value,
+    success: function (result) {
+      // Do something with the result
+      console.log('obj');
+    },
+  });
+}
+window.actionEvents = {
+  'click .profile': function (e, value, row, index) {
+    window.location.href = "/profile/" + row._id;
+  },
+  'click .edit': function (e, value, row, index) {
+    activateUser(row._id);
+    $('#inactiveUsersTable').bootstrapTable('refresh');
+    //alert('You click edit icon, row: ' + JSON.stringify(row));
+  },
+};
+</script>
