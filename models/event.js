@@ -5,10 +5,16 @@ var EventSchema = mongoose.Schema({
   name: {
     type: String,
   },
-  level: {
+  shortname: {
     type: String,
   },
-  shortname: {
+  season: {
+    type: String,
+  },
+  type: {
+    type: String,
+  },
+  level: {
     type: String,
   },
   active: {

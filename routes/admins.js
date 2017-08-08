@@ -134,11 +134,11 @@ router.get('/addevent', ensureAuthenticated, function (req, res) {
 });
 
 // Users
-router.get('/events', function (req, res) {
+router.get('/events', ensureAuthenticated, function (req, res) {
   res.render('events', { layout: 'admin', title: 'Events - Wolves Page' });
 });
 
-router.post('/events', function (req, res) {
+router.post('/events', ensureAuthenticated, function (req, res) {
   if (req.query.active == 'true') {
     Event.find({ active: true }, function (err, events) {
       res.json(events);
@@ -151,7 +151,7 @@ router.post('/events', function (req, res) {
 });
 
 // Activate/Deactivate event
-router.put('/events', function (req, res) {
+router.put('/events', ensureAuthenticated, function (req, res) {
   Event.findOne({ _id: req.query.id, },
   function (err, events) {
     events.active = !events.active;
@@ -277,17 +277,24 @@ router.post('/addgame', ensureAuthenticated, function (req, res) {
 router.post('/addevent', ensureAuthenticated, function (req, res) {
   var name = req.body.name;
   var shortname = req.body.shortname;
+  var season = req.body.season;
+  var type = req.body.type;
   var level = req.body.level;
-  var active = false;
+  var active = true;
 
   // Validation
   req.checkBody('name', 'Nazwa rozgrywek jest wymagana').notEmpty();
   req.checkBody('shortname', 'Krótka nazwa rozgrywek jest wymagana').notEmpty();
+  req.checkBody('season', 'Lata sezonu są wymagane').notEmpty();
+  req.checkBody('type', 'Typ rozgrywek jest wymagany').notEmpty();
   req.checkBody('level', 'Poziom rozgrywek jest wymagany').notEmpty();
 
   // TODO: Add Validationerror if name already exists in db
   Event.findOne({
-    name: name, }, function (err, event_) {
+    name: name,
+    shortname: shortname,
+    season: season,
+    type: type, }, function (err, event_) {
       if (err) throw err;
       if (event_) {
         console.log('event exist');
@@ -308,6 +315,8 @@ router.post('/addevent', ensureAuthenticated, function (req, res) {
     var newEvent = new Event({
       name: name,
       shortname: shortname,
+      season: season,
+      type: type,
       level: level,
       active: active,
     });

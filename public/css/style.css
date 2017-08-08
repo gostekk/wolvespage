@@ -113,3 +113,7 @@ footer{
 .ml10 {
     margin-left: 10px;
 }
+
+.container {
+  min-width: 900px;
+}
