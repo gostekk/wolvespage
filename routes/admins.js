@@ -6,13 +6,6 @@ var User = require('../models/user');
 var Game = require('../models/game');
 var Event = require('../models/event');
 
-// Test1
-router.get('/test1', ensureAuthenticated, function (req, res) {
-  Game.find({ 'event._id': '598979fd871c901ddf2eb29e' }, function (err, games) {
-    res.json(games);
-  });
-});
-
 // Admin panel
 router.get('/', ensureAuthenticated, function (req, res) {
   res.render('admin', { layout: 'admin', title: 'admin - Wolves page' });
@@ -220,7 +213,7 @@ router.post('/adduser', ensureAuthenticated, function (req, res) {
   var position = req.body.position;
   var password = req.body.password;
   var password2 = req.body.password2;
-  var adminflag = req.body.adminflag;
+  var adminflag = (req.body.adminflag == 'on' ? true : false);
 
   // Validation
   req.checkBody('username', 'Username jest wymagany').notEmpty();
@@ -282,6 +275,7 @@ router.post('/addgame', ensureAuthenticated, function (req, res) {
   var teamname = req.body.teamname;
   var teamlogo = req.body.teamlogo;
   var date = new Date(moment(req.body.date, 'MM-DD-YYYY').format('MM-DD-YYYY'));
+  var home = (req.body.home == 'on' ? false : true);
   var event = req.body.event[0];
   var score = req.body.score;
   var players = req.body.players;
@@ -300,6 +294,7 @@ router.post('/addgame', ensureAuthenticated, function (req, res) {
       teamname: teamname,
       teamlogo: teamlogo,
       date: date,
+      home: home,
       event: event,
       score: score,
       players: players,

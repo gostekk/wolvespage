@@ -32,6 +32,16 @@
   <div id="date" class="form-group">
     <label>Data spotkania</label>
     <input type="text" name="date" id="datepicker" placeholder="MM/DD/YYYY">
+    <input type="checkbox" name="home" id="home" autocomplete="off" />
+    <div class="btn-group">
+      <label for="home" class="btn btn-default">
+        <span class="glyphicon glyphicon-ok"></span>
+        <span> </span>
+      </label>
+      <label for="home" class="btn btn-default active">
+        Wyjazd
+      </label>
+    </div>
   </div>
 
   <table id="eventsTable"
@@ -93,6 +103,7 @@ $(function () {
     data.teamname = $('input[name=name]').val();
     data.teamlogo = $('input[name=logo]').val();
     data.date = $('input[name=date]').val();
+    data.home = $('input[name=home]').val();
     data.event = $('#eventsTable').bootstrapTable('getAllSelections');
     data.score = {};
     data.score.our = $('input[name=scoreOur]').val();

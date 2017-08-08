@@ -12,6 +12,9 @@ var GameSchema = mongoose.Schema({
   date: {
     type: Date,
   },
+  home: {
+    type: Boolean,
+  },
   event: {
     _id: {
       type: mongoose.Schema.Types.ObjectId,
