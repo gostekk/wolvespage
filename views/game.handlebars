@@ -130,43 +130,43 @@ function incPims(row, value) {
 window.goalsEvents = {
   'click .plus': function (e, value, row, index) {
     incGoals(row, 1);
-    refreshTable();
+    refreshTable('#playersTable');
   },
   'click .minus': function (e, value, row, index) {
     incGoals(row, -1);
-    refreshTable();
+    refreshTable('#playersTable');
   },
 };
 window.assistsEvents = {
   'click .plus': function (e, value, row, index) {
     incAssists(row, 1);
-    refreshTable();
+    refreshTable('#playersTable');
   },
   'click .minus': function (e, value, row, index) {
     incAssists(row, -1);
-    refreshTable();
+    refreshTable('#playersTable');
   },
 };
 window.pimsEvents = {
   'click .2': function (e, value, row, index) {
     incPims(row, 2);
-    refreshTable();
+    refreshTable('#playersTable');
   },
   'click .4': function (e, value, row, index) {
     incPims(row, 4);
-    refreshTable();
+    refreshTable('#playersTable');
   },
   'click .5': function (e, value, row, index) {
     incPims(row, 5);
-    refreshTable();
+    refreshTable('#playersTable');
   },
   'click .10': function (e, value, row, index) {
     incPims(row, 10);
-    refreshTable();
+    refreshTable('#playersTable');
   },
   'click .reset': function (e, value, row, index) {
     incPims(row, -1);
-    refreshTable();
+    refreshTable('#playersTable');
   },
 };
 </script>

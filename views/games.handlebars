@@ -67,7 +67,7 @@ window.actionEvents = {
   },
   'click .remove': function (e, value, row, index) {
     deleteGame(row._id);
-    $('#gamesTable').bootstrapTable('refresh');
+    refreshTable('#gamesTable');
   }
 };
 </script>

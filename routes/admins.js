@@ -58,7 +58,6 @@ router.put('/users/:id', ensureAuthenticated, function (req, res) {
   User.findOne({ _id: req.params.id, },
   function (err, user) {
     user.active = !user.active;
-    console.log(user);
     user.save(function (err, updatedUser) {
       if (err) throw err;
     });

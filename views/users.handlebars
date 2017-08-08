@@ -63,7 +63,7 @@ window.actionEvents = {
   },
   'click .remove': function (e, value, row, index) {
     deleteUser(row._id);
-    $('#usersTable').bootstrapTable('refresh');
+    refreshTable('#usersTable');
   }
 };
 </script>

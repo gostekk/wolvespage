@@ -50,7 +50,7 @@ window.actionEvents = {
   },
   'click .edit': function (e, value, row, index) {
     activateUser(row._id);
-    $('#inactiveUsersTable').bootstrapTable('refresh');
+    refreshTable('#inactiveUsersTable');
     //alert('You click edit icon, row: ' + JSON.stringify(row));
   },
 };
