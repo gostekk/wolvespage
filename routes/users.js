@@ -15,6 +15,11 @@ router.get('/login', function (req, res) {
   res.render('login', { layout: false });
 });
 
+// Login
+router.get('/login1', function (req, res) {
+  res.render('login1', { layout: false });
+});
+
 // Logout
 // TODO: Message after succesful logout
 router.get('/logout', function (req, res) {
