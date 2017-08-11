@@ -30,13 +30,13 @@ function usernameFormatter(value) {
 function actionFormatter(value, row, index) {
     return [
         '<a class="like" href="" onclick="return false;" title="Like">',
-        '<i class="glyphicon glyphicon-heart"></i>',
+        '<i class="fa fa-user"></i>',
         '</a>',
         '<a class="edit ml10" nohref onclick="return false;" title="Edit">',
-        '<i class="glyphicon glyphicon-edit"></i>',
+        '<i class="fa fa-edit"></i>',
         '</a>',
-        '<a class="remove ml10" href="" onclick="return false;" title="Remove">',
-        '<i class="glyphicon glyphicon-remove"></i>',
+        '<a class="remove pull-right" href="" onclick="return false;" title="Remove">',
+        '<i class="fa fa-times"></i>',
         '</a>'
     ].join('');
 }

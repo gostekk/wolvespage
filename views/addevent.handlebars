@@ -8,33 +8,46 @@
   <div class="alert alert-success">{{success}}</div>
 {{/if}}
 <form method="post" action="/ap/addevent">
-  <div class="form-group">
-    <label>Nazwa</label>
-    <input type="text" class="form-control" placeholder="Nazwa rozgrywek" name="name">
+  <div class="row">
+    <div class="col-md-4">
+      <div class="form-group label-floating">
+        <label class="control-label">Nazwa rozgrywek</label>
+        <input type="text" class="form-control" name="name">
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group label-floating">
+        <label class="control-label">Krótka nazwa ( np. śalh )</label>
+        <input type="text" class="form-control" name="shortname">
+      </div>
+    </div>
+    <div class="col-md-4">
+      <div class="form-group label-floating">
+        <label class="control-label">Sezon ( np. 2016/17 )</label>
+        <input type="text" class="form-control" name="season">
+      </div>
+    </div>
   </div>
-
-  <div class="form-group">
-    <label>Krótka nazwa</label>
-    <input type="text" class="form-control" placeholder="śalh" name="shortname">
+  <div class="row">
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Rodzaj</label>
+        <div class="radio">
+          <label class="radio-inline"><input type="radio" name="type" checked="checked" value="S.Z">Sezon zasadniczy</label>
+          <label class="radio-inline"><input type="radio" name="type" value="P-O">Playoff</label>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="form-group">
+        <label>Poziom</label>
+        <div class="radio">
+          <label class="radio-inline"><input type="radio" name="level" checked="checked" value="Amator">Amator</label>
+          <label class="radio-inline"><input type="radio" name="level" value="2 liga">2 liga</label>
+        </div>
+      </div>
+    </div>
   </div>
-
-  <div class="form-group">
-    <label>Sezon</label>
-    <input type="text" class="form-control" placeholder="2016/17" name="season">
-  </div>
-
-  <div class="form-group">
-    <label>Rodzaj</label>
-    <label class="radio-inline"><input type="radio" name="type" checked="checked" value="S.Z">Sezon zasadniczy</label>
-    <label class="radio-inline"><input type="radio" name="type" value="P-O">Playoff</label>
-  </div>
-
-  <div class="form-group">
-    <label>Poziom</label>
-    <label class="radio-inline"><input type="radio" name="level" checked="checked" value="Amator">Amator</label>
-    <label class="radio-inline"><input type="radio" name="level" value="2 liga">2 liga</label>
-  </div>
-
   <div class="form-group">
     <button type="submit" class="btn btn-success pull-right">Submit</button>
   </div>
