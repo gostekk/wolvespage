@@ -8,8 +8,15 @@
 
       {{#if errors}}
         {{#each errors}}
-          <div class="alert alert-danger">{{msg}}</div>
+          <script>
+            admins.showNotification('danger','{{msg}}');
+          </script>
         {{/each}}
+      {{/if}}
+      {{#if success}}
+        <script>
+          admins.showNotification('success','{{success}}');
+        </script>
       {{/if}}
       <form id="addgameForm" method="post" action="/ap/addgame">
         <div class="row">
@@ -159,8 +166,5 @@ $(function () {
   $('#datepicker').datepicker();
 });
 
-$(function () {
-    $('#datetimepicker1').datetimepicker();
-});
 
 </script>

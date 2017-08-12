@@ -8,27 +8,27 @@ var Event = require('../models/event');
 
 // Admin panel
 router.get('/', ensureAuthenticated, function (req, res) {
-  res.render('admin', { layout: 'admin', title: 'admin - Wolves page' });
+  res.render('admin', { layout: 'admin', active: 'admin', title: 'Admin - Wolves page' });
 });
 
 // Admin
 router.get('/admin', ensureAuthenticated, function (req, res) {
-  res.render('admin', { layout: 'admin', title: 'admin - Wolves page' });
+  res.render('admin', { layout: 'admin', active: 'admin', title: 'Admin - Wolves page' });
 });
 
 //\\//\\//\\//\\  USERs //\\//\\//\\//\\
 
 // Add user
 router.get('/adduser', ensureAuthenticated, function (req, res) {
-  res.render('adduser', { layout: 'admin', title: 'Add User - Wolves page' });
+  res.render('adduser', { layout: 'admin', active: 'adduser', title: 'Dodaj użytkownika - Wolves page' });
 });
 
 // Users
 router.get('/users', ensureAuthenticated, function (req, res) {
   if (req.query.show == 'inactive') {
-    res.render('usersinactive', { layout: 'admin', title: 'Inactive users - Wolves Page' });
+    res.render('usersinactive', { layout: 'admin', active: 'userinactive', title: 'Inactive users - Wolves Page' });
   } else {
-    res.render('users', { layout: 'admin', title: 'Users - Wolves Page' });
+    res.render('users', { layout: 'admin', active: 'users', title: 'Users - Wolves Page' });
   }
 });
 
@@ -68,7 +68,7 @@ router.put('/users/:id', ensureAuthenticated, function (req, res) {
 
 // Add game
 router.get('/addgame', ensureAuthenticated, function (req, res) {
-  res.render('addgame', { layout: 'admin', title: 'Add Game - Wolves Page' });
+  res.render('addgame', { layout: 'admin', active: 'addgame', title: 'Add Game - Wolves Page' });
 });
 
 // Games
@@ -79,13 +79,14 @@ router.post('/games', ensureAuthenticated, function (req, res) {
 });
 
 router.get('/games', ensureAuthenticated, function (req, res) {
-  res.render('games', { layout: 'admin', title: 'Games - Wolves Page' });
+  res.render('games', { layout: 'admin', active: 'games', title: 'Games - Wolves Page' });
 });
 
 // Game overview
 router.get('/game/:id', ensureAuthenticated, function (req, res) {
   Game.findById(req.params.id, function (err, gameOverview) {
     res.render('game', { layout: 'admin',
+                        active: 'game',
                         title: 'Game - Wolves Page',
                         gameOverview: gameOverview, });
   });
@@ -151,13 +152,14 @@ router.delete('/game/:id', ensureAuthenticated, function (req, res) {
 
 // Add event
 router.get('/addevent', ensureAuthenticated, function (req, res) {
-  res.render('addevent', { layout: 'admin', title: 'Add Event - Wolves Page' });
+  res.render('addevent', { layout: 'admin', active: 'addevent', title: 'Add Event - Wolves Page' });
 });
 
 // Event page
 router.get('/event/:id', function (req, res) {
   Event.findById(req.params.id, function (err, eventOverview) {
     res.render('event', { layout: 'admin',
+                        active: 'event',
                         title: 'Event - Wolves Page',
                         eventOverview: eventOverview, });
   });
@@ -188,7 +190,7 @@ router.post('/event/:id', function (req, res) {
 
 // Events
 router.get('/events', ensureAuthenticated, function (req, res) {
-  res.render('events', { layout: 'admin', title: 'Events - Wolves Page' });
+  res.render('events', { layout: 'admin', active: 'events', title: 'Events - Wolves Page' });
 });
 
 router.post('/events', ensureAuthenticated, function (req, res) {
@@ -264,6 +266,7 @@ router.post('/adduser', ensureAuthenticated, function (req, res) {
   if (errors) {
     res.render('adduser', {
       layout: 'admin',
+      active: 'adduser',
       errors: errors,
       title: 'Add User - Wolves page',
     });
@@ -286,6 +289,7 @@ router.post('/adduser', ensureAuthenticated, function (req, res) {
 
     res.render('adduser', {
       layout: 'admin',
+      active: 'adduser',
       success: 'Poprawnie dodano nowego użytkownika',
       title: 'Add User - Wolves page',
     });
@@ -367,6 +371,7 @@ router.post('/addevent', ensureAuthenticated, function (req, res) {
   if (errors) {
     res.render('addevent', {
       layout: 'admin',
+      active: 'addevent',
       errors: errors,
       title: 'Add Event - Wolves page',
     });
@@ -387,6 +392,7 @@ router.post('/addevent', ensureAuthenticated, function (req, res) {
 
     res.render('addevent', {
       layout: 'admin',
+      active: 'addevent',
       success: 'Poprawnie dodano nowy rodzaj rozgrywek',
       title: 'Add Event - Wolves page',
     });

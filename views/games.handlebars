@@ -1,3 +1,15 @@
+{{#if errors}}
+	{{#each errors}}
+		<script>
+			admins.showNotification('danger','{{msg}}');
+		</script>
+	{{/each}}
+{{/if}}
+{{#if success}}
+	<script>
+		admins.showNotification('success','{{success}}');
+	</script>
+{{/if}}
 <div class="row">
 	<div class="col-md-12">
 	  <div class="card">

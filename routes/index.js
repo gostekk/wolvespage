@@ -30,6 +30,31 @@ router.get('/profile/:id', ensureAuthenticated, function (req, res) {
   });
 });
 
+// Player seasons
+router.post('/profile/:id', function (req, res) {
+  User.findById(req.params.id, function (err, user) {
+    if (err) throw err;
+    Game.aggregate([
+      { $unwind: '$players' },
+      { $match: { 'players._id': user._id } },
+      { $group: { _id: '$event._id',
+                  shortname: { $first: '$event.shortname' },
+                  season: { $first: '$event.season' },
+                  type: { $first: '$event.type' },
+                  level: { $first: '$event.level' },
+                  position: { $first: '$players.position' },
+                  gp: { $sum: 1 },
+                  goals: { $sum: '$players.goals' },
+                  assists: { $sum: '$players.assists' },
+                  points: { $sum: { $add: ['$players.goals', '$players.assists'] } },
+                  pim: { $sum: '$players.pim' }, }, },
+    ], function (err, eventStats) {
+      if (err) throw err;
+      res.json(eventStats);
+    });
+  });
+});
+
 // Statistics page
 router.get('/stats', ensureAuthenticated, function (req, res) {
   res.render('stats', { title: 'Stats - Wolves page', });

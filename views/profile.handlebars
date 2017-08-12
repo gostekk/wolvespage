@@ -1,3 +1,4 @@
+
 <h2>{{userProfile.username}}</h2>
 <ul class="list-group">
   <li class="list-group-item">Imię: {{userProfile.name}}</li>
@@ -10,3 +11,25 @@
   <li class="list-group-item">Punkty: {{#if userStats.points}} {{userStats.points}} {{else}} 0 {{/if}}</li>
   <li class="list-group-item">Minuty karne: {{#if userStats.pim}} {{userStats.pim}} {{else}} 0 {{/if}}</li>
 </ul>
+
+<table id="seasonsTable"
+       data-toggle="table"
+       data-method="post"
+       data-classes="table"
+       data-url="/profile/{{userProfile._id}}">
+    <thead>
+    <tr>
+      <th data-field="_id" data-formatter="idFormatter" data-visible="false">ID</th>
+      <th data-field="season" data-sortable="true">Sezon</th>
+      <th data-field="shortname" data-sortable="true">Liga</th>
+      <th data-field="type" data-sortable="true">Typ</th>
+      <th data-field="level" data-sortable="true">Poziom</th>
+      <th data-field="position" data-sortable="true">Pozycja</th>
+      <th data-field="gp" data-sortable="true">GP</th>
+      <th data-field="goals" data-sortable="true">G</th>
+      <th data-field="assists" data-sortable="true">A</th>
+      <th data-field="points" data-sortable="true">P</th>
+      <th data-field="pim" data-sortable="true">PIM</th>
+    </tr>
+  </thead>
+</table>

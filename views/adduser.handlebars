@@ -1,5 +1,15 @@
-<!--  Notifications Plugin    -->
-<script src="/js/bootstrap-notify.js"></script>
+{{#if errors}}
+  {{#each errors}}
+    <script>
+      admins.showNotification('danger','{{msg}}');
+    </script>
+  {{/each}}
+{{/if}}
+{{#if success}}
+  <script>
+    admins.showNotification('success','{{success}}');
+  </script>
+{{/if}}
 
 <div class="col-md-12">
   <div class="card">
@@ -8,18 +18,6 @@
         <p class="category">Dodawanie nowego użytkownika</p>
     </div>
     <div class="card-content">
-      {{#if errors}}
-        {{#each errors}}
-          <script>
-            admins.showNotification('danger','{{msg}}');
-          </script>
-        {{/each}}
-      {{/if}}
-      {{#if success}}
-        <script>
-          admins.showNotification('success','{{success}}');
-        </script>
-      {{/if}}
       <form method="post" action="/ap/adduser">
         <div class="row">
 
