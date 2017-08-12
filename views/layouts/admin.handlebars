@@ -1,108 +1,185 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>{{title}}</title>
+<!doctype html>
+<html lang="pl">
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
 
-    <!--    Stylesheets   -->
-    <link rel="stylesheet" href="https://bootswatch.com/sandstone/bootstrap.min.css" />
-    <link rel="stylesheet" href="/css/bootstrap.min.css" />
+	<title>{{title}}</title>
+
+	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
+    <meta name="viewport" content="width=device-width" />
+
+		<link rel="stylesheet" href="https://bootswatch.com/sandstone/bootstrap.min.css" />
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/bootstrap-table.css">
-    <link rel="stylesheet" href="/css/material-kit.css" />
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css">
 
-    <!--    Fonts and icons   -->
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
-    <link rel="stylesheet" type="text/css" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" />
-	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" />
+    <!-- Bootstrap core CSS     -->
+    <link href="/css/bootstrap.css" rel="stylesheet" />
 
-    <!--    Top JS files   -->
-    <script src="/js/jquery.min.js"></script>
-  </head>
-  <body>
-    <nav class="navbar navbar-default navbar-fixed-top">
-      <div class="container">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <a class="navbar-brand" href="/ap">AdminPage</a>
-        </div>
-        <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav navbar-left">
-            <li><a href="/ap/admin">Dashboard</a></li>
-            <li class="dropdown">
-        			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Users <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="/ap/adduser">AddUser</a></li>
-                <li class="divider"></li>
-                <li><a href="/ap/users">Users</a></li>
-                <li><a href="/ap/users?show=inactive">InactiveUsers</a></li>
-        			</ul>
-        		</li>
-            <li class="dropdown">
-        			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Games <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="/ap/addgame">AddGame</a></li>
-                <li class="divider"></li>
-                <li><a href="/ap/games">Games</a></li>
-        			</ul>
-        		</li>
-            <li class="dropdown">
-        			<a href="#" class="dropdown-toggle" data-toggle="dropdown">Events <b class="caret"></b></a>
-              <ul class="dropdown-menu">
-                <li><a href="/ap/addevent">AddEvent</a></li>
-                <li class="divider"></li>
-                <li><a href="/ap/events">Events</a></li>
-        			</ul>
-        		</li>
-          </ul>
-          <ul class="nav navbar-nav navbar-right">
-            <li><a class="btn btn-white" href="/">Back to page</a></li>
-          </ul>
-        </div><!--/.nav-collapse -->
-      </div>
-    </nav>
-    <div class="main">
-    <div class="container">
+    <!--  Material Dashboard CSS    -->
+    <link href="/css/material-dashboard.css" rel="stylesheet"/>
 
-      <div class="row">
-        <div class="col-lg-12">
+    <!--     Fonts and icons     -->
+    <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300|Material+Icons' rel='stylesheet' type='text/css'>
 
-          {{#if success_msg}}
+		<script src="/js/jquery-3.1.0.min.js" type="text/javascript"></script>
+		<script src="/js/jquery-ui.min.js" type="text/javascript"></script>
+		<script src="/js/admins.js"></script>
+</head>
+
+<body>
+
+	<div class="wrapper">
+	  <div class="sidebar" data-color="purple" data-image="/img/sidebar-1.jpg">
+			<div class="logo">
+				<a href="/ap" class="simple-text">
+					Wolves Page
+				</a>
+			</div>
+			<div class="sidebar-wrapper">
+				<ul class="nav">
+					<li class="active">
+						<a href="/ap">
+							<i class="material-icons">dashboard</i>
+							<p>Dashboard</p>
+						</a>
+					</li>
+					<li>
+						<a href="/ap/adduser">
+							<i class="material-icons">person_add</i>
+							<p>Dodaj użytkownika</p>
+						</a>
+					</li>
+					<li>
+						<a href="/ap/users">
+							<i class="material-icons">people</i>
+							<p>Lista użytkowników</p>
+						</a>
+					</li>
+					<li>
+						<a href="/ap/users?show=inactive">
+							<i class="material-icons">people_outline</i>
+							<p>Nieaktywni użytkownicy</p>
+						</a>
+					</li>
+					<li>
+						<a href="/ap/addgame">
+							<i class="material-icons">add_circle</i>
+							<p>Dodaj mecz</p>
+						</a>
+					</li>
+					<li>
+						<a href="/ap/games">
+							<i class="material-icons">today</i>
+							<p>Lista meczów</p>
+						</a>
+					</li>
+					<li>
+						<a href="/ap/addevent">
+							<i class="material-icons">create_new_folder</i>
+							<p>Dodaj rozgrywki</p>
+						</a>
+					</li>
+					<li>
+						<a href="/ap/events">
+							<i class="material-icons">folder</i>
+							<p>Lista rozgrywek</p>
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+	  <div class="main-panel">
+			<nav class="navbar navbar-transparent navbar-absolute">
+				<div class="container-fluid">
+					<div class="navbar-header">
+						<button type="button" class="navbar-toggle" data-toggle="collapse">
+							<span class="sr-only">Toggle navigation</span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+							<span class="icon-bar"></span>
+						</button>
+						<a class="navbar-brand" href="#">Table List</a>
+					</div>
+					<div class="collapse navbar-collapse">
+						<ul class="nav navbar-nav navbar-right">
+							<li>
+								<a href="/ap" class="dropdown-toggle">
+									<i class="material-icons">dashboard</i>
+									<p class="hidden-lg hidden-md">Dashboard</p>
+								</a>
+							</li>
+							<li>
+								<a href="/" class="dropdown-toggle">
+	 							   <i class="material-icons">change_history</i>
+	 							   <p class="hidden-lg hidden-md">Back to page</p>
+	 						   </a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</nav>
+			<div class="content">
+				<div class="container-fluid">
+					{{#if success_msg}}
             <div class="alert alert-success">{{success_msg}}</div>
           {{/if}}
-
-          {{#if error_msg}}
-            <div class="alert alert-danger">{{error_msg}}</div>
+					{{#if error_msg}}
+						<div class="alert alert-danger">{{error_msg}}</div>
           {{/if}}
 
-          {{{body}}}
-        </div>
-      </div>
-      <footer class="footer">
-        <p>&copy; 2017 WolvesPage, Inc.</p>
-      </footer>
-    </div>
-    </div> <!-- /container -->
+	        {{{body}}}
+	      </div>
+	    </div>
+			<footer class="footer">
+	     <div class="container-fluid">
+				 <nav class="pull-left">
+					 <ul>
+						 <li>
+							 <a href="/">
+								 Home
+							 </a>
+						 </li>
+						 <li>
+							 <a href="/stats">
+								 Stats
+							 </a>
+						 </li>
+					 </ul>
+				 </nav>
+				 <p class="copyright pull-right">
+					 &copy; <script>document.write(new Date().getFullYear())</script> Wolves Page
+				 </p>
+			 </div>
+		 </footer>
+	 </div>
+	</div>
+</body>
 
-    <script src="/js/bootstrap.js"></script>
-    <script src="/js/bootstrap-table.js"></script>
-    <script src="/js/bootstrap-table-en-US.js"></script>
-    <script src="/js/admins.js"></script>
-    <script src="/js/material.min.js"></script>
+	<!--   Core JS Files   -->
+  <script src="/js/bootstrap-table.js"></script>
+  <script src="/js/bootstrap-table-en-US.js"></script>
+	<script src="/js/bootstrap.js" type="text/javascript"></script>
+	<script src="/js/material.min.js" type="text/javascript"></script>
 
-	<!--  Plugin for the Sliders, full documentation here: http://refreshless.com/nouislider/ -->
-	<script src="/js/nouislider.min.js" type="text/javascript"></script>
 
-	<!--  Plugin for the Datepicker, full documentation here: http://www.eyecon.ro/bootstrap-datepicker/ -->
-	<script src="/js/bootstrap-datepicker.js" type="text/javascript"></script>
+	<!--  Charts Plugin -->
+	<script src="/js/chartist.min.js"></script>
 
-	<!-- Control Center for Material Kit: activating the ripples, parallax effects, scripts from the example pages etc -->
-	<script src="/js/material-kit.js" type="text/javascript"></script>
+	<!--  Notifications Plugin    -->
+	<script src="/js/bootstrap-notify.js"></script>
 
-  </body>
+	<!--  Moment plugin -->
+	<script src="/js/moment.min.js" type="text/javascript"></script>
+
+  <!--  Plugin for the Datepicker, full documentation here: http://www.eyecon.ro/bootstrap-datepicker/ -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.47/css/bootstrap-datetimepicker.min.css" type="text/javascript"></script>
+
+	<!-- Material Dashboard javascript methods -->
+	<script src="/js/material-dashboard.js"></script>
+
+
 </html>

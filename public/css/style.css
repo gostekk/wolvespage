@@ -1,17 +1,7 @@
-/* Space out content a bit */
-body {
-  padding-top: 70px;
-  padding-bottom: 20px;
-}
-
-/* Custom page footer */
-.footer {
-  padding-top: 19px;
-  color: #777;
-  border-top: 1px solid #e5e5e5;
-}
-
 /* Action column in users */
 .ml10 {
     margin-left: 10px;
+}
+.text-center {
+  text-align: center;
 }

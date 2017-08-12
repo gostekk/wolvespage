@@ -1,54 +1,63 @@
-<h2 class="page-header">Add Event</h2>
-{{#if errors}}
-  {{#each errors}}
-    <div class="alert alert-danger">{{msg}}</div>
-  {{/each}}
-{{/if}}
-{{#if success}}
-  <div class="alert alert-success">{{success}}</div>
-{{/if}}
-<form method="post" action="/ap/addevent">
-  <div class="row">
-    <div class="col-md-4">
-      <div class="form-group label-floating">
-        <label class="control-label">Nazwa rozgrywek</label>
-        <input type="text" class="form-control" name="name">
-      </div>
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-header" data-background-color="purple">
+        <h4 class="title">Dodaj rozgrywkę</h4>
+        <p class="category">Dodawanie nowej rozgrywki</p>
     </div>
-    <div class="col-md-4">
-      <div class="form-group label-floating">
-        <label class="control-label">Krótka nazwa ( np. śalh )</label>
-        <input type="text" class="form-control" name="shortname">
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="form-group label-floating">
-        <label class="control-label">Sezon ( np. 2016/17 )</label>
-        <input type="text" class="form-control" name="season">
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-6">
-      <div class="form-group">
-        <label>Rodzaj</label>
-        <div class="radio">
-          <label class="radio-inline"><input type="radio" name="type" checked="checked" value="S.Z">Sezon zasadniczy</label>
-          <label class="radio-inline"><input type="radio" name="type" value="P-O">Playoff</label>
+    <div class="card-content">
+      {{#if errors}}
+        {{#each errors}}
+          <div class="alert alert-danger">{{msg}}</div>
+        {{/each}}
+      {{/if}}
+      {{#if success}}
+        <div class="alert alert-success">{{success}}</div>
+      {{/if}}
+      <form method="post" action="/ap/addevent">
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group label-floating">
+              <label class="control-label">Nazwa rozgrywek</label>
+              <input type="text" class="form-control" name="name">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group label-floating">
+              <label class="control-label">Krótka nazwa ( np. śalh )</label>
+              <input type="text" class="form-control" name="shortname">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group label-floating">
+              <label class="control-label">Sezon ( np. 2016/17 )</label>
+              <input type="text" class="form-control" name="season">
+            </div>
+          </div>
         </div>
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="form-group">
-        <label>Poziom</label>
-        <div class="radio">
-          <label class="radio-inline"><input type="radio" name="level" checked="checked" value="Amator">Amator</label>
-          <label class="radio-inline"><input type="radio" name="level" value="2 liga">2 liga</label>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Rodzaj</label>
+              <div class="radio">
+                <label class="radio-inline"><input type="radio" name="type" checked="checked" value="S.Z">Sezon zasadniczy</label>
+                <label class="radio-inline"><input type="radio" name="type" value="P-O">Playoff</label>
+              </div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group">
+              <label>Poziom</label>
+              <div class="radio">
+                <label class="radio-inline"><input type="radio" name="level" checked="checked" value="Amator">Amator</label>
+                <label class="radio-inline"><input type="radio" name="level" value="2 liga">2 liga</label>
+              </div>
+            </div>
+          </div>
         </div>
-      </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-success pull-right">Submit</button>
+        </div>
+      </form>
     </div>
   </div>
-  <div class="form-group">
-    <button type="submit" class="btn btn-success pull-right">Submit</button>
-  </div>
-</form>
+</div>

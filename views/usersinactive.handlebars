@@ -1,24 +1,36 @@
-<table id="inactiveUsersTable"
-       data-toggle="table"
-       data-method="post"
-       data-classes="table table-striped table-hover"
-       data-search="true"
-       data-show-refresh="true"
-       data-show-toggle="true"
-       data-show-columns="true"
-       data-url="/ap/users?show=inactive">
-    <thead>
-    <tr>
-      <th data-field="_id" data-formatter="idFormatter" data-visible="false">ID</th>
-      <th data-field="username" data-formatter="usernameFormatter" data-sortable="true" data-events="actionEvents">username</th>
-      <th data-field="name" data-sortable="true">Imię</th>
-      <th data-field="surname" data-sortable="true">Nazwisko</th>
-      <th data-field="shirtnumber" data-sortable="true">Numer</th>
-      <th data-field="position" data-sortable="true">Pozycja</th>
-      <th data-field="action" data-formatter="actionFormatter" data-events="actionEvents">Action</th>
-    </tr>
-  </thead>
-</table>
+<div class="row">
+	<div class="col-md-12">
+	  <div class="card">
+      <div class="card-header" data-background-color="purple">
+	      <h4 class="title">Nieaktywni użytkownicy</h4>
+	      <p class="category">Wszyscy użytkownicy portalu, którzy nie zostali aktywowani</p>
+	    </div>
+      <div class="card-content table-responsive">
+        <table id="inactiveUsersTable"
+               data-toggle="table"
+               data-method="post"
+               data-classes="table"
+               data-search="true"
+               data-show-refresh="true"
+               data-show-toggle="true"
+               data-show-columns="true"
+               data-url="/ap/users?show=inactive">
+            <thead>
+            <tr>
+              <th data-field="_id" data-formatter="idFormatter" data-visible="false">ID</th>
+              <th data-field="username" data-formatter="usernameFormatter" data-sortable="true" data-events="actionEvents">username</th>
+              <th data-field="name" data-sortable="true">Imię</th>
+              <th data-field="surname" data-sortable="true">Nazwisko</th>
+              <th data-field="shirtnumber" data-sortable="true">Numer</th>
+              <th data-field="position" data-sortable="true">Pozycja</th>
+              <th data-field="action" data-formatter="actionFormatter" data-events="actionEvents">Action</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
 function idFormatter(value) {

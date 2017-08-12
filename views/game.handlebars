@@ -1,80 +1,87 @@
-{{#if gameOverview.home}}
-  <div class="row">
-    <div class="col-sm-5">
+	<div class="col-md-12">
+	  <div class="card">
+      <div class="col-md-12">
+      {{#if gameOverview.home}}
+        <div class="row">
+          <div class="col-sm-5">
+            <div class="row">
+              <h2 class="text-center">{{gameOverview.teamname}}</h2>
+            </div>
+            <div class="row">
+              <img src="{{gameOverview.teamlogo}}">
+            </div>
+          </div>
+          <div class="col-sm-2">
+            <div class="row">
+              <h2>vs</h2>
+            </div>
+            <div class="row">
+              {{gameOverview.score.opponent}} : {{gameOverview.score.our}}
+            </div>
+          </div>
+          <div class="col-sm-5">
+            <div class="row">
+              <h2 class="text-center">Wolves Tychy</h2>
+            </div>
+            <div class="row">
+              <img src="/img/wolvesorginal.png">
+            </div>
+          </div>
+        </div>
+      {{else}}
       <div class="row">
-        <h2>{{gameOverview.teamname}}</h2>
-      </div>
-      <div class="row">
-        <img src="{{gameOverview.teamlogo}}" height="246" width="246">
-      </div>
-    </div>
-    <div class="col-sm-2">
-      <div class="row">
-        <h2>vs</h2>
-      </div>
-      <div class="row">
-        {{gameOverview.score.opponent}} : {{gameOverview.score.our}}
-      </div>
-    </div>
-    <div class="col-sm-5">
-      <div class="row">
-        <h2>Wolves Tychy</h2>
-      </div>
-      <div class="row">
-        <img src="https://scontent-frx5-1.xx.fbcdn.net/v/t1.0-9/14446177_706534532820954_9136687012834038950_n.png?oh=86879ce51ed1ed2e2ae78fa4e82b9135&oe=59C34CFB" height="246" width="246">
-      </div>
-    </div>
-  </div>
-{{else}}
-<div class="row">
-  <div class="col-sm-5">
-    <div class="row">
-      <h2>Wolves Tychy</h2>
-    </div>
-    <div class="row">
-      <img src="https://scontent-frx5-1.xx.fbcdn.net/v/t1.0-9/14446177_706534532820954_9136687012834038950_n.png?oh=86879ce51ed1ed2e2ae78fa4e82b9135&oe=59C34CFB" height="246" width="246">
-    </div>
-  </div>
-  <div class="col-sm-2">
-    <div class="row">
-      <h2>vs</h2>
-    </div>
-    <div class="row">
-      {{gameOverview.score.our}} : {{gameOverview.score.opponent}}
-    </div>
-  </div>
-  <div class="col-sm-5">
-    <div class="row">
-      <h2>{{gameOverview.teamname}}</h2>
-    </div>
-    <div class="row">
-      <img src="{{gameOverview.teamlogo}}" height="246" width="246">
-    </div>
-  </div>
-{{/if}}
-  <div class="row">
+        <div class="col-sm-5">
+          <div class="row">
+            <h2 class="text-center">Wolves Tychy</h2>
+          </div>
+          <div class="row">
+            <img src="/img/wolvesorginal.png">
+          </div>
+        </div>
+        <div class="col-sm-2">
+          <div class="row">
+            <h2>vs</h2>
+          </div>
+          <div class="row">
+            {{gameOverview.score.our}} : {{gameOverview.score.opponent}}
+          </div>
+        </div>
+        <div class="col-sm-5">
+          <div class="row">
+            <h2 class="text-center">{{gameOverview.teamname}}</h2>
+          </div>
+          <div class="row">
+            <img src="{{gameOverview.teamlogo}}">
+          </div>
+        </div>
+      {{/if}}
+        <div class="col-md-12">
 
-    <!-- Score table ! -->
-    <table id="playersTable"
-           data-toggle="table"
-           data-method="post"
-           data-classes="table table-striped table-hover"
-           data-url="/ap/game/{{gameOverview._id}}">
-      <thead>
-        <tr>
-          <th data-field="_id" data-visible="false">id</th>
-          <th data-field="username" data-visible="false" data-sortable="true">username</th>
-          <th data-field="name" data-sortable="true">Imie</th>
-          <th data-field="surname" data-sortable="true">Nazwisko</th>
-          <th data-field="shirtnumber" data-sortable="true">Numer</th>
-          <th data-field="position" data-sortable="true">Pozycja</th>
-          <th data-field="goals" data-sortable="true" data-formatter="goalsFormatter" data-events="goalsEvents">Gole</th>
-          <th data-field="assists" data-sortable="true" data-formatter="goalsFormatter" data-events="assistsEvents">Asysty</th>
-          <th data-field="pim" data-sortable="true" data-formatter="pimsFormatter" data-events="pimsEvents">Minuty Karne</th>
-        </tr>
-      </thead>
-    </table>
+          <!-- Score table ! -->
+          <table id="playersTable"
+                 data-toggle="table"
+                 data-method="post"
+                 data-classes="table"
+                 data-url="/ap/game/{{gameOverview._id}}">
+            <thead>
+              <tr>
+                <th data-field="_id" data-visible="false">id</th>
+                <th data-field="username" data-visible="false" data-sortable="true">username</th>
+                <th data-field="name" data-sortable="true">Imie</th>
+                <th data-field="surname" data-sortable="true">Nazwisko</th>
+                <th data-field="shirtnumber" data-sortable="true">Numer</th>
+                <th data-field="position" data-sortable="true">Pozycja</th>
+                <th data-field="goals" data-sortable="true" data-formatter="goalsFormatter" data-events="goalsEvents">Gole</th>
+                <th data-field="assists" data-sortable="true" data-formatter="goalsFormatter" data-events="assistsEvents">Asysty</th>
+                <th data-field="pim" data-sortable="true" data-formatter="pimsFormatter" data-events="pimsEvents">Minuty Karne</th>
+              </tr>
+            </thead>
+          </table>
+        </div>
+      </div>
+    </div>
   </div>
+</div>
 
 <script>
 function goalsFormatter(value) {

@@ -1,79 +1,94 @@
-<h2 class="page-header">Add User</h2>
+<!--  Notifications Plugin    -->
+<script src="/js/bootstrap-notify.js"></script>
 
-{{#if errors}}
-  {{#each errors}}
-    <div class="alert alert-danger">{{msg}}</div>
-  {{/each}}
-{{/if}}
-{{#if success}}
-  <div class="alert alert-success">{{success}}</div>
-{{/if}}
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-header" data-background-color="purple">
+        <h4 class="title">Dodaj użytkownika</h4>
+        <p class="category">Dodawanie nowego użytkownika</p>
+    </div>
+    <div class="card-content">
+      {{#if errors}}
+        {{#each errors}}
+          <script>
+            admins.showNotification('danger','{{msg}}');
+          </script>
+        {{/each}}
+      {{/if}}
+      {{#if success}}
+        <script>
+          admins.showNotification('success','{{success}}');
+        </script>
+      {{/if}}
+      <form method="post" action="/ap/adduser">
+        <div class="row">
 
-<form method="post" action="/ap/adduser">
-  <div class="row">
-    <div class="col-md-4">
-      <div class="form-group label-floating">
-        <label class="control-label">Username</label>
-        <input type="text" class="form-control" name="username">
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="form-group label-floating">
-        <label class="control-label">Imie</label>
-        <input type="text" class="form-control" name="name">
-      </div>
-    </div>
-    <div class="col-md-4">
-      <div class="form-group label-floating">
-        <label class="control-label">Nazwisko</label>
-        <input type="text" class="form-control" name="surname">
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-4">
-      <div class="form-group">
-        <label>Numer koszulki</label>
-        <input type="number" class="form-control" placeholder="0 - 99" name="shirtnumber" min="0" max="99">
-      </div>
-    </div>
-    <div class="col-md-8">
-      <div class="form-group">
-        Pozycja
-        <div class="radio">
-          <label class="radio-inline"><input type="radio" name="position" checked="checked" value="Emeryt">Emeryt</label>
-          <label class="radio-inline"><input type="radio" name="position" value="Bramkarz">Bramkarz</label>
-          <label class="radio-inline"><input type="radio" name="position" value="Obrońca">Obrońca</label>
-          <label class="radio-inline"><input type="radio" name="position" value="Napastnik">Napastnik</label>
+          <div class="col-md-4">
+            <div class="form-group label-floating">
+              <label class="control-label">Username</label>
+              <input type="text" class="form-control" name="username">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group label-floating">
+              <label class="control-label">Imie</label>
+              <input type="text" class="form-control" name="name">
+            </div>
+          </div>
+          <div class="col-md-4">
+            <div class="form-group label-floating">
+              <label class="control-label">Nazwisko</label>
+              <input type="text" class="form-control" name="surname">
+            </div>
+          </div>
         </div>
-      </div>
+        <div class="row">
+          <div class="col-md-4">
+            <div class="form-group">
+              <label>Numer koszulki</label>
+              <input type="number" class="form-control" placeholder="0 - 99" name="shirtnumber" min="0" max="99">
+            </div>
+          </div>
+          <div class="col-md-8">
+            <div class="form-group">
+              Pozycja
+              <div class="radio">
+                <label class="radio-inline"><input type="radio" name="position" checked="checked" value="Emeryt">Emeryt</label>
+                <label class="radio-inline"><input type="radio" name="position" value="Bramkarz">Bramkarz</label>
+                <label class="radio-inline"><input type="radio" name="position" value="Obrońca">Obrońca</label>
+                <label class="radio-inline"><input type="radio" name="position" value="Napastnik">Napastnik</label>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-md-6">
+            <div class="form-group label-floating">
+              <label class="control-label">Password</label>
+              <input type="password" class="form-control" name="password">
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="form-group label-floating">
+              <label class="control-label">Confirm Password</label>
+              <input type="password" class="form-control" name="password2">
+            </div>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-xs-6">
+            <div class="togglebutton">
+        	    <label>
+            	  <input type="checkbox" name="adminflag" id="adminflag">
+        		    Admin flag
+        	    </label>
+            </div>
+          </div>
+          <div class="col-xs-6">
+            <button type="submit" class="btn btn-success pull-right">Submit</button>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
-  <div class="row">
-    <div class="col-md-6">
-      <div class="form-group label-floating">
-        <label class="control-label">Password</label>
-        <input type="password" class="form-control" name="password">
-      </div>
-    </div>
-    <div class="col-md-6">
-      <div class="form-group label-floating">
-        <label class="control-label">Confirm Password</label>
-        <input type="password" class="form-control" name="password2">
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-xs-6">
-      <div class="togglebutton">
-  	    <label>
-      	  <input type="checkbox" name="adminflag" id="adminflag">
-  		    Admin flag
-  	    </label>
-      </div>
-    </div>
-    <div class="col-xs-6">
-      <button type="submit" class="btn btn-success pull-right">Submit</button>
-    </div>
-  </div>
-</form>
+</div>

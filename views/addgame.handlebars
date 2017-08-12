@@ -1,113 +1,126 @@
-<h2 class="page-header">Add Game</h2>
-{{#if errors}}
-  {{#each errors}}
-    <div class="alert alert-danger">{{msg}}</div>
-  {{/each}}
-{{/if}}
-<form id="addgameForm" method="post" action="/ap/addgame">
-  <div class="row">
-    <div class="col-md-6">
-  <div id="name" class="form-group label-floating">
-    <label class="control-label">Nazwa drużyny</label>
-    <input type="text" required="true" class="form-control" name="name">
-  </div>
-  </div>
+<div class="col-md-12">
+  <div class="card">
+    <div class="card-header" data-background-color="purple">
+        <h4 class="title">Dodaj nowy mecz</h4>
+        <p class="category">Dodawanie nowego meczu do bazy</p>
+    </div>
+    <div class="card-content">
 
-  <div class="col-md-6">
-  <div id="logo" class="form-group label-floating">
-    <label class="control-label">Logo drużyny (url)</label>
-    <input type="url" class="form-control" name="logo">
-  </div>
-</div>
-</div>
-  <div id="scoreOur">
-    <div class="row" style="border: 1px solid orange;">
-      <div class="col-sm-12" style="text-align: center;margin: auto;">
-        Wynik
+      {{#if errors}}
+        {{#each errors}}
+          <div class="alert alert-danger">{{msg}}</div>
+        {{/each}}
+      {{/if}}
+      <form id="addgameForm" method="post" action="/ap/addgame">
+        <div class="row">
+          <div class="col-md-6">
+        <div id="name" class="form-group label-floating">
+          <label class="control-label">Nazwa drużyny</label>
+          <input type="text" required="true" class="form-control" name="name">
+        </div>
+        </div>
+
+        <div class="col-md-6">
+        <div id="logo" class="form-group label-floating">
+          <label class="control-label">Logo drużyny (url)</label>
+          <input type="url" class="form-control" name="logo">
+        </div>
       </div>
-      <div class="col-xs-6 form-group">
-        <label class="control-label">Wolves Tychy</label>
-        <input type="number" class="form-control" value="0" placeholder="0" name="scoreOur">
       </div>
-      <div class="col-xs-6 form-group">
-        <label class="control-label">Przeciwnik</label>
-        <input type="number" class="form-control" value="0" placeholder="0" name="scoreOpponent">
+
+      <div class="row">
+        <div id="scoreOur">
+            <label class="col-sm-2">Wynik</label>
+            <div class="col-sm-5">
+              <div class="form-group label-floating column-sizing">
+                <label class="control-label"></label>
+                <input type="number" class="form-control" placeholder="Wolves Tychy" name="scoreOur">
+              </div>
+            </div>
+            <div class="col-sm-5">
+              <div class="form-group label-floating column-sizing">
+                <label class="control-label"></label>
+                <input type="number" class="form-control" placeholder="Przeciwnik" name="scoreOpponent">
+              </div>
+            </div>
+          </div>
       </div>
+
+      <div class="row">
+        <!-- TODO: Repair datapicker
+      -->
+        <div class="col-sm-6">
+          <div id="date" class="form-group">
+            <label>Data spotkania</label>
+            <input class="form-control datepicker" type="text" name="date" id="datepicker" placeholder="MM/DD/YYYY">
+          </div>
+        </div>
+        <div class="col-sm-6">
+        <div class="togglebutton form-group">
+          <label>
+            <input type="checkbox" name="home" id="home">
+            Wyjazd
+          </label>
+        </div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col-md-12">
+        <table id="eventsTable"
+               data-toggle="table"
+               data-method="post"
+               data-classes="table table-striped table-hover"
+               data-sort-name="season"
+               data-sort-order="desc"
+               data-click-to-select="true"
+               data-single-select="true"
+               data-url="/ap/events/?active=true">
+            <thead>
+            <tr>
+              <th data-field="state" data-checkbox="true"></th>
+              <th data-field="_id" data-formatter="idFormatter" data-visible="false">ID</th>
+              <th data-field="season" data-sortable="true">Sezon</th>
+              <th data-field="shortname" data-sortable="true">K.Nazwa</th>
+              <th data-field="type" data-sortable="true">Rodzaj</th>
+              <th data-field="level" data-sortable="true">Poziom</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+      </div>
+        <div class="col-md-12">
+        <table id="statsTable"
+               data-toggle="table"
+               data-search="true"
+               data-toolbar="#toolbar"
+               data-click-To-Select="true"
+               data-id-Field="_id"
+               data-method="post"
+               data-url="/ap/users">
+          <thead>
+            <tr>
+              <th data-field="state" data-checkbox="true"></th>
+              <th data-field="_id" data-visible="false">username</th>
+              <th data-field="username" data-visible="false">username</th>
+              <th data-field="name" data-sortable="true">Imię</th>
+              <th data-field="surname" data-sortable="true">Nazwisko</th>
+              <th data-field="shirtnumber" data-sortable="true">Numer</th>
+              <th data-field="position" data-sortable="true">Pozycja</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+        <div id="toolbar">
+          Zawodnicy
+        </div>
+        <div class="form-group">
+          <button id="getAllSelections" type="submit" class="btn btn-success pull-right">Submit</button>
+        </div>
+      </form>
     </div>
   </div>
-
-<div class="row">
-  <div class="col-sm-6">
-  <div id="date" class="form-group">
-    <label>Data spotkania</label>
-    <input class="datepicker" type="text" name="date" id="datepicker" placeholder="MM/DD/YYYY">
-  </div>
-  </div>
-  <div class="col-sm-6">
-  <div class="togglebutton form-group">
-    <label>
-      <input type="checkbox" name="home" id="home">
-      Wyjazd
-    </label>
-  </div>
-  </div>
 </div>
-
-<div class="row">
-  <div class="col-md-12">
-  <table id="eventsTable"
-         data-toggle="table"
-         data-method="post"
-         data-classes="table table-striped table-hover"
-         data-sort-name="season"
-         data-sort-order="desc"
-         data-click-to-select="true"
-         data-single-select="true"
-         data-url="/ap/events/?active=true">
-      <thead>
-      <tr>
-        <th data-field="state" data-checkbox="true"></th>
-        <th data-field="_id" data-formatter="idFormatter" data-visible="false">ID</th>
-        <th data-field="season" data-sortable="true">Sezon</th>
-        <th data-field="shortname" data-sortable="true">K.Nazwa</th>
-        <th data-field="type" data-sortable="true">Rodzaj</th>
-        <th data-field="level" data-sortable="true">Poziom</th>
-      </tr>
-    </thead>
-  </table>
-</div>
-</div>
-<div class="row">
-  <div class="col-md-12">
-  <table id="statsTable"
-         data-toggle="table"
-         data-search="true"
-         data-toolbar="#toolbar"
-         data-click-To-Select="true"
-         data-id-Field="_id"
-         data-method="post"
-         data-url="/ap/users">
-    <thead>
-      <tr>
-        <th data-field="state" data-checkbox="true"></th>
-        <th data-field="_id" data-visible="false">username</th>
-        <th data-field="username" data-visible="false">username</th>
-        <th data-field="name" data-sortable="true">Imię</th>
-        <th data-field="surname" data-sortable="true">Nazwisko</th>
-        <th data-field="shirtnumber" data-sortable="true">Numer</th>
-        <th data-field="position" data-sortable="true">Pozycja</th>
-      </tr>
-    </thead>
-  </table>
-</div>
-</div>
-  <div id="toolbar">
-    Zawodnicy
-  </div>
-  <div class="form-group">
-    <button id="getAllSelections" type="submit" class="btn btn-success pull-right">Submit</button>
-  </div>
-</form>
 
 <script>
 $(function () {
@@ -141,4 +154,13 @@ $(function () {
     e.preventDefault();
   });
 });
+
+$(function () {
+  $('#datepicker').datepicker();
+});
+
+$(function () {
+    $('#datetimepicker1').datetimepicker();
+});
+
 </script>

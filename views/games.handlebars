@@ -1,26 +1,38 @@
-<table id="gamesTable"
-       data-toggle="table"
-       data-method="post"
-       data-classes="table table-striped table-hover"
-       data-search="true"
-       data-show-refresh="true"
-       data-show-toggle="true"
-       data-show-columns="true"
-       data-sort-name="date"
-       data-sort-order="desc"
-       data-url="/ap/games">
-    <thead>
-    <tr>
-      <th data-field="_id" data-formatter="idFormatter" data-visible="false">ID</th>
-      <th data-field="teamname" data-formatter="gameFormatter" data-events="actionEvents" data-sortable="true">Nazwa drużyny</th>
-      <th data-field="teamlogo" data-formatter="teamlogoFormatter" data-sortable="true">Logo</th>
-      <th data-field="event.shortname" data-sortable="true">K.Nazwa</th>
-      <th data-field="event.level" data-sortable="true">Poziom</th>
-      <th data-field="date" data-sortable="true">Data spotkania</th>
-      <th data-field="action" data-formatter="actionFormatter" data-events="actionEvents">Action</th>
-    </tr>
-  </thead>
-</table>
+<div class="row">
+	<div class="col-md-12">
+	  <div class="card">
+      <div class="card-header" data-background-color="purple">
+	      <h4 class="title">Lista meczów</h4>
+	      <p class="category">Wszystkie mecze amatorów oraz sekcji drugoligowej</p>
+	    </div>
+      <div class="card-content table-responsive">
+        <table id="gamesTable"
+               data-toggle="table"
+               data-method="post"
+               data-classes="table"
+               data-search="true"
+               data-show-refresh="true"
+               data-show-toggle="true"
+               data-show-columns="true"
+               data-sort-name="date"
+               data-sort-order="desc"
+               data-url="/ap/games">
+            <thead>
+            <tr>
+              <th data-field="_id" data-formatter="idFormatter" data-visible="false">ID</th>
+              <th data-field="teamname" data-formatter="gameFormatter" data-events="actionEvents" data-sortable="true">Nazwa drużyny</th>
+              <th data-field="teamlogo" data-formatter="teamlogoFormatter" data-sortable="true">Logo</th>
+              <th data-field="event.shortname" data-sortable="true">K.Nazwa</th>
+              <th data-field="event.level" data-sortable="true">Poziom</th>
+              <th data-field="date" data-sortable="true">Data spotkania</th>
+              <th data-field="action" data-formatter="actionFormatter" data-events="actionEvents">Action</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
 
 <script>
 function idFormatter(value) {
@@ -30,7 +42,7 @@ function gameFormatter(value) {
     return '<a class="game" href="" onclick="return false;" title="Game">' + value + '</a>';
 }
 function teamlogoFormatter(value) {
-    return '<img src="' + value + '" height="32" width="32">';
+    return '<img src="'  + value + '" style="height: 40px; width: 40px;">';
 }
 function actionFormatter(value, row, index) {
     return [
