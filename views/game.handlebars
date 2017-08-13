@@ -100,8 +100,27 @@ function incGoals(row, value) {
     data: JSON.stringify(data),
     contentType: 'application/json',
     url: window.location.pathname,
-    success: function (data, textStatus, jqXHR) {
-      console.log(data);
+    success: function (result) {
+			if (result) {
+				swal({
+	        title: 'Updating things!',
+	        text: 'Wait a second.',
+	        allowOutsideClick: false,
+	        allowEscapeKey: false,
+	        allowEnterKey: false,
+	        timer: 1000,
+	        showConfirmButton: false,
+	      }).then(
+	        function () {},
+
+	        // handling the promise rejection
+	        function (dismiss) {
+	          if (dismiss === 'timer') {
+	            refreshTable('#playersTable');
+	          }
+	        }
+	      );
+			}
     },
   });
 }
@@ -114,8 +133,27 @@ function incAssists(row, value) {
     data: JSON.stringify(data),
     contentType: 'application/json',
     url: window.location.pathname,
-    success: function (data, textStatus, jqXHR) {
-      console.log(data);
+    success: function (result) {
+			if (result) {
+				swal({
+	        title: 'Updating things!',
+	        text: 'Wait a second.',
+	        allowOutsideClick: false,
+	        allowEscapeKey: false,
+	        allowEnterKey: false,
+	        timer: 1000,
+	        showConfirmButton: false,
+	      }).then(
+	        function () {},
+
+	        // handling the promise rejection
+	        function (dismiss) {
+	          if (dismiss === 'timer') {
+	            refreshTable('#playersTable');
+	          }
+	        }
+	      );
+			}
     },
   });
 }
@@ -128,8 +166,27 @@ function incPims(row, value) {
     data: JSON.stringify(data),
     contentType: 'application/json',
     url: window.location.pathname,
-    success: function (data, textStatus, jqXHR) {
-      console.log(data);
+    success: function (result) {
+			if (result) {
+				swal({
+	        title: 'Updating things!',
+	        text: 'Wait a second.',
+	        allowOutsideClick: false,
+	        allowEscapeKey: false,
+	        allowEnterKey: false,
+	        timer: 1000,
+	        showConfirmButton: false,
+	      }).then(
+	        function () {},
+
+	        // handling the promise rejection
+	        function (dismiss) {
+	          if (dismiss === 'timer') {
+	            refreshTable('#playersTable');
+	          }
+	        }
+	      );
+			}
     },
   });
 }

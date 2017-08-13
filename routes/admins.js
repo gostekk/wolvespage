@@ -114,6 +114,7 @@ router.put('/game/:id', ensureAuthenticated, function (req, res) {
     },
   }, function (err, user) {
     if (err) throw err;
+    res.send(true);
   });
 });
 
@@ -128,6 +129,7 @@ router.purge('/game/:id', ensureAuthenticated, function (req, res) {
     },
   }, function (err, user) {
     if (err) throw err;
+    res.send(true);
   });
 });
 
@@ -142,6 +144,7 @@ router.merge('/game/:id', ensureAuthenticated, function (req, res) {
     },
   }, function (err, user) {
     if (err) throw err;
+    res.send(true);
   });
 });
 
