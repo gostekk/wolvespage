@@ -57,8 +57,20 @@ function deleteUser(value) {
     type: 'DELETE',
     url: '/ap/user/' + value,
     success: function (result) {
-      // Do something with the result
-      console.log('obj');
+			if (result){
+				refreshTable('#usersTable');
+	  		swal(
+	    	'Usuniety!',
+	    	'Użytkownik pomyślnie usuniety z bazy danych',
+	    	'success'
+		  	)
+			} else {
+				swal(
+	      'Error',
+	      'Wystąpił błąd podczas próby usuniecia użytkownika',
+	      'error'
+	    )
+			}
     },
   });
 }
@@ -75,21 +87,15 @@ window.actionEvents = {
   },
   'click .remove': function (e, value, row, index) {
 		swal({
-  		title: 'Are you sure?',
-  		text: "You won't be able to revert this!",
+  		title: 'Jesteś pewien?',
+  		text: "Usuniecie użytkownika nie będzie można cofnąć!",
   		type: 'warning',
   		showCancelButton: true,
   		confirmButtonColor: '#3085d6',
   		cancelButtonColor: '#d33',
-  		confirmButtonText: 'Yes, delete it!'
+  		confirmButtonText: 'Tak, usuń!'
 		}).then(function () {
 			deleteUser(row._id);
-			refreshTable('#usersTable');
-  		swal(
-    	'Deleted!',
-    	'Your file has been deleted.',
-    	'success'
-	  	)
 		})
   }
 };

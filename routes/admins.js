@@ -53,7 +53,7 @@ router.delete('/user/:id', ensureAuthenticated, function (req, res) {
   User.remove({ _id: req.params.id }, function (err) {
     if (err) throw err;
 
-    // TODO: Message after correct remove user
+    res.send(true);
   });
 });
 
@@ -149,7 +149,7 @@ router.delete('/game/:id', ensureAuthenticated, function (req, res) {
   Game.remove({ _id: req.params.id }, function (err) {
     if (err) throw err;
 
-    // TODO: Message after correct remove user
+    res.send(true);
   });
 });
 
@@ -217,6 +217,7 @@ router.put('/events', ensureAuthenticated, function (req, res) {
     events.active = !events.active;
     events.save(function (err, updatedEvent) {
       if (err) throw err;
+      res.send(true);
     });
   });
 });
@@ -226,7 +227,7 @@ router.delete('/event/:id', ensureAuthenticated, function (req, res) {
   Event.remove({ _id: req.params.id }, function (err) {
     if (err) throw err;
 
-    // TODO: Message after correct remove user
+    res.send(true);
   });
 });
 

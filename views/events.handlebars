@@ -91,7 +91,20 @@ function deleteEvent(value) {
     url: '/ap/event/' + value,
     success: function (result) {
       // Do something with the result
-      console.log('obj');
+			if (result){
+				refreshTable1();
+				swal(
+				'Usunieto!',
+				'Rozgrywki zostały pomyślnie usuniety z bazy danych',
+				'success'
+				)
+			} else {
+				swal(
+				'Error',
+				'Wystąpił błąd podczas próby usuniecia rozgrywek',
+				'error'
+			)
+			}
     },
   });
 }
@@ -101,7 +114,24 @@ function activeChangeEvent(value) {
     url: '/ap/events/?id=' + value,
     success: function (result) {
       // Do something with the result
-      console.log('obj');
+			swal({
+				title: 'Updating things!',
+				text: 'Wait a second.',
+				allowOutsideClick: false,
+				allowEscapeKey: false,
+				allowEnterKey: false,
+				timer: 2000,
+				showConfirmButton: false,
+			}).then(
+				function () {},
+
+				// handling the promise rejection
+				function (dismiss) {
+					if (dismiss === 'timer') {
+						refreshTable1();
+					}
+				}
+			);
     },
   });
 }
@@ -115,11 +145,19 @@ window.actionEvents = {
   'click .edit': function (e, value, row, index) {
     //alert('You click edit icon, row: ' + JSON.stringify(row));
     activeChangeEvent(row._id);
-    refreshTable1();
   },
   'click .remove': function (e, value, row, index) {
-    deleteEvent(row._id);
-    refreshTable1();
+		swal({
+			title: 'Jesteś pewien?',
+			text: "Usuniecie rozgrywek nie będzie można cofnąć!",
+			type: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Tak, usuń!'
+		}).then(function () {
+			deleteEvent(row._id);
+		})
   }
 };
 async function refreshTable1() {
