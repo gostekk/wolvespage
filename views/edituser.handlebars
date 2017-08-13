@@ -1,0 +1,50 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header" data-background-color="purple">
+        <h4 class="title">Edycja użytkownika</h4>
+      </div>
+      <div class="card-content">
+        <form>
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group label-floating">
+                <label class="control-label">username</label>
+                <input type="text" value="{{userProfile.username}}" name="username" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group label-floating">
+                <label class="control-label">Imie</label>
+                <input type="text" value="{{userProfile.name}}" name="name" class="form-control">
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group label-floating">
+                <label class="control-label">Nazwisko</label>
+                <input type="text" value="{{userProfile.surname}}" name="surname" class="form-control">
+              </div>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group label-floating">
+                <label class="control-label">Numer zawodnika</label>
+                <input type="number" value="{{userProfile.shirtnumber}}" name="shirtnumber" class="form-control" min="0" max="99">
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group label-floating">
+                <label class="control-label">Pozycja</label>
+                <input type="text" value="{{userProfile.position}}" name="position" class="form-control" disabled>
+              </div>
+            </div>
+          </div>
+          <button type="submit" class="btn btn-primary pull-right">Uaktualnij użytkownika</button>
+          <div class="clearfix"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

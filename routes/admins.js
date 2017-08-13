@@ -48,6 +48,16 @@ router.post('/users', ensureAuthenticated, function (req, res) {
   }
 });
 
+// Edit user
+router.get('/edituser/:id', ensureAuthenticated, function (req, res) {
+  User.findById(req.params.id, function (err, userProfile) {
+    if (err) throw err;
+    res.render('edituser', { layout: 'admin',
+                            userProfile: userProfile,
+                            title: 'Profile - Wolves page', });
+  });
+});
+
 // Delete user
 router.delete('/user/:id', ensureAuthenticated, function (req, res) {
   User.remove({ _id: req.params.id }, function (err) {

@@ -82,8 +82,7 @@ window.actionEvents = {
     window.location.href = "/profile/" + row._id;
   },
   'click .edit': function (e, value, row, index) {
-    alert('You click edit icon, row: ' + JSON.stringify(row));
-    console.log(value, row, index);
+    window.location.href = "/ap/edituser/" + row._id;
   },
   'click .remove': function (e, value, row, index) {
 		swal({
