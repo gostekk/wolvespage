@@ -103,6 +103,7 @@ router.post('/game/:id', ensureAuthenticated, function (req, res) {
 });
 
 // Inc/dec goals
+// TODO: goals can be minus degree value
 router.put('/game/:id', ensureAuthenticated, function (req, res) {
   Game.findOneAndUpdate({ _id: req.params.id,
                   'players._id': req.body.player._id, },
