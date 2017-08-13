@@ -42,49 +42,49 @@
 			</div>
 			<div class="sidebar-wrapper">
 				<ul class="nav">
-					<li class="active">
+					<li {{#if navAdmin}} class="active" {{/if}}>
 						<a href="/ap">
 							<i class="material-icons">dashboard</i>
 							<p>Dashboard</p>
 						</a>
 					</li>
-					<li>
+					<li {{#if navAdduser}} class="active" {{/if}}>
 						<a href="/ap/adduser">
 							<i class="material-icons">person_add</i>
 							<p>Dodaj użytkownika</p>
 						</a>
 					</li>
-					<li>
+					<li {{#if navUsers}} class="active" {{/if}}>
 						<a href="/ap/users">
 							<i class="material-icons">people</i>
 							<p>Lista użytkowników</p>
 						</a>
 					</li>
-					<li>
+					<li {{#if navInactiveusers}} class="active" {{/if}}>
 						<a href="/ap/users?show=inactive">
 							<i class="material-icons">people_outline</i>
-							<p>Nieaktywni użytkownicy</p>
+							<p>Nieaktywni</p>
 						</a>
 					</li>
-					<li>
+					<li {{#if navAddgame}} class="active" {{/if}}>
 						<a href="/ap/addgame">
 							<i class="material-icons">add_circle</i>
 							<p>Dodaj mecz</p>
 						</a>
 					</li>
-					<li>
+					<li {{#if navGames}} class="active" {{/if}}>
 						<a href="/ap/games">
 							<i class="material-icons">today</i>
 							<p>Lista meczów</p>
 						</a>
 					</li>
-					<li>
+					<li {{#if navAddevent}} class="active" {{/if}}>
 						<a href="/ap/addevent">
 							<i class="material-icons">create_new_folder</i>
 							<p>Dodaj rozgrywki</p>
 						</a>
 					</li>
-					<li>
+					<li {{#if navEvents}} class="active" {{/if}}>
 						<a href="/ap/events">
 							<i class="material-icons">folder</i>
 							<p>Lista rozgrywek</p>
@@ -160,7 +160,7 @@
   <script src="/js/bootstrap-table-en-US.js"></script>
 	<script src="/js/bootstrap.js" type="text/javascript"></script>
 	<script src="/js/material.min.js" type="text/javascript"></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/6.6.8/sweetalert2.min.js" type="text/javascript"></script>
 
 	<!--  Charts Plugin -->
 	<script src="/js/chartist.min.js"></script>
