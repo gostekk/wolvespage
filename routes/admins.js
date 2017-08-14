@@ -267,20 +267,30 @@ router.post('/adduser', ensureAuthenticated, function (req, res) {
   'Hasło musi zawierać co najmniej 6 znaków oraz nie wiecej niż 20').len(6, 20);
   req.checkBody('password2', 'Hasła nie pasują do siebie').equals(req.body.password);
 
-  // TODO: Check if numerkoszulki already exist in db
-  // TODO: Add Validationerror if username already exists in db
-  // TODO: Add Validationerror if numerkoszulki already exists in db
+  var errors = req.validationErrors();
+
   User.findOne({
     username: username, }, function (err, user) {
       if (err) throw err;
       if (user) {
-        console.log('user exist');
-      } else {
-        console.log('user dsnt exist');
+        errors.push({ param: 'username',
+          msg: 'Istnieje użytkownik z podanym username',
+          value: '',
+        });
       }
     }
   );
-  var errors = req.validationErrors();
+  User.findOne({
+    shirtnumber: shirtnumber, }, function (err, user) {
+      if (err) throw err;
+      if (user) {
+        errors.push({ param: 'shirtnumber',
+          msg: 'Istnieje użytkownik z podanym numerem',
+          value: '',
+        });
+      }
+    }
+  );
 
   if (errors) {
     res.render('adduser', {
