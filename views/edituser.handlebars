@@ -5,46 +5,240 @@
         <h4 class="title">Edycja użytkownika</h4>
       </div>
       <div class="card-content">
-        <form>
           <div class="row">
-            <div class="col-md-4">
+            <div class="col-md-4 col-sm-10">
               <div class="form-group label-floating">
-                <label class="control-label">username</label>
-                <input type="text" value="{{userProfile.username}}" name="username" class="form-control">
+                <label class="control-label">ID</label>
+                <input type="text" value="{{userProfile._id}}" name="_id" class="form-control" disabled>
               </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-2 col-sm-2">
+              <button class="btn btn-primary btn-fill" onclick="showSwal()" disabled>Change!</button>
+            </div>
+            <div class="col-md-4 col-sm-10">
+              <div class="form-group label-floating">
+                <label class="control-label">Username</label>
+                <input id="username" type="text" value="{{userProfile.username}}" name="username" class="form-control" disabled>
+              </div>
+            </div>
+            <div class="col-md-2 col-sm-2">
+              <button class="btn btn-primary btn-fill" onclick="showSwal('username')">Change!</button>
+            </div>
+            <div class="col-md-4 col-sm-10">
               <div class="form-group label-floating">
                 <label class="control-label">Imie</label>
-                <input type="text" value="{{userProfile.name}}" name="name" class="form-control">
+                <input id="name" type="text" value="{{userProfile.name}}" name="name" class="form-control" disabled>
               </div>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-2 col-sm-2">
+              <button class="btn btn-primary btn-fill" onclick="showSwal('name')">Change!</button>
+            </div>
+            <div class="col-md-4 col-sm-10">
               <div class="form-group label-floating">
                 <label class="control-label">Nazwisko</label>
-                <input type="text" value="{{userProfile.surname}}" name="surname" class="form-control">
+                <input id="surname" type="text" value="{{userProfile.surname}}" name="surname" class="form-control" disabled>
               </div>
             </div>
-          </div>
-
-          <div class="row">
-            <div class="col-md-6">
+            <div class="col-md-2 col-sm-2">
+              <button class="btn btn-primary btn-fill" onclick="showSwal('surname')">Change!</button>
+            </div>
+            <div class="col-md-4 col-sm-10">
               <div class="form-group label-floating">
                 <label class="control-label">Numer zawodnika</label>
-                <input type="number" value="{{userProfile.shirtnumber}}" name="shirtnumber" class="form-control" min="0" max="99">
+                <input id="shirtnumber" type="number" value="{{userProfile.shirtnumber}}" name="shirtnumber" class="form-control" disabled>
               </div>
             </div>
-            <div class="col-md-6">
+            <div class="col-md-2 col-sm-2">
+              <button class="btn btn-primary btn-fill" onclick="showSwal('shirtnumber')">Change!</button>
+            </div>
+            <div class="col-md-4 col-sm-10">
               <div class="form-group label-floating">
                 <label class="control-label">Pozycja</label>
-                <input type="text" value="{{userProfile.position}}" name="position" class="form-control" disabled>
+                <input id="position" type="text" value="{{userProfile.position}}" name="position" class="form-control" disabled>
               </div>
             </div>
+            <div class="col-md-2 col-sm-2">
+              <button class="btn btn-primary btn-fill" onclick="showSwal('position')">Change!</button>
+            </div>
           </div>
-          <button type="submit" class="btn btn-primary pull-right">Uaktualnij użytkownika</button>
           <div class="clearfix"></div>
-        </form>
       </div>
     </div>
   </div>
 </div>
+
+<script>
+function showSwal (type) {
+  if (type == 'username') {
+    swal({
+      title: 'Username',
+      input: 'text',
+      inputPlaceholder: $('#username').val(),
+      showCancelButton: true,
+      inputValidator: function (value) {
+        return new Promise(function (resolve, reject) {
+          if (value == $('#username').val()) {
+            reject('Taki sam username... seriooo ???')
+          } else if (value) {
+            $.ajax({
+              type: 'POST',
+              data: {username: value},
+              url: window.location.pathname,
+              success: function (value) {
+                resolve();
+              },
+              error: function (value) {
+                reject(value.responseText);
+              },
+            });
+          } else {
+            reject('Musisz coś wpisać!')
+          }
+        })
+      }
+    }).then(function (result) {
+      admins.showSwal('edituser');
+      $('#username').val(result);
+    }).catch(function (result) {})
+  } else if (type == 'name') {
+    swal({
+      title: 'Imie',
+      input: 'text',
+      inputPlaceholder: '{{userProfile.name}}',
+      showCancelButton: true,
+      inputValidator: function (value) {
+        return new Promise(function (resolve, reject) {
+          if (value) {
+            $.ajax({
+              type: 'POST',
+              data: {name: value},
+              url: window.location.pathname,
+              success: function (value) {
+                resolve()
+              },
+              error: function (value) {
+                reject(value.responseText)
+              },
+            });
+            resolve()
+          } else {
+            reject('Musisz coś wpisać!')
+          }
+        })
+      }
+    }).then(function (result) {
+      admins.showSwal('edituser');
+      $('#name').val(result);
+    }).catch(function (result) {})
+  } else if (type == 'surname') {
+    swal({
+      title: 'Nazwisko',
+      input: 'text',
+      inputPlaceholder: '{{userProfile.surname}}',
+      showCancelButton: true,
+      inputValidator: function (value) {
+        return new Promise(function (resolve, reject) {
+          if (value == '{{userProfile.surname}}') {
+            resolve()
+          } else if (value) {
+            $.ajax({
+              type: 'POST',
+              data: {surname: value},
+              url: window.location.pathname,
+              success: function (value) {
+                resolve()
+              },
+              error: function (value) {
+                reject(value.responseText)
+              },
+            });
+          } else {
+            reject('Musisz coś wpisać!')
+          }
+        })
+      }
+    }).then(function (result) {
+      admins.showSwal('edituser');
+      $('#surname').val(result);
+    }).catch(function (result) {})
+  } else if (type == 'shirtnumber') {
+    swal({
+      title: 'Numer zawodnika',
+      input: 'number',
+      inputPlaceholder: $('#shirtnumber').val(),
+      inputAttributes: {
+        min: 0,
+        max: 99,
+      },
+      showCancelButton: true,
+      inputValidator: function (value) {
+        return new Promise(function (resolve, reject) {
+          if (0 > value || value > 99) {
+            reject('Liczba musi zawierać się w przedziale 0-99!')
+          } else if (value == $('#shirtnumber').val()) {
+            reject('Ten sam numer... seriooo ?')
+          } else if (value) {
+            $.ajax({
+              type: 'POST',
+              data: {shirtnumber: value},
+              url: window.location.pathname,
+              success: function (value) {
+                resolve()
+              },
+              error: function (value) {
+                reject(value.responseText)
+              },
+            });
+          } else {
+            reject('Musisz podać liczbe!')
+          }
+        })
+      }
+    }).then(function (result) {
+      admins.showSwal('edituser');
+      $('#shirtnumber').val(result);
+    }).catch(function (result) {})
+  } else if (type == 'position') {
+    var inputOptions = new Promise(function (resolve) {
+      setTimeout(function () {
+        resolve({
+          'Emeryt': 'Emeryt',
+          'Bramkarz': 'Bramkarz',
+          'Obrońca': 'Obrońca',
+          'Napastnik': 'Napastnik'
+        })
+      }, 1000)
+    })
+    swal({
+      title: 'Wybierz pozycje',
+      input: 'radio',
+      inputOptions: inputOptions,
+      inputValue: '{{userProfile.position}}',
+      inputValidator: function (result) {
+        return new Promise(function (resolve, reject) {
+          if (result == '{{userProfile.position}}') {
+            resolve()
+          } else if (result) {
+            $.ajax({
+              type: 'POST',
+              data: {position: result},
+              url: window.location.pathname,
+              success: function (value) {
+                resolve()
+              },
+              error: function (value) {
+                reject(value.responseText)
+              },
+            });
+          } else {
+            reject('You need to select something!')
+          }
+        })
+      }
+    }).then(function (result) {
+      admins.showSwal('edituser');
+      $('#position').val(result);
+    }).catch(function (result) {})
+  }
+}
+</script>

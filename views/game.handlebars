@@ -1,236 +1,177 @@
-	<div class="col-md-12">
-	  <div class="card">
-      <div class="col-md-12">
-      {{#if gameOverview.home}}
-        <div class="row">
-          <div class="col-sm-5">
-            <div class="row">
-              <h2 class="text-center">{{gameOverview.teamname}}</h2>
-            </div>
-            <div class="row">
-              <img src="{{gameOverview.teamlogo}}">
-            </div>
-          </div>
-          <div class="col-sm-2">
-            <div class="row">
-              <h2>vs</h2>
-            </div>
-            <div class="row">
-              {{gameOverview.score.opponent}} : {{gameOverview.score.our}}
-            </div>
-          </div>
-          <div class="col-sm-5">
-            <div class="row">
-              <h2 class="text-center">Wolves Tychy</h2>
-            </div>
-            <div class="row">
-              <img src="/img/wolvesorginal.png">
-            </div>
-          </div>
-        </div>
-      {{else}}
-      <div class="row">
-        <div class="col-sm-5">
-          <div class="row">
-            <h2 class="text-center">Wolves Tychy</h2>
-          </div>
-          <div class="row">
-            <img src="/img/wolvesorginal.png">
-          </div>
-        </div>
-        <div class="col-sm-2">
-          <div class="row">
-            <h2>vs</h2>
-          </div>
-          <div class="row">
-            {{gameOverview.score.our}} : {{gameOverview.score.opponent}}
-          </div>
-        </div>
-        <div class="col-sm-5">
-          <div class="row">
-            <h2 class="text-center">{{gameOverview.teamname}}</h2>
-          </div>
-          <div class="row">
-            <img src="{{gameOverview.teamlogo}}">
-          </div>
-        </div>
-      {{/if}}
-        <div class="col-md-12">
+<div class="col-md-12">
+	<div class="card col-md-12"> <!-- White card Edit from here -->
+		{{#if gameOverview.home}} <!-- Change sides if home/away game -->
+			<div class="row">
+				<div class="col-sm-5">
+					<div class="row">
+						<h2 class="text-center">{{gameOverview.teamname}}</h2>
+					</div>
+					<div class="row">
+						<img src="{{gameOverview.teamlogo}}">
+					</div>
+				</div>
+				<div class="col-sm-2">
+					<div class="row">
+						<h2>vs</h2>
+					</div>
+					<div class="row">
+						{{gameOverview.score.opponent}} : {{gameOverview.score.our}}
+					</div>
+				</div>
+				<div class="col-sm-5">
+					<div class="row">
+						<h2 class="text-center">Wolves Tychy</h2>
+					</div>
+					<div class="row">
+						<img src="/img/wolvesorginal.png">
+					</div>
+				</div>
+			</div>
+		{{else}} <!-- away game sides -->
+		<div class="row">
+			<div class="col-sm-5">
+				<div class="row">
+					<h2 class="text-center">Wolves Tychy</h2>
+				</div>
+				<div class="row">
+					<img src="/img/wolvesorginal.png">
+				</div>
+			</div>
+			<div class="col-sm-2">
+				<div class="row">
+					<h2>vs</h2>
+				</div>
+				<div class="row">
+					{{gameOverview.score.our}} : {{gameOverview.score.opponent}}
+				</div>
+			</div>
+			<div class="col-sm-5">
+				<div class="row">
+					<h2 class="text-center">{{gameOverview.teamname}}</h2>
+				</div>
+				<div class="row">
+					<img src="{{gameOverview.teamlogo}}">
+				</div>
+			</div>
+		{{/if}}
+			<div class="col-md-12">
 
-          <!-- Score table ! -->
-          <table id="playersTable"
-                 data-toggle="table"
-                 data-method="post"
-                 data-classes="table"
-                 data-url="/ap/game/{{gameOverview._id}}">
-            <thead>
-              <tr>
-                <th data-field="_id" data-visible="false">id</th>
-                <th data-field="username" data-visible="false" data-sortable="true">username</th>
-                <th data-field="name" data-sortable="true">Imie</th>
-                <th data-field="surname" data-sortable="true">Nazwisko</th>
-                <th data-field="shirtnumber" data-sortable="true">Numer</th>
-                <th data-field="position" data-sortable="true">Pozycja</th>
-                <th data-field="goals" data-sortable="true" data-formatter="goalsFormatter" data-events="goalsEvents">Gole</th>
-                <th data-field="assists" data-sortable="true" data-formatter="goalsFormatter" data-events="assistsEvents">Asysty</th>
-                <th data-field="pim" data-sortable="true" data-formatter="pimsFormatter" data-events="pimsEvents">Minuty Karne</th>
-              </tr>
-            </thead>
-          </table>
-        </div>
-      </div>
-    </div>
-  </div>
+				<!-- Score table ! -->
+				<table id="playersTable"
+							 data-toggle="table"
+							 data-method="post"
+							 data-classes="table"
+							 data-url="/ap/game/{{gameOverview._id}}">
+					<thead>
+						<tr>
+							<th data-field="_id" data-visible="false">id</th>
+							<th data-field="username" data-visible="false" data-sortable="true">username</th>
+							<th data-field="name" data-sortable="true">Imie</th>
+							<th data-field="surname" data-sortable="true">Nazwisko</th>
+							<th data-field="shirtnumber" data-sortable="true">Numer</th>
+							<th data-field="position" data-sortable="true">Pozycja</th>
+							<th data-field="goals" data-sortable="true" data-formatter="goalsFormatter" data-events="goalsEvents">Gole</th>
+							<th data-field="assists" data-sortable="true" data-formatter="goalsFormatter" data-events="assistsEvents">Asysty</th>
+							<th data-field="pim" data-sortable="true" data-formatter="pimsFormatter" data-events="pimsEvents">Minuty Karne</th>
+						</tr>
+					</thead>
+				</table>
+			</div>
+		</div>
+</div> <!-- END card -->
 </div>
 
 <script>
 function goalsFormatter(value) {
-  return '<a class="minus" nohref><i class="glyphicon glyphicon-minus-sign"></i></a> ' + value + ' <a class="plus" nohref><i class="glyphicon glyphicon-plus-sign"></i></a>';
+return '<a class="minus" nohref><i class="glyphicon glyphicon-minus-sign"></i></a> ' + value + ' <a class="plus" nohref><i class="glyphicon glyphicon-plus-sign"></i></a>';
 }
 function pimsFormatter(value) {
-  return '<a class="minus" nohref><i class="glyphicon glyphicon-minus-sign"></i></a> ' + value + ' <a class="2" nohref>2</a> <a class="4" nohref>4</a> <a class="5" nohref>5</a> <a class="10" nohref>10</a>';
+return '<a class="minus" nohref><i class="glyphicon glyphicon-minus-sign"></i></a> ' + value + ' <a class="2" nohref>2</a> <a class="4" nohref>4</a> <a class="5" nohref>5</a> <a class="10" nohref>10</a>';
 }
 
 function incGoals(row, value) {
-  var data = {};
-  data.value = value;
-  data.player = row;
-  $.ajax({
-    type: 'PUT',
-    data: JSON.stringify(data),
-    contentType: 'application/json',
-    url: window.location.pathname,
-    success: function (result) {
-			if (result) {
-				swal({
-	        title: 'Updating things!',
-	        text: 'Wait a second.',
-	        allowOutsideClick: false,
-	        allowEscapeKey: false,
-	        allowEnterKey: false,
-	        timer: 1000,
-	        showConfirmButton: false,
-	      }).then(
-	        function () {},
-
-	        // handling the promise rejection
-	        function (dismiss) {
-	          if (dismiss === 'timer') {
-	            refreshTable('#playersTable');
-	          }
-	        }
-	      );
-			}
-    },
-  });
+	var data = {};
+	data.value = value;
+	data.player = row;
+	$.ajax({
+		type: 'PUT',
+		data: JSON.stringify(data),
+		contentType: 'application/json',
+		url: window.location.pathname,
+		success: function (data, textStatus, jqXHR) {
+			console.log(data);
+		},
+	});
 }
 function incAssists(row, value) {
-  var data = {};
-  data.value = value;
-  data.player = row;
-  $.ajax({
-    type: 'PURGE',
-    data: JSON.stringify(data),
-    contentType: 'application/json',
-    url: window.location.pathname,
-    success: function (result) {
-			if (result) {
-				swal({
-	        title: 'Updating things!',
-	        text: 'Wait a second.',
-	        allowOutsideClick: false,
-	        allowEscapeKey: false,
-	        allowEnterKey: false,
-	        timer: 1000,
-	        showConfirmButton: false,
-	      }).then(
-	        function () {},
-
-	        // handling the promise rejection
-	        function (dismiss) {
-	          if (dismiss === 'timer') {
-	            refreshTable('#playersTable');
-	          }
-	        }
-	      );
-			}
-    },
-  });
+	var data = {};
+	data.value = value;
+	data.player = row;
+	$.ajax({
+		type: 'PURGE',
+		data: JSON.stringify(data),
+		contentType: 'application/json',
+		url: window.location.pathname,
+		success: function (data, textStatus, jqXHR) {
+			console.log(data);
+		},
+	});
 }
 function incPims(row, value) {
-  var data = {};
-  data.value = value;
-  data.player = row;
-  $.ajax({
-    type: 'MERGE',
-    data: JSON.stringify(data),
-    contentType: 'application/json',
-    url: window.location.pathname,
-    success: function (result) {
-			if (result) {
-				swal({
-	        title: 'Updating things!',
-	        text: 'Wait a second.',
-	        allowOutsideClick: false,
-	        allowEscapeKey: false,
-	        allowEnterKey: false,
-	        timer: 1000,
-	        showConfirmButton: false,
-	      }).then(
-	        function () {},
-
-	        // handling the promise rejection
-	        function (dismiss) {
-	          if (dismiss === 'timer') {
-	            refreshTable('#playersTable');
-	          }
-	        }
-	      );
-			}
-    },
-  });
+	var data = {};
+	data.value = value;
+	data.player = row;
+	$.ajax({
+		type: 'MERGE',
+		data: JSON.stringify(data),
+		contentType: 'application/json',
+		url: window.location.pathname,
+		success: function (data, textStatus, jqXHR) {
+			console.log(data);
+		},
+	});
 }
 
 window.goalsEvents = {
-  'click .plus': function (e, value, row, index) {
-    incGoals(row, 1);
+	'click .plus': function (e, value, row, index) {
+		incGoals(row, 1);
 		admins.showSwal('refreshplayers');
-  },
-  'click .minus': function (e, value, row, index) {
-    incGoals(row, -1);
+	},
+	'click .minus': function (e, value, row, index) {
+		incGoals(row, -1);
 		admins.showSwal('refreshplayers');
-  },
-};
-window.assistsEvents = {
-  'click .plus': function (e, value, row, index) {
-    incAssists(row, 1);
+	},
+	};
+	window.assistsEvents = {
+	'click .plus': function (e, value, row, index) {
+		incAssists(row, 1);
 		admins.showSwal('refreshplayers');
-  },
-  'click .minus': function (e, value, row, index) {
-    incAssists(row, -1);
+	},
+	'click .minus': function (e, value, row, index) {
+		incAssists(row, -1);
 		admins.showSwal('refreshplayers');
-  },
-};
-window.pimsEvents = {
-  'click .2': function (e, value, row, index) {
-    incPims(row, 2);
+	},
+	};
+	window.pimsEvents = {
+	'click .2': function (e, value, row, index) {
+		incPims(row, 2);
 		admins.showSwal('refreshplayers');
-  },
-  'click .4': function (e, value, row, index) {
-    incPims(row, 4);
+	},
+	'click .4': function (e, value, row, index) {
+		incPims(row, 4);
 		admins.showSwal('refreshplayers');
-  },
-  'click .5': function (e, value, row, index) {
-    incPims(row, 5);
+	},
+	'click .5': function (e, value, row, index) {
+		incPims(row, 5);
 		admins.showSwal('refreshplayers');
-  },
-  'click .10': function (e, value, row, index) {
-    incPims(row, 10);
+	},
+	'click .10': function (e, value, row, index) {
+		incPims(row, 10);
 		admins.showSwal('refreshplayers');
-  },
-  'click .reset': function (e, value, row, index) {
-    incPims(row, -1);
-		admins.showSwal('refreshplayers');
-  },
+	},
+	'click .reset': function (e, value, row, index) {
+		incPims(row, -1);
+	admins.showSwal('refreshplayers');
+},
 };
 </script>

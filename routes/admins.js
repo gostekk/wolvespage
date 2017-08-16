@@ -54,7 +54,7 @@ router.get('/edituser/:id', ensureAuthenticated, function (req, res) {
     if (err) throw err;
     res.render('edituser', { layout: 'admin',
                             userProfile: userProfile,
-                            title: 'Profile - Wolves page', });
+                            title: 'Edit user - Wolves page', });
   });
 });
 
@@ -323,6 +323,56 @@ router.post('/adduser', ensureAuthenticated, function (req, res) {
       title: 'Add User - Wolves page',
     });
   }
+});
+
+// Edit user post
+// TODO: admin change password
+router.post('/edituser/:id', function (req, res) {
+  User.findById(req.params.id, function (err, user) {
+    // USERNAME
+    if (user.username != req.body.username && req.body.username) {
+      User.getUserByUsername(req.body.username, function (err, userValidation) {
+        if (err) throw err;
+        if (userValidation) {
+          res.status(500).send('Podany username jest zajęty');
+        } else {
+          user.username = req.body.username;
+          user.save(function (err, updatedUser) {
+            if (err) throw err;
+            res.status(200).send(true);
+          });
+        }
+      });
+    }
+
+    // SHIRTNUMBER
+    if (user.shirtnumber != req.body.shirtnumber && req.body.shirtnumber) {
+      User.findOne({ shirtnumber: req.body.shirtnumber }, function (err, userValidation) {
+        if (err) throw err;
+        if (userValidation) {
+          res.status(500).send('Podany numer jest zajęty');
+        } else {
+          user.shirtnumber = req.body.shirtnumber;
+          user.save(function (err, updatedUser) {
+            if (err) throw err;
+            res.status(200).send(true);
+          });
+        }
+      });
+    }
+
+    // NAME // SURNAME // POSITION
+    if (req.body.name || req.body.surname || req.body.position) {
+      user.name = req.body.name ? req.body.name : user.name;
+      user.surname = req.body.surname ? req.body.surname : user.surname;
+      user.position = req.body.position ? req.body.position : user.position;
+
+      user.save(function (err, updatedUser) {
+        if (err) throw err;
+        res.status(200).send(true);
+      });
+    }
+  });
 });
 
 // Add game

@@ -31,7 +31,15 @@ admins = {
         confirmButtonClass: 'btn btn-success',
         type: 'success',
       });
-
+    } else if (type == 'edituser') {
+      swal({
+        type: 'success',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        allowEnterKey: false,
+        timer: 1000,
+        showConfirmButton: false,
+      });
     } else if (type == 'refreshplayers') {
       swal({
         title: 'Updating things!',
