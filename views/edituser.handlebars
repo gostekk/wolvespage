@@ -60,6 +60,15 @@
             <div class="col-md-2 col-sm-2">
               <button class="btn btn-primary btn-fill" onclick="showSwal('position')">Change!</button>
             </div>
+            <div class="col-md-4 col-sm-10">
+              <div class="form-group label-floating">
+                <label class="control-label">Hasło</label>
+                <input id="password" type="text" value="*********" name="password" class="form-control" disabled>
+              </div>
+            </div>
+            <div class="col-md-2 col-sm-2">
+              <button class="btn btn-primary btn-fill" onclick="showSwal('password')">Change!</button>
+            </div>
           </div>
           <div class="clearfix"></div>
       </div>
@@ -238,6 +247,37 @@ function showSwal (type) {
     }).then(function (result) {
       admins.showSwal('edituser');
       $('#position').val(result);
+    }).catch(function (result) {})
+  } else if (type == 'password') {
+    swal({
+      title: 'Nowe hasło',
+      input: 'password',
+      inputAttributes: {
+        autocomplete: 'new-password',
+        minlength: '6',
+      },
+      showCancelButton: true,
+      inputValidator: function (value) {
+        return new Promise(function (resolve, reject) {
+          if (value) {
+            $.ajax({
+              type: 'POST',
+              data: {password: value},
+              url: window.location.pathname,
+              success: function (value) {
+                resolve()
+              },
+              error: function (value) {
+                reject(value.responseText)
+              },
+            });
+          } else {
+            reject('Musisz coś wpisać!')
+          }
+        })
+      }
+    }).then(function (result) {
+      admins.showSwal('edituser');
     }).catch(function (result) {})
   }
 }

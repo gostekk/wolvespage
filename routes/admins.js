@@ -372,6 +372,13 @@ router.post('/edituser/:id', function (req, res) {
         res.status(200).send(true);
       });
     }
+
+    if (req.body.password) {
+      User.changeUserPassword(req.params.id, req.body.password, function (err, updatedUser) {
+        if (err) throw err;
+        res.status(200).send(true);
+      });
+    }
   });
 });
 
