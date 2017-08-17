@@ -86,19 +86,19 @@ router.get('/addgame', ensureAuthenticated, function (req, res) {
 });
 
 // Games
-router.post('/games', ensureAuthenticated, function (req, res) {
-  Game.find({}, function (err, games) {
-    res.json(games);
-  });
-});
-
 router.get('/games', ensureAuthenticated, function (req, res) {
   res.render('games', { layout: 'admin', navGames: true, title: 'Games - Wolves Page' });
 });
 
+router.post('/games', ensureAuthenticated, function (req, res) {
+  Game.find({}).populate('eventID').exec(function (err, games) {
+    res.json(games);
+  });
+});
+
 // Game overview
 router.get('/game/:id', ensureAuthenticated, function (req, res) {
-  Game.findById(req.params.id, function (err, gameOverview) {
+  Game.findById(req.params.id).populate('eventID').exec(function (err, gameOverview) {
     res.render('game', { layout: 'admin',
                         navGame: true,
                         title: 'Game - Wolves Page',
@@ -106,8 +106,8 @@ router.get('/game/:id', ensureAuthenticated, function (req, res) {
   });
 });
 
-router.post('/game/:id', ensureAuthenticated, function (req, res) {
-  Game.findById(req.params.id, function (err, gameOverview) {
+router.post('/game/:id', function (req, res) {
+  Game.findById(req.params.id).populate('players.playerID').exec(function (err, gameOverview) {
     res.json(gameOverview.players);
   });
 });
@@ -187,19 +187,36 @@ router.post('/event/:id', function (req, res) {
   Event.findById(req.params.id, function (err, eventValue) {
     Game.aggregate([
       { $unwind: '$players' },
-      { $match: { 'event._id': eventValue._id } },
+      { $match: { eventID: eventValue._id } },
       { $group: { _id: '$players._id',
-                  username: { $first: '$players.username' },
-                  name: { $first: '$players.name' },
-                  surname: { $first: '$players.surname' },
-                  shirtnumber: { $first: '$players.shirtnumber' },
-                  position: { $first: '$players.position' },
+                  playerID: { $first: '$players.playerID' },
                   gp: { $sum: 1 },
                   goals: { $sum: '$players.goals' },
                   assists: { $sum: '$players.assists' },
                   points: { $sum: { $add: ['$players.goals', '$players.assists'] } },
                   pim: { $sum: '$players.pim' }, }, },
+      { $lookup: {
+        from: 'users',
+        localField: '_id',
+        foreignField: '_id',
+        as: 'player',
+      }, },
+      { $unwind: '$player' },
+      { $project: {
+        _id: '$_id',
+        username: '$player.username',
+        name: '$player.name',
+        surname: '$player.surname',
+        shirtnumber: '$player.shirtnumber',
+        position: '$player.position',
+        gp: '$gp',
+        goals: '$goals',
+        assists: '$assists',
+        points: '$points',
+        pim: '$pim',
+      }, },
     ], function (err, eventStats) {
+
       if (err) throw err;
       res.json(eventStats);
     });
@@ -383,14 +400,13 @@ router.post('/edituser/:id', function (req, res) {
 });
 
 // Add game
-// TODO: repair error reload page and show errors
 router.post('/addgame', ensureAuthenticated, function (req, res) {
   var teamname = req.body.teamname;
   var teamlogo = req.body.teamlogo;
   var date = new Date(moment(req.body.date, 'MM-DD-YYYY').format('MM-DD-YYYY'));
   var home = (req.body.home == 'on' ? false : true);
-  var event = req.body.event[0];
-  var score = req.body.score;
+  var eventID = req.body.event[0]._id;
+  var periods = req.body.periods;
   var players = req.body.players;
 
   // Validation
@@ -400,7 +416,7 @@ router.post('/addgame', ensureAuthenticated, function (req, res) {
   var errors = req.validationErrors();
 
   if (errors) {
-    res.send({ redirect: 'reload' });
+    res.status(500).send(errors.msg);
   } else {
 
     var newGame = new Game({
@@ -408,17 +424,18 @@ router.post('/addgame', ensureAuthenticated, function (req, res) {
       teamlogo: teamlogo,
       date: date,
       home: home,
-      event: event,
-      score: score,
+      eventID: eventID,
+      periods: periods,
       players: players,
     });
+
+    console.log(newGame);
 
     Game.addGame(newGame, function (err, game) {
       if (err) throw err;
       console.log(game);
+      res.status(200).send(true);
     });
-
-    res.send({ redirect: '/ap/games' });
   }
 });
 

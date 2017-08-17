@@ -18,7 +18,7 @@
           admins.showNotification('success','{{success}}');
         </script>
       {{/if}}
-      <form id="addgameForm" method="post" action="/ap/addgame">
+      <form id="addGameForm" method="post" onsubmit="return false">
         <div class="row">
           <div class="col-md-6">
         <div id="name" class="form-group label-floating">
@@ -36,21 +36,46 @@
       </div>
 
       <div class="row">
-        <div id="scoreOur">
-            <label class="col-sm-2">Wynik</label>
-            <div class="col-sm-5">
-              <div class="form-group label-floating column-sizing">
-                <label class="control-label"></label>
-                <input type="number" class="form-control" placeholder="Wolves Tychy" name="scoreOur">
-              </div>
-            </div>
-            <div class="col-sm-5">
-              <div class="form-group label-floating column-sizing">
-                <label class="control-label"></label>
-                <input type="number" class="form-control" placeholder="Przeciwnik" name="scoreOpponent">
-              </div>
-            </div>
+        <label class="col-sm-12">Wynik poszczególnych tercji:</label>
+        <label class="col-sm-2">Pierwsza</label>
+        <div class="col-sm-5">
+          <div class="form-group label-floating column-sizing">
+            <label class="control-label"></label>
+            <input type="number" required="true" min="0" class="form-control" placeholder="Wolves Tychy" name="firstOur">
           </div>
+        </div>
+        <div class="col-sm-5">
+          <div class="form-group label-floating column-sizing">
+            <label class="control-label"></label>
+            <input type="number" required="true" min="0" class="form-control" placeholder="Przeciwnik" name="firstOpponent">
+          </div>
+        </div>
+        <label class="col-sm-2">Druga</label>
+        <div class="col-sm-5">
+          <div class="form-group label-floating column-sizing">
+            <label class="control-label"></label>
+            <input type="number" class="form-control" min="0" placeholder="Wolves Tychy" name="secondOur">
+          </div>
+        </div>
+        <div class="col-sm-5">
+          <div class="form-group label-floating column-sizing">
+            <label class="control-label"></label>
+            <input type="number" class="form-control" min="0" placeholder="Przeciwnik" name="secondOpponent">
+          </div>
+        </div>
+        <label class="col-sm-2">Trzecia</label>
+        <div class="col-sm-5">
+          <div class="form-group label-floating column-sizing">
+            <label class="control-label"></label>
+            <input type="number" class="form-control" min="0" placeholder="Wolves Tychy" name="thirdOur">
+          </div>
+        </div>
+        <div class="col-sm-5">
+          <div class="form-group label-floating column-sizing">
+            <label class="control-label"></label>
+            <input type="number" class="form-control" min="0" placeholder="Przeciwnik" name="thirdOpponent">
+          </div>
+        </div>
       </div>
 
       <div class="row">
@@ -59,7 +84,7 @@
         <div class="col-sm-6">
           <div id="date" class="form-group">
             <label>Data spotkania</label>
-            <input class="form-control datepicker" type="text" name="date" id="datepicker" placeholder="MM/DD/YYYY">
+            <input class="form-control datepicker" required="true" type="text" name="date" id="datepicker" placeholder="MM/DD/YYYY">
           </div>
         </div>
         <div class="col-sm-6">
@@ -77,6 +102,7 @@
         <table id="eventsTable"
                data-toggle="table"
                data-method="post"
+               data-select-item-name="eventID"
                data-classes="table table-striped table-hover"
                data-sort-name="season"
                data-sort-order="desc"
@@ -85,7 +111,7 @@
                data-url="/ap/events/?active=true">
             <thead>
             <tr>
-              <th data-field="state" data-checkbox="true"></th>
+              <th data-field="state1" data-checkbox="true"></th>
               <th data-field="_id" data-formatter="idFormatter" data-visible="false">ID</th>
               <th data-field="season" data-sortable="true">Sezon</th>
               <th data-field="shortname" data-sortable="true">K.Nazwa</th>
@@ -101,6 +127,7 @@
                data-toggle="table"
                data-search="true"
                data-toolbar="#toolbar"
+               data-select-item-name="playersID"
                data-click-To-Select="true"
                data-id-Field="_id"
                data-method="post"
@@ -108,7 +135,7 @@
           <thead>
             <tr>
               <th data-field="state" data-checkbox="true"></th>
-              <th data-field="_id" data-visible="false">username</th>
+              <th data-field="_id" data-name="id" data-visible="false">ID</th>
               <th data-field="username" data-visible="false">username</th>
               <th data-field="name" data-sortable="true">Imię</th>
               <th data-field="surname" data-sortable="true">Nazwisko</th>
@@ -122,7 +149,7 @@
           Zawodnicy
         </div>
         <div class="form-group">
-          <button id="getAllSelections" type="submit" class="btn btn-success pull-right">Submit</button>
+          <button type="submit" id="submitButton" class="btn btn-success pull-right">Submit</button>
         </div>
       </form>
     </div>
@@ -131,40 +158,78 @@
 
 <script>
 $(function () {
-  $('#getAllSelections').click(function (e) {
-
-    var formURL = $('#addgameForm').attr('action');
+  $('#addGameForm').submit(function (e) {
+    // sendAjax();
     var data = {};
     data.teamname = $('input[name=name]').val();
     data.teamlogo = $('input[name=logo]').val();
     data.date = $('input[name=date]').val();
     data.home = $('input[name=home]').val();
     data.event = $('#eventsTable').bootstrapTable('getAllSelections');
-    data.score = {};
-    data.score.our = $('input[name=scoreOur]').val();
-    data.score.opponent = $('input[name=scoreOpponent]').val();
-    data.players = $('#statsTable').bootstrapTable('getAllSelections');
+    data.periods = {};
+    data.periods.first = {};
+    data.periods.first.our = $('input[name=firstOur]').val();
+    data.periods.first.opponent = $('input[name=firstOpponent]').val();
+    data.periods.second = {};
+    data.periods.second.our = $('input[name=secondOur]').val();
+    data.periods.second.opponent = $('input[name=secondOpponent]').val();
+    data.periods.third = {};
+    data.periods.third.our = $('input[name=thirdOur]').val();
+    data.periods.third.opponent = $('input[name=thirdOpponent]').val();
+    data.players = [];
+    players = $('#statsTable').bootstrapTable('getAllSelections');
+    jQuery.each(players, function (i, val) {
+      data.players.push({ playerID: val._id, _id: val._id });
+    });
     $.ajax({
       type: 'POST',
       data: JSON.stringify(data),
       contentType: 'application/json',
-      url: formURL,
-      success: function (data, textStatus, jqXHR) {
-        console.log('success');
-        if (data.redirect == 'reload') {
-          window.location.reload();
-        } else if (typeof (data.redirect == 'string')) {
-          window.location = data.redirect;
-        }
+      url: '/ap/addgame',
+      success: function (value) {
+        admins.showNotification('success','lol success');
+      },
+      error: function (value) {
+        admins.showNotification('danger',value.responseText);
       },
     });
-    e.preventDefault();
   });
 });
 
-$(function () {
-  $('#datepicker').datepicker();
-});
+// function sendAjax () {;
+//   var data = {};
+//   data.teamname = $('input[name=name]').val();
+//   data.teamlogo = $('input[name=logo]').val();
+//   data.date = $('input[name=date]').val();
+//   data.home = $('input[name=home]').val();
+//   data.event = $('#eventsTable').bootstrapTable('getAllSelections');
+//   data.periods = {};
+//   data.periods.first = {};
+//   data.periods.first.our = $('input[name=firstOur]').val();
+//   data.periods.first.opponent = $('input[name=firstOpponent]').val();
+//   data.periods.second = {};
+//   data.periods.second.our = $('input[name=secondOur]').val();
+//   data.periods.second.opponent = $('input[name=secondOpponent]').val();
+//   data.periods.third = {};
+//   data.periods.third.our = $('input[name=thirdOur]').val();
+//   data.periods.third.opponent = $('input[name=thirdOpponent]').val();
+//   data.players = $('#statsTable').bootstrapTable('getAllSelections');
+//   $.ajax({
+//     type: 'POST',
+//     data: JSON.stringify(data),
+//     contentType: 'application/json',
+//     url: '/ap/addgame',
+//     success: function (value) {
+//       admins.showNotification('success','lol success');
+//     },
+//     error: function (value) {
+//       admins.showNotification('danger',value.responseText);
+//     },
+//   });
+// };
+// $(function () {
+//   $('#datepicker').datepicker();
+// });
 
 
 </script>

@@ -15,7 +15,8 @@
 						<h2>vs</h2>
 					</div>
 					<div class="row">
-						{{gameOverview.score.opponent}} : {{gameOverview.score.our}}
+						({{gameOverview.periods.first.opponent}} : {{gameOverview.periods.first.our}}, {{gameOverview.periods.second.opponent}} : {{gameOverview.periods.second.our}},
+						{{gameOverview.periods.third.opponent}} : {{gameOverview.periods.third.our}})
 					</div>
 				</div>
 				<div class="col-sm-5">
@@ -42,7 +43,8 @@
 					<h2>vs</h2>
 				</div>
 				<div class="row">
-					{{gameOverview.score.our}} : {{gameOverview.score.opponent}}
+					({{gameOverview.periods.first.our}} : {{gameOverview.periods.first.opponent}}, {{gameOverview.periods.second.our}} : {{gameOverview.periods.second.opponent}},
+					{{gameOverview.periods.third.our}} : {{gameOverview.periods.third.opponent}})
 				</div>
 			</div>
 			<div class="col-sm-5">
@@ -64,12 +66,12 @@
 							 data-url="/ap/game/{{gameOverview._id}}">
 					<thead>
 						<tr>
-							<th data-field="_id" data-visible="false">id</th>
-							<th data-field="username" data-visible="false" data-sortable="true">username</th>
-							<th data-field="name" data-sortable="true">Imie</th>
-							<th data-field="surname" data-sortable="true">Nazwisko</th>
-							<th data-field="shirtnumber" data-sortable="true">Numer</th>
-							<th data-field="position" data-sortable="true">Pozycja</th>
+							<th data-field="playerID._id" data-visible="false">id</th>
+							<th data-field="playerID.username" data-visible="false" data-sortable="true">username</th>
+							<th data-field="playerID.name" data-sortable="true">Imie</th>
+							<th data-field="playerID.surname" data-sortable="true">Nazwisko</th>
+							<th data-field="playerID.shirtnumber" data-sortable="true">Numer</th>
+							<th data-field="playerID.position" data-sortable="true">Pozycja</th>
 							<th data-field="goals" data-sortable="true" data-formatter="goalsFormatter" data-events="goalsEvents">Gole</th>
 							<th data-field="assists" data-sortable="true" data-formatter="goalsFormatter" data-events="assistsEvents">Asysty</th>
 							<th data-field="pim" data-sortable="true" data-formatter="pimsFormatter" data-events="pimsEvents">Minuty Karne</th>

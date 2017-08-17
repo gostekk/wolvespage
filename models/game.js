@@ -1,5 +1,8 @@
 var mongoose = require('mongoose');
 
+var User = require('./user');
+var Event = require('./event');
+
 // Game Schema
 var GameSchema = mongoose.Schema({
   teamname: {
@@ -15,62 +18,94 @@ var GameSchema = mongoose.Schema({
   home: {
     type: Boolean,
   },
-  event: {
-    _id: {
+  eventID: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Event',
+  },
+  periods: {
+    first: {
+      opponent: {
+        type: Number,
+      },
+      our: {
+        type: Number,
+      },
+    },
+    second: {
+      opponent: {
+        type: Number,
+      },
+      our: {
+        type: Number,
+      },
+    },
+    third: {
+      opponent: {
+        type: Number,
+      },
+      our: {
+        type: Number,
+      },
+    },
+    overtime: {
+      opponent: {
+        type: Number,
+      },
+      our: {
+        type: Number,
+      },
+    },
+    shootout: {
+      opponent: {
+        type: Number,
+      },
+      our: {
+        type: Number,
+      },
+    },
+  },
+  players: [{
+    playerID: {
       type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
     },
-    shortname: {
-      type: String,
+    goals: {
+      type: Number,
+      default: 0,
     },
-    season: {
-      type: String,
+    assists: {
+      type: Number,
+      default: 0,
     },
-    type: {
-      type: String,
-    },
-    level: {
-      type: String,
+    pim: {
+      type: Number,
+      default: 0,
     },
   },
-  score: {
-    opponent: {
-      type: Number,
-    },
-    our: {
-      type: Number,
-    },
-  },
-  players: [
-    {
-      username: {
-        type: String,
-      },
-      name: {
-        type: String,
-      },
-      surname: {
-        type: String,
-      },
-      shirtnumber: {
-        type: Number,
-      },
-      position: {
-        type: String,
-      },
-      goals: {
-        type: Number,
-        default: 0,
-      },
-      assists: {
-        type: Number,
-        default: 0,
-      },
-      pim: {
-        type: Number,
-        default: 0,
-      },
-    },
   ],
+  status: {
+    win: {
+      type: Number,
+    },
+    draw: {
+      type: Number,
+    },
+    lose: {
+      type: Number,
+    },
+    overtimeWin: {
+      type: Number,
+    },
+    overtimeLose: {
+      type: Number,
+    },
+    shootoutWin: {
+      type: Number,
+    },
+    shootoutLose: {
+      type: Number,
+    },
+  },
 });
 
 var Game = module.exports = mongoose.model('Game', GameSchema);

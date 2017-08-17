@@ -37,17 +37,32 @@ router.post('/profile/:id', function (req, res) {
     Game.aggregate([
       { $unwind: '$players' },
       { $match: { 'players._id': user._id } },
-      { $group: { _id: '$event._id',
-                  shortname: { $first: '$event.shortname' },
-                  season: { $first: '$event.season' },
-                  type: { $first: '$event.type' },
-                  level: { $first: '$event.level' },
-                  position: { $first: '$players.position' },
+      { $group: { _id: '$eventID',
                   gp: { $sum: 1 },
                   goals: { $sum: '$players.goals' },
                   assists: { $sum: '$players.assists' },
                   points: { $sum: { $add: ['$players.goals', '$players.assists'] } },
                   pim: { $sum: '$players.pim' }, }, },
+      { $lookup: {
+        from: 'events',
+        localField: '_id',
+        foreignField: '_id',
+        as: 'event',
+      }, },
+      { $unwind: '$event' },
+      { $project: {
+        _id: '$_id',
+        shortname: '$event.shortname',
+        season: '$event.season',
+        type: '$event.type',
+        level: '$event.level',
+        gp: '$gp',
+        goals: '$goals',
+        assists: '$assists',
+        points: '$points',
+        pim: '$pim',
+      }, },
+
     ], function (err, eventStats) {
       if (err) throw err;
       res.json(eventStats);
@@ -65,16 +80,32 @@ router.post('/stats', ensureAuthenticated, function (req, res) {
   Game.aggregate([
     { $unwind: '$players' },
     { $group: { _id: '$players._id',
-                username: { $first: '$players.username' },
-                name: { $first: '$players.name' },
-                surname: { $first: '$players.surname' },
-                shirtnumber: { $first: '$players.shirtnumber' },
-                position: { $first: '$players.position' },
+                playerID: { $first: '$players.playerID' },
                 gp: { $sum: 1 },
                 goals: { $sum: '$players.goals' },
                 assists: { $sum: '$players.assists' },
                 points: { $sum: { $add: ['$players.goals', '$players.assists'] } },
                 pim: { $sum: '$players.pim' }, }, },
+    { $lookup: {
+      from: 'users',
+      localField: '_id',
+      foreignField: '_id',
+      as: 'player',
+    }, },
+    { $unwind: '$player' },
+    { $project: {
+      _id: '$_id',
+      username: '$player.username',
+      name: '$player.name',
+      surname: '$player.surname',
+      shirtnumber: '$player.shirtnumber',
+      position: '$player.position',
+      gp: '$gp',
+      goals: '$goals',
+      assists: '$assists',
+      points: '$points',
+      pim: '$pim',
+    }, },
   ], function (err, users) {
     if (err) throw err;
     res.json(users);
