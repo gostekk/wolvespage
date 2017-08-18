@@ -30,9 +30,9 @@ router.get('/users', ensureAuthenticated, function (req, res) {
   if (req.query.show == 'inactive') {
     res.render('usersinactive', { layout: 'admin',
                                   navInactiveusers: true,
-                                  title: 'Inactive users - Wolves Page', });
+                                  title: 'Nieaktywni użytkownicy - Wolves Page', });
   } else {
-    res.render('users', { layout: 'admin', navUsers: true, title: 'Users - Wolves Page' });
+    res.render('users', { layout: 'admin', navUsers: true, title: 'Użytkownicy - Wolves Page' });
   }
 });
 
@@ -54,7 +54,7 @@ router.get('/edituser/:id', ensureAuthenticated, function (req, res) {
     if (err) throw err;
     res.render('edituser', { layout: 'admin',
                             userProfile: userProfile,
-                            title: 'Edit user - Wolves page', });
+                            title: 'Edycja użytkownika - Wolves page', });
   });
 });
 
@@ -80,14 +80,19 @@ router.put('/users/:id', ensureAuthenticated, function (req, res) {
 
 //\\//\\//\\//\\  GAMEs //\\//\\//\\//\\
 
-// Add game
+// Add game wizard
 router.get('/addgame', ensureAuthenticated, function (req, res) {
-  res.render('addgame', { layout: 'admin', navAddgame: true, title: 'Add Game - Wolves Page' });
+  res.render('addgame', { layout: 'admin', navAddgame: true, title: 'Dodaj mecz - Wolves Page' });
+});
+
+// Add game standard
+router.get('/addgame1', ensureAuthenticated, function (req, res) {
+  res.render('addgame2', { layout: 'admin', navAddgame: true, title: 'Dodaj mecz - Wolves Page' });
 });
 
 // Games
 router.get('/games', ensureAuthenticated, function (req, res) {
-  res.render('games', { layout: 'admin', navGames: true, title: 'Games - Wolves Page' });
+  res.render('games', { layout: 'admin', navGames: true, title: 'Mecze - Wolves Page' });
 });
 
 router.post('/games', ensureAuthenticated, function (req, res) {
@@ -101,7 +106,7 @@ router.get('/game/:id', ensureAuthenticated, function (req, res) {
   Game.findById(req.params.id).populate('eventID').exec(function (err, gameOverview) {
     res.render('game', { layout: 'admin',
                         navGame: true,
-                        title: 'Game - Wolves Page',
+                        title: 'Mecz - Wolves Page',
                         gameOverview: gameOverview, });
   });
 });
@@ -170,7 +175,9 @@ router.delete('/game/:id', ensureAuthenticated, function (req, res) {
 
 // Add event
 router.get('/addevent', ensureAuthenticated, function (req, res) {
-  res.render('addevent', { layout: 'admin', navAddevent: true, title: 'Add Event - Wolves Page' });
+  res.render('addevent', { layout: 'admin',
+                          navAddevent: true,
+                          title: 'Dodaj rozgrywki - Wolves Page', });
 });
 
 // Event page
@@ -178,7 +185,7 @@ router.get('/event/:id', function (req, res) {
   Event.findById(req.params.id, function (err, eventOverview) {
     res.render('event', { layout: 'admin',
                         navEvent: true,
-                        title: 'Event - Wolves Page',
+                        title: 'Rozgrywka - Wolves Page',
                         eventOverview: eventOverview, });
   });
 });
@@ -225,7 +232,7 @@ router.post('/event/:id', function (req, res) {
 
 // Events
 router.get('/events', ensureAuthenticated, function (req, res) {
-  res.render('events', { layout: 'admin', navEvents: true, title: 'Events - Wolves Page' });
+  res.render('events', { layout: 'admin', navEvents: true, title: 'Rozgrywki - Wolves Page' });
 });
 
 router.post('/events', ensureAuthenticated, function (req, res) {
@@ -337,7 +344,7 @@ router.post('/adduser', ensureAuthenticated, function (req, res) {
       layout: 'admin',
       navAdduser: true,
       success: 'Poprawnie dodano nowego użytkownika',
-      title: 'Add User - Wolves page',
+      title: 'Dodaj użytkownika - Wolves page',
     });
   }
 });
@@ -401,10 +408,11 @@ router.post('/edituser/:id', function (req, res) {
 
 // Add game
 router.post('/addgame', ensureAuthenticated, function (req, res) {
+  console.log(req.body);
   var teamname = req.body.teamname;
   var teamlogo = req.body.teamlogo;
   var date = new Date(moment(req.body.date, 'MM-DD-YYYY').format('MM-DD-YYYY'));
-  var home = (req.body.home == 'on' ? false : true);
+  var home = !req.body.home;
   var eventID = req.body.event[0]._id;
   var periods = req.body.periods;
   var players = req.body.players;
@@ -476,7 +484,7 @@ router.post('/addevent', ensureAuthenticated, function (req, res) {
       layout: 'admin',
       navAddevent: true,
       errors: errors,
-      title: 'Add Event - Wolves page',
+      title: 'Dodaj rozgrywki- Wolves page',
     });
   } else {
     var newEvent = new Event({
@@ -497,7 +505,7 @@ router.post('/addevent', ensureAuthenticated, function (req, res) {
       layout: 'admin',
       navAddevent: true,
       success: 'Poprawnie dodano nowy rodzaj rozgrywek',
-      title: 'Add Event - Wolves page',
+      title: 'Dodaj rozgrywki - Wolves page',
     });
   }
 });
