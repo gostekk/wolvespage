@@ -63,6 +63,14 @@ var GameSchema = mongoose.Schema({
         type: Number,
       },
     },
+    final: {
+      opponent: {
+        type: Number,
+      },
+      our: {
+        type: Number,
+      },
+    },
   },
   players: [{
     playerID: {

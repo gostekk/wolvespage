@@ -112,6 +112,37 @@
                       </div>
                     </div>
                   </div>
+                  <div class="col-md-6">
+                    <div class="input-group">
+                      <span class="input-group-addon">
+    											<i class="material-icons">looks_4</i>
+    									  </span>
+                      <div class="form-group label-floating">
+                        <label class="control-label">Nasz<small>( dogrywka )</small></label>
+                        <input name="overtimeOur" type="number" class="form-control">
+                      </div>
+                      <div class="form-group label-floating">
+                        <label class="control-label">Przeciwnik<small>( dogrywka )</small></label>
+                        <input name="overtimeOpponent" type="number" class="form-control">
+                      </div>
+                    </div>
+
+                  </div>
+                  <div class="col-md-6">
+                    <div class="input-group">
+                      <span class="input-group-addon">
+    											<i class="material-icons">looks_5</i>
+    									  </span>
+                      <div class="form-group label-floating">
+                        <label class="control-label">Nasz<small>( karne )</small></label>
+                        <input name="shootoutOur" type="number" class="form-control">
+                      </div>
+                      <div class="form-group label-floating">
+                        <label class="control-label">Przeciwnik<small>( karne)</small></label>
+                        <input name="shootoutOpponent" type="number" class="form-control">
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -194,6 +225,23 @@
       data.periods.third = {};
       data.periods.third.our = $('input[name=thirdOur]').val();
       data.periods.third.opponent = $('input[name=thirdOpponent]').val();
+      data.periods.final = {};
+      data.periods.final.our = (+data.periods.first.our + +data.periods.second.our + +data.periods.third.our);
+      data.periods.final.opponent = (+data.periods.first.opponent + +data.periods.second.opponent + +data.periods.third.opponent);
+      if ($('input[name=overtimeOpponent]').val() && $('input[name=overtimeOur]').val()){
+        data.periods.overtime = {};
+        data.periods.overtime.our = $('input[name=overtimeOur]').val();
+        data.periods.overtime.opponent = $('input[name=overtimeOpponent]').val();
+        data.periods.final.our += +data.periods.overtime.our;
+        data.periods.final.opponent += +data.periods.overtime.opponent;
+        if ($('input[name=shootoutOpponent]').val() && $('input[name=shootoutOur]').val()){
+          data.periods.shootout = {};
+          data.periods.shootout.our = $('input[name=shootoutOur]').val();
+          data.periods.shootout.opponent = $('input[name=shootoutOpponent]').val();
+          data.periods.final.our += +data.periods.shootout.our;
+          data.periods.final.opponent += +data.periods.shootout.opponent;
+        };
+      };
       data.players = [];
       players = $('#statsTable').bootstrapTable('getAllSelections');
       jQuery.each(players, function(i, val) {

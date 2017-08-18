@@ -408,7 +408,6 @@ router.post('/edituser/:id', function (req, res) {
 
 // Add game
 router.post('/addgame', ensureAuthenticated, function (req, res) {
-  console.log(req.body);
   var teamname = req.body.teamname;
   var teamlogo = req.body.teamlogo;
   var date = new Date(moment(req.body.date, 'MM-DD-YYYY').format('MM-DD-YYYY'));
