@@ -111,7 +111,7 @@ router.get('/game/:id', ensureAuthenticated, function (req, res) {
   });
 });
 
-router.post('/game/:id', function (req, res) {
+router.post('/game/:id', ensureAuthenticated, function (req, res) {
   Game.findById(req.params.id).populate('players.playerID').exec(function (err, gameOverview) {
     res.json(gameOverview.players);
   });
@@ -181,7 +181,7 @@ router.get('/addevent', ensureAuthenticated, function (req, res) {
 });
 
 // Event page
-router.get('/event/:id', function (req, res) {
+router.get('/event/:id', ensureAuthenticated, function (req, res) {
   Event.findById(req.params.id, function (err, eventOverview) {
     res.render('event', { layout: 'admin',
                         navEvent: true,
@@ -190,7 +190,7 @@ router.get('/event/:id', function (req, res) {
   });
 });
 
-router.post('/event/:id', function (req, res) {
+router.post('/event/:id', ensureAuthenticated, function (req, res) {
   Event.findById(req.params.id, function (err, eventValue) {
     Game.aggregate([
       { $unwind: '$players' },
@@ -351,7 +351,7 @@ router.post('/adduser', ensureAuthenticated, function (req, res) {
 
 // Edit user post
 // TODO: admin change password
-router.post('/edituser/:id', function (req, res) {
+router.post('/edituser/:id', ensureAuthenticated, function (req, res) {
   User.findById(req.params.id, function (err, user) {
     // USERNAME
     if (user.username != req.body.username && req.body.username) {
@@ -414,6 +414,7 @@ router.post('/addgame', ensureAuthenticated, function (req, res) {
   var home = !req.body.home;
   var eventID = req.body.event[0]._id;
   var periods = req.body.periods;
+  var status = req.body.status;
   var players = req.body.players;
 
   // Validation
@@ -433,6 +434,7 @@ router.post('/addgame', ensureAuthenticated, function (req, res) {
       home: home,
       eventID: eventID,
       periods: periods,
+      status: status,
       players: players,
     });
 
