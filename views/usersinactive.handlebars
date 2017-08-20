@@ -41,7 +41,7 @@ function usernameFormatter(value) {
 }
 function actionFormatter(value, row, index) {
     return [
-        '<a class="edit ml10" nohref onclick="return false;" title="Edit">',
+        '<a class="edit ml10" href="" onclick="return false;" title="Edit">',
         '<i class="glyphicon glyphicon-edit"></i>',
         '</a>',
     ].join('');
@@ -49,10 +49,10 @@ function actionFormatter(value, row, index) {
 function activateUser(value) {
   $.ajax({
     type: 'PUT',
-    url: '/ap/users/' + value,
+    url: '/ap/user/' + value + '?action=activate',
     success: function (result) {
-      // Do something with the result
-      console.log('obj');
+      admins.showSwal('edituser');
+			refreshTable('#inactiveUsersTable');
     },
   });
 }
@@ -62,7 +62,6 @@ window.actionEvents = {
   },
   'click .edit': function (e, value, row, index) {
     activateUser(row._id);
-    refreshTable('#inactiveUsersTable');
     //alert('You click edit icon, row: ' + JSON.stringify(row));
   },
 };

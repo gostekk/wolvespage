@@ -48,13 +48,13 @@ router.post('/users', ensureAuthenticated, function (req, res) {
   }
 });
 
-// Edit user
-router.get('/edituser/:id', ensureAuthenticated, function (req, res) {
+// user overview
+router.get('/user/:id', ensureAuthenticated, function (req, res) {
   User.findById(req.params.id, function (err, userProfile) {
     if (err) throw err;
-    res.render('edituser', { layout: 'admin',
-                            userProfile: userProfile,
-                            title: 'Edycja użytkownika - Wolves page', });
+    res.render('user', { layout: 'admin',
+                        userProfile: userProfile,
+                        title: 'Podgląd użytkownika - Wolves page', });
   });
 });
 
@@ -67,13 +67,19 @@ router.delete('/user/:id', ensureAuthenticated, function (req, res) {
   });
 });
 
-// Activate/Inactivate user
-router.put('/users/:id', ensureAuthenticated, function (req, res) {
+// Activate/Deactivate user
+router.put('/user/:id', ensureAuthenticated, function (req, res) {
   User.findOne({ _id: req.params.id, },
   function (err, user) {
-    user.active = !user.active;
+    if (req.query.action == 'activate' && user.active == false) {
+      user.active = !user.active;
+    } else if (req.query.action == 'deactivate' && user.active == true) {
+      user.active = !user.active;
+    }
+
     user.save(function (err, updatedUser) {
       if (err) throw err;
+      res.status(200).send(true);
     });
   });
 });
