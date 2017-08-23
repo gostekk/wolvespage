@@ -37,7 +37,7 @@
             <div class="form-group">
               Pozycja
               <div class="radio">
-                <label class="radio-inline"><input type="radio" name="position" checked="checked" value="Emeryt">Emeryt</label>
+                <label class="radio-inline"><input type="radio" name="position" checked value="Emeryt">Emeryt</label>
                 <label class="radio-inline"><input type="radio" name="position" value="Bramkarz">Bramkarz</label>
                 <label class="radio-inline"><input type="radio" name="position" value="Obrońca">Obrońca</label>
                 <label class="radio-inline"><input type="radio" name="position" value="Napastnik">Napastnik</label>
@@ -247,7 +247,7 @@
       data.name = $('input[name=name]').val();
       data.surname = $('input[name=surname]').val();
       data.shirtnumber = $('input[name=shirtnumber]').val();
-      data.position = $('input[name=position]').val();
+      data.position = $( "input[type=radio][name=position]:checked" ).val();;
       data.password = $('input[name=password]').val();
       data.password2 = $('input[name=password2]').val();
 

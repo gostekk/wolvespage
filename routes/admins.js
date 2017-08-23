@@ -436,7 +436,7 @@ router.post('/adduser', ensureAuthenticated, function (req, res) {
 });
 
 // Edit user post
-router.post('/edituser/:id', ensureAuthenticated, function (req, res) {
+router.post('/user/:id', ensureAuthenticated, function (req, res) {
   if (req.user.permissions.editUser || req.user.permissions.superAdmin) {
     User.findById(req.params.id, function (err, user) {
       // USERNAME
