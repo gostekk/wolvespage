@@ -5,15 +5,7 @@
         <p class="category">Dodawanie nowej rozgrywki</p>
     </div>
     <div class="card-content">
-      {{#if errors}}
-        {{#each errors}}
-          <div class="alert alert-danger">{{msg}}</div>
-        {{/each}}
-      {{/if}}
-      {{#if success}}
-        <div class="alert alert-success">{{success}}</div>
-      {{/if}}
-      <form method="post" action="/ap/addevent">
+      <form id="addEventForm" onsubmit="return false;">
         <div class="row">
           <div class="col-md-4">
             <div class="form-group label-floating">
@@ -61,3 +53,36 @@
     </div>
   </div>
 </div>
+
+<script>
+  $(function() {
+    $('#addEventForm').submit(function(e) {
+      var data = {};
+      data.name = $('input[name=name]').val();
+      data.shortname = $('input[name=shortname]').val();
+      data.season = $('input[name=season]').val();
+      data.type = $('input[name=type]').val();
+      data.level = $('input[name=level]').val();
+
+      $.ajax({
+        type: 'POST',
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        url: '/ap/addevent',
+        success: function(value) {
+          admins.showSwal('success', value);
+        },
+        error: function(value) {
+          if (value.status == 409) {
+            jQuery.each(value.responseJSON, function(i, val) {
+              admins.showNotification('danger', val.msg);
+            });
+          } else if (value.status == 401) {
+            admins.showNotification('danger', value.responseText);
+          }
+
+        },
+      });
+    });
+  });
+</script>

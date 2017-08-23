@@ -22,14 +22,16 @@ admins = {
     });
   },
 
-  showSwal: function (type) {
-    if (type == 'success-message') {
+  showSwal: function (type, msg) {
+    if (type == 'success') {
       swal({
-        title: 'Good job!',
-        text: 'You clicked the button!',
-        buttonsStyling: false,
-        confirmButtonClass: 'btn btn-success',
+        text: msg,
         type: 'success',
+        allowOutsideClick: false,
+        allowEscapeKey: false,
+        allowEnterKey: false,
+        timer: 1000,
+        showConfirmButton: false,
       });
     } else if (type == 'edituser') {
       swal({

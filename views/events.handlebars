@@ -77,14 +77,19 @@ function actionFormatter(value, row, index) {
         '<a class="like" href="" onclick="return false;" title="Like">',
         '<i class="glyphicon glyphicon-heart"></i>',
         '</a>',
+				{{#if user.permissions.editEvent}}
         '<a class="edit ml10" nohref onclick="return false;" title="Edit">',
         '<i class="glyphicon glyphicon-edit"></i>',
         '</a>',
+				{{/if}}
+				{{#if user.permissions.deleteEvent}}
         '<a class="remove ml10" href="" onclick="return false;" title="Remove">',
         '<i class="glyphicon glyphicon-remove"></i>',
         '</a>'
+				{{/if}}
     ].join('');
 }
+{{#if user.permissions.deleteEvent}}
 function deleteEvent(value) {
   $.ajax({
     type: 'DELETE',
@@ -108,6 +113,8 @@ function deleteEvent(value) {
     },
   });
 }
+{{/if}}
+{{#if user.permissions.editEvent}}
 function activeChangeEvent(value) {
   $.ajax({
     type: 'put',
@@ -135,6 +142,7 @@ function activeChangeEvent(value) {
     },
   });
 }
+{{/if}}
 window.actionEvents = {
   'click .event': function (e, value, row, index) {
     window.location.href = "/ap/event/" + row._id;
@@ -142,10 +150,13 @@ window.actionEvents = {
   'click .like': function (e, value, row, index) {
     window.location.href = "/ap/event/" + row._id;
   },
+	{{#if user.permissions.editEvent}}
   'click .edit': function (e, value, row, index) {
     //alert('You click edit icon, row: ' + JSON.stringify(row));
     activeChangeEvent(row._id);
   },
+	{{/if}}
+	{{#if user.permissions.deleteEvent}}
   'click .remove': function (e, value, row, index) {
 		swal({
 			title: 'Jesteś pewien?',
@@ -159,6 +170,7 @@ window.actionEvents = {
 			deleteEvent(row._id);
 		})
   }
+	{{/if}}
 };
 async function refreshTable1() {
   await sleep(400);

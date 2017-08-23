@@ -47,42 +47,50 @@
 							<p>Dashboard</p>
 						</a>
 					</li>
+					{{#if user.permissions.addUser}}
 					<li {{#if navAdduser}} class="active" {{/if}}>
 						<a href="/ap/adduser">
 							<i class="material-icons">person_add</i>
 							<p>Dodaj użytkownika</p>
 						</a>
 					</li>
+					{{/if}}
 					<li {{#if navUsers}} class="active" {{/if}}>
 						<a href="/ap/users">
 							<i class="material-icons">people</i>
 							<p>Lista użytkowników</p>
 						</a>
 					</li>
+					{{#if user.permissions.editUser}}
 					<li {{#if navInactiveusers}} class="active" {{/if}}>
 						<a href="/ap/users?show=inactive">
 							<i class="material-icons">people_outline</i>
 							<p>Nieaktywni</p>
 						</a>
 					</li>
+					{{/if}}
+					{{#if user.permissions.addGame}}
 					<li {{#if navAddgame}} class="active" {{/if}}>
 						<a href="/ap/addgame">
 							<i class="material-icons">add_circle</i>
 							<p>Dodaj mecz</p>
 						</a>
 					</li>
+					{{/if}}
 					<li {{#if navGames}} class="active" {{/if}}>
 						<a href="/ap/games">
 							<i class="material-icons">today</i>
 							<p>Lista meczów</p>
 						</a>
 					</li>
+					{{#if user.permissions.addEvent}}
 					<li {{#if navAddevent}} class="active" {{/if}}>
 						<a href="/ap/addevent">
 							<i class="material-icons">create_new_folder</i>
 							<p>Dodaj rozgrywki</p>
 						</a>
 					</li>
+					{{/if}}
 					<li {{#if navEvents}} class="active" {{/if}}>
 						<a href="/ap/events">
 							<i class="material-icons">folder</i>

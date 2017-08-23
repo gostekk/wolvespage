@@ -44,14 +44,19 @@ function actionFormatter(value, row, index) {
         '<a class="like" href="" onclick="return false;" title="Like">',
         '<i class="material-icons">person</i>',
         '</a>',
+				{{#if user.permissions.editUser}}
         '<a class="edit" href="" onclick="return false;" title="Edit">',
         '<i class="material-icons">edit</i>',
         '</a>',
+				{{/if}}
+				{{#if user.permissions.deleteUser}}
         '<a class="remove" href="" onclick="return false;" title="Remove">',
         '<i class="material-icons">close</i>',
         '</a>',
+				{{/if}}
     ].join('');
 }
+{{#if user.permissions.deleteUser}}
 function deleteUser(value) {
   $.ajax({
     type: 'DELETE',
@@ -74,6 +79,7 @@ function deleteUser(value) {
     },
   });
 }
+{{/if}}
 window.actionEvents = {
   'click .profile': function (e, value, row, index) {
     window.location.href = "/profile/" + row._id;
@@ -81,9 +87,12 @@ window.actionEvents = {
   'click .like': function (e, value, row, index) {
     window.location.href = "/profile/" + row._id;
   },
+	{{#if user.permissions.editUser}}
   'click .edit': function (e, value, row, index) {
     window.location.href = "/ap/user/" + row._id;
   },
+	{{/if}}
+	{{#if user.permissions.deleteUser}}
   'click .remove': function (e, value, row, index) {
 		swal({
   		title: 'Jesteś pewien?',
@@ -97,5 +106,6 @@ window.actionEvents = {
 			deleteUser(row._id);
 		})
   }
+	{{/if}}
 };
 </script>

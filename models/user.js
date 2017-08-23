@@ -24,11 +24,52 @@ var UserSchema = mongoose.Schema({
   password: {
     type: String,
   },
-  adminflag: {
-    type: Boolean,
-  },
   active: {
     type: Boolean,
+  },
+  permissions: {
+    adminPanel: {
+      type: Boolean,
+    },
+    addUser: {
+      type: Boolean,
+    },
+    addGame: {
+      type: Boolean,
+    },
+    addEvent: {
+      type: Boolean,
+    },
+    addLiveGame: {
+      type: Boolean,
+    },
+    editUser: {
+      type: Boolean,
+    },
+    editGame: {
+      type: Boolean,
+    },
+    editEvent: {
+      type: Boolean,
+    },
+    editLiveGame: {
+      type: Boolean,
+    },
+    deleteUser: {
+      type: Boolean,
+    },
+    deleteGame: {
+      type: Boolean,
+    },
+    deleteEvent: {
+      type: Boolean,
+    },
+    editPermissions: {
+      type: Boolean,
+    },
+    superAdmin: {
+      type: Boolean,
+    },
   },
 });
 

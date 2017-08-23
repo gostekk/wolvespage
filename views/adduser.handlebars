@@ -1,26 +1,12 @@
-{{#if errors}}
-  {{#each errors}}
-    <script>
-      admins.showNotification('danger','{{msg}}');
-    </script>
-  {{/each}}
-{{/if}}
-{{#if success}}
-  <script>
-    admins.showNotification('success','{{success}}');
-  </script>
-{{/if}}
-
 <div class="col-md-12">
   <div class="card">
     <div class="card-header" data-background-color="purple">
-        <h4 class="title">Dodaj użytkownika</h4>
-        <p class="category">Dodawanie nowego użytkownika</p>
+      <h4 class="title">Dodaj użytkownika</h4>
+      <p class="category">Dodawanie nowego użytkownika</p>
     </div>
     <div class="card-content">
-      <form method="post" action="/ap/adduser">
+      <form id="addUserForm" onsubmit="return false;">
         <div class="row">
-
           <div class="col-md-4">
             <div class="form-group label-floating">
               <label class="control-label">Username</label>
@@ -55,6 +41,7 @@
                 <label class="radio-inline"><input type="radio" name="position" value="Bramkarz">Bramkarz</label>
                 <label class="radio-inline"><input type="radio" name="position" value="Obrońca">Obrońca</label>
                 <label class="radio-inline"><input type="radio" name="position" value="Napastnik">Napastnik</label>
+                <label class="radio-inline"><input type="radio" name="position" value="Admin">Admin</label>
               </div>
             </div>
           </div>
@@ -74,15 +61,176 @@
           </div>
         </div>
         <div class="row">
-          <div class="col-xs-6">
-            <div class="togglebutton">
-        	    <label>
-            	  <input type="checkbox" name="adminflag" id="adminflag">
-        		    Admin flag
-        	    </label>
-            </div>
+          <div class="col-sm-12">
+            <table class="table">
+              <thead class="text-danger">
+                <th>Nazwa uprawnienia</th>
+                <th>Opis</th>
+                <th>Toogle</th>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>adminPanel</td>
+                  <td>Możliwość wejścia do panelu admina</td>
+                  <td>
+                    <div class="togglebutton">
+				            	<label>
+				                <input type="checkbox" name="adminPanel">
+				            	</label>
+				            </div>
+                  </td>
+                </tr>
+                {{#if user.permissions.editPermissions}}
+                <tr>
+                  <td>addUser</td>
+                  <td>Dodawanie nowego użytkownika</td>
+                  <td>
+                    <div class="togglebutton">
+				            	<label>
+				                <input type="checkbox" name="addUser">
+				            	</label>
+				            </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>addGame</td>
+                  <td>Dodawanie nowego meczu</td>
+                  <td>
+                    <div class="togglebutton">
+				            	<label>
+				                <input type="checkbox" name="addGame">
+				            	</label>
+				            </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>addEvent</td>
+                  <td>Dodawanie nowych rozgrywek</td>
+                  <td>
+                    <div class="togglebutton">
+				            	<label>
+				                <input type="checkbox" name="addEvent">
+				            	</label>
+				            </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>addLiveGame</td>
+                  <td>Dodawanie meczu live</td>
+                  <td>
+                    <div class="togglebutton">
+				            	<label>
+				                <input type="checkbox" name="addLiveGame">
+				            	</label>
+				            </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>editUser</td>
+                  <td>Możliwość edycji użytkownika</td>
+                  <td>
+                    <div class="togglebutton">
+				            	<label>
+				                <input type="checkbox" name="editUser">
+				            	</label>
+				            </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>editGame</td>
+                  <td>Możliwość edycji meczu</td>
+                  <td>
+                    <div class="togglebutton">
+				            	<label>
+				                <input type="checkbox" name="editGame">
+				            	</label>
+				            </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>editEvent</td>
+                  <td>Możliwość edycji rozgrywek</td>
+                  <td>
+                    <div class="togglebutton">
+				            	<label>
+				                <input type="checkbox" name="editEvent">
+				            	</label>
+				            </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>editLiveGame</td>
+                  <td>Możliwość edycji meczu na żywo</td>
+                  <td>
+                    <div class="togglebutton">
+				            	<label>
+				                <input type="checkbox" name="editLiveGame">
+				            	</label>
+				            </div>
+                  </td>
+                </tr>
+                {{/if}}
+                {{#if user.permissions.superAdmin}}
+                <tr>
+                  <td>deleteUser</td>
+                  <td>Możliwość usuniecia użytkownika*</td>
+                  <td>
+                    <div class="togglebutton">
+				            	<label>
+				                <input type="checkbox" name="deleteUser">
+				            	</label>
+				            </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>deleteGame</td>
+                  <td>Możliwość usuniecia meczu</td>
+                  <td>
+                    <div class="togglebutton">
+				            	<label>
+				                <input type="checkbox" name="deleteGame">
+				            	</label>
+				            </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>deleteEvent</td>
+                  <td>Możliwość usuniecia rozgrywek</td>
+                  <td>
+                    <div class="togglebutton">
+				            	<label>
+				                <input type="checkbox" name="deleteEvent">
+				            	</label>
+				            </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>editPermissions</td>
+                  <td>Możliwość edycji uprawnień</td>
+                  <td>
+                    <div class="togglebutton">
+				            	<label>
+				                <input type="checkbox" name="editPermissions">
+				            	</label>
+				            </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td>superAdmin</td>
+                  <td>Uprawnienia superAdmina</td>
+                  <td>
+                    <div class="togglebutton">
+				            	<label>
+				                <input type="checkbox" name="superAdmin">
+				            	</label>
+				            </div>
+                  </td>
+                </tr>
+                {{/if}}
+              </tbody>
+            </table>
           </div>
-          <div class="col-xs-6">
+          <div class="col-xs-12">
             <button type="submit" class="btn btn-success pull-right">Submit</button>
           </div>
         </div>
@@ -90,3 +238,69 @@
     </div>
   </div>
 </div>
+
+<script>
+  $(function() {
+    $('#addUserForm').submit(function(e) {
+      var data = {};
+      data.username = $('input[name=username]').val();
+      data.name = $('input[name=name]').val();
+      data.surname = $('input[name=surname]').val();
+      data.shirtnumber = $('input[name=shirtnumber]').val();
+      data.position = $('input[name=position]').val();
+      data.password = $('input[name=password]').val();
+      data.password2 = $('input[name=password2]').val();
+
+      {{#if user.permissions.superAdmin}}
+        data.permissions = {}
+        data.permissions.adminPanel = $('input[type=checkbox][name=adminPanel]').is(':checked');
+        data.permissions.addUser = $('input[type=checkbox][name=addUser]').is(':checked');
+        data.permissions.addGame = $('input[type=checkbox][name=addGame]').is(':checked');
+        data.permissions.addEvent = $('input[type=checkbox][name=addEvent]').is(':checked');
+        data.permissions.addLiveGame = $('input[type=checkbox][name=addLiveGame]').is(':checked');
+        data.permissions.editUser = $('input[type=checkbox][name=editUser]').is(':checked');
+        data.permissions.editGame = $('input[type=checkbox][name=editGame]').is(':checked');
+        data.permissions.editEvent = $('input[type=checkbox][name=editEvent]').is(':checked');
+        data.permissions.editLiveGame = $('input[type=checkbox][name=editLiveGame]').is(':checked');
+        data.permissions.deleteUser = $('input[type=checkbox][name=deleteUser]').is(':checked');
+        data.permissions.deleteGame = $('input[type=checkbox][name=deleteGame]').is(':checked');
+        data.permissions.deleteEvent = $('input[type=checkbox][name=deleteEvent]').is(':checked');
+        data.permissions.editPermissions = $('input[type=checkbox][name=editPermissions]').is(':checked');
+        data.permissions.superAdmin = $('input[type=checkbox][name=superAdmin]').is(':checked');
+      {{else}}
+        {{#if user.permissions.editPermissions}}
+          data.permissions = {}
+          data.permissions.adminPanel = $('input[type=checkbox][name=adminPanel]').is(':checked');
+          data.permissions.addUser = $('input[type=checkbox][name=addUser]').is(':checked');
+          data.permissions.addGame = $('input[type=checkbox][name=addGame]').is(':checked');
+          data.permissions.addEvent = $('input[type=checkbox][name=addEvent]').is(':checked');
+          data.permissions.addLiveGame = $('input[type=checkbox][name=addLiveGame]').is(':checked');
+          data.permissions.editUser = $('input[type=checkbox][name=editUser]').is(':checked');
+          data.permissions.editGame = $('input[type=checkbox][name=editGame]').is(':checked');
+          data.permissions.editEvent = $('input[type=checkbox][name=editEvent]').is(':checked');
+          data.permissions.editLiveGame = $('input[type=checkbox][name=editLiveGame]').is(':checked');
+        {{/if}}
+      {{/if}}
+
+      $.ajax({
+        type: 'POST',
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        url: '/ap/adduser',
+        success: function(value) {
+          admins.showSwal('success', value);
+        },
+        error: function(value) {
+          if (value.status == 409) {
+            jQuery.each(value.responseJSON, function(i, val) {
+              admins.showNotification('danger', val.msg);
+            });
+          } else if (value.status == 401) {
+            admins.showNotification('danger', value.responseText);
+          }
+
+        },
+      });
+    });
+  });
+</script>

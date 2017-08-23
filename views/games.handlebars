@@ -1,15 +1,3 @@
-{{#if errors}}
-	{{#each errors}}
-		<script>
-			admins.showNotification('danger','{{msg}}');
-		</script>
-	{{/each}}
-{{/if}}
-{{#if success}}
-	<script>
-		admins.showNotification('success','{{success}}');
-	</script>
-{{/if}}
 <div class="row">
 	<div class="col-md-12">
 	  <div class="card">
@@ -61,36 +49,41 @@ function actionFormatter(value, row, index) {
         '<a class="like" href="" onclick="return false" title="Like">',
         '<i class="glyphicon glyphicon-heart"></i>',
         '</a>',
+				{{#if user.permissions.editGame}}
         '<a class="edit ml10" nohref onclick="return false;" title="Edit">',
         '<i class="glyphicon glyphicon-edit"></i>',
         '</a>',
+				{{/if}}
+				{{#if user.permissions.deleteGame}}
         '<a class="remove ml10" href="" onclick="return false;" title="Remove">',
         '<i class="glyphicon glyphicon-remove"></i>',
         '</a>'
+				{{/if}}
     ].join('');
 }
+{{#if user.permissions.deleteGame}}
 function deleteGame(value) {
   $.ajax({
     type: 'DELETE',
     url: '/ap/game/' + value,
-    success: function (result) {
-			if (result){
-				refreshTable('#gamesTable');
-	  		swal(
+    success: function (response) {
+			refreshTable('#gamesTable');
+	  	swal(
 	    	'Usuniety!',
 	    	'Mecz został pomyślnie usuniety z bazy danych',
-	    	'success'
-		  	)
-			} else {
-				swal(
-	      'Error',
-	      'Wystąpił błąd podczas próby usuniecia meczu',
-	      'error'
-	    )
-			}
+	    	'success',
+		  )
     },
+		error: function (response) {
+			swal(
+			'Error',
+			'Wystąpił błąd podczas próby usuniecia meczu',
+			'error'
+			)
+		},
   });
 }
+{{/if}}
 window.actionEvents = {
   'click .game': function (e, value, row, index) {
     window.location.href = "/ap/game/" + row._id;
@@ -98,9 +91,12 @@ window.actionEvents = {
   'click .like': function (e, value, row, index) {
     window.location.href = "/ap/game/" + row._id;
   },
+	{{#if user.permissions.editGame}}
   'click .edit': function (e, value, row, index) {
     console.log('obj');
   },
+	{{/if}}
+	{{#if user.permissions.deleteGame}}
   'click .remove': function (e, value, row, index) {
 		swal({
   		title: 'Jesteś pewien?',
@@ -114,5 +110,6 @@ window.actionEvents = {
 			deleteGame(row._id);
 		})
   }
+	{{/if}}
 };
 </script>

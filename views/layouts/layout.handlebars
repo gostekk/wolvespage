@@ -42,7 +42,7 @@
               <ul class="dropdown-menu">
                 <li><a href="/profile/{{user._id}}">Profile</a></li>
                 <li><a href="/uc">UC</a></li>
-                {{#if user.adminflag}}
+                {{#if user.permissions.adminPanel}}
                   <li role="presentation"><a href="/ap/admin">AP</a></li>
                 {{/if}}
                 <li><a href="/logout">Logout</a></li>

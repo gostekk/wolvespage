@@ -1,0 +1,205 @@
+<div class="col-sm-12">
+  <form id="editPermissionsForm" onsubmit="return false;">
+    <table class="table">
+      <thead class="text-danger">
+        <th>Nazwa uprawnienia</th>
+        <th>Opis</th>
+        <th>Toogle</th>
+      </thead>
+      <tbody>
+        <tr>
+          <td>adminPanel</td>
+          <td>Możliwość wejścia do panelu admina</td>
+          <td>
+            <div class="togglebutton">
+              <label>
+                <input type="checkbox" name="adminPanel" {{#if userProfile.permissions.adminPanel}}checked=""{{/if}} {{#if user.permissions.superAdmin}}{{else}}{{#if userProfile.permissions.superAdmin}}onclick="return false;"{{/if}}{{/if}}>
+              </label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>addUser</td>
+          <td>Dodawanie nowego użytkownika</td>
+          <td>
+            <div class="togglebutton">
+              <label>
+                <input type="checkbox" name="addUser" {{#if userProfile.permissions.addUser}}checked=""{{/if}} {{#if user.permissions.superAdmin}}{{else}}{{#if userProfile.permissions.superAdmin}}onclick="return false;"{{/if}}{{/if}}>
+              </label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>addGame</td>
+          <td>Dodawanie nowego meczu</td>
+          <td>
+            <div class="togglebutton">
+              <label>
+                <input type="checkbox" name="addGame" {{#if userProfile.permissions.addGame}}checked=""{{/if}} {{#if user.permissions.superAdmin}}{{else}}{{#if userProfile.permissions.superAdmin}}onclick="return false;"{{/if}}{{/if}}>
+              </label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>addEvent</td>
+          <td>Dodawanie nowych rozgrywek</td>
+          <td>
+            <div class="togglebutton">
+              <label>
+                <input type="checkbox" name="addEvent" {{#if userProfile.permissions.addEvent}}checked=""{{/if}} {{#if user.permissions.superAdmin}}{{else}}{{#if userProfile.permissions.superAdmin}}onclick="return false;"{{/if}}{{/if}}>
+              </label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>addLiveGame</td>
+          <td>Dodawanie meczu live</td>
+          <td>
+            <div class="togglebutton">
+              <label>
+                <input type="checkbox" name="addLiveGame" {{#if userProfile.permissions.addLiveGame}}checked=""{{/if}} {{#if user.permissions.superAdmin}}{{else}}{{#if userProfile.permissions.superAdmin}}onclick="return false;"{{/if}}{{/if}}>
+              </label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>editUser</td>
+          <td>Możliwość edycji użytkownika</td>
+          <td>
+            <div class="togglebutton">
+              <label>
+                <input type="checkbox" name="editUser" {{#if userProfile.permissions.editUser}}checked=""{{/if}} {{#if user.permissions.superAdmin}}{{else}}{{#if userProfile.permissions.superAdmin}}onclick="return false;"{{/if}}{{/if}}>
+              </label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>editGame</td>
+          <td>Możliwość edycji meczu</td>
+          <td>
+            <div class="togglebutton">
+              <label>
+                <input type="checkbox" name="editGame" {{#if userProfile.permissions.editGame}}checked=""{{/if}} {{#if user.permissions.superAdmin}}{{else}}{{#if userProfile.permissions.superAdmin}}onclick="return false;"{{/if}}{{/if}}>
+              </label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>editEvent</td>
+          <td>Możliwość edycji rozgrywek</td>
+          <td>
+            <div class="togglebutton">
+              <label>
+                <input type="checkbox" name="editEvent" {{#if userProfile.permissions.editEvent}}checked=""{{/if}} {{#if user.permissions.superAdmin}}{{else}}{{#if userProfile.permissions.superAdmin}}onclick="return false;"{{/if}}{{/if}}>
+              </label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>editLiveGame</td>
+          <td>Możliwość edycji meczu na żywo</td>
+          <td>
+            <div class="togglebutton">
+              <label>
+                <input type="checkbox" name="editLiveGame" {{#if userProfile.permissions.editLiveGame}}checked=""{{/if}} {{#if user.permissions.superAdmin}}{{else}}{{#if userProfile.permissions.superAdmin}}onclick="return false;"{{/if}}{{/if}}>
+              </label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>deleteUser</td>
+          <td>Możliwość usuniecia użytkownika*</td>
+          <td>
+            <div class="togglebutton">
+              <label>
+                <input type="checkbox" name="deleteUser" {{#if userProfile.permissions.deleteUser}}checked=""{{/if}} {{#if user.permissions.superAdmin}}{{else}}onclick="return false;"{{/if}}>
+              </label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>deleteGame</td>
+          <td>Możliwość usuniecia meczu</td>
+          <td>
+            <div class="togglebutton">
+              <label>
+                <input type="checkbox" name="deleteGame" {{#if userProfile.permissions.deleteGame}}checked=""{{/if}} {{#if user.permissions.superAdmin}}{{else}}onclick="return false;"{{/if}}>
+              </label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>deleteEvent</td>
+          <td>Możliwość usuniecia rozgrywek</td>
+          <td>
+            <div class="togglebutton">
+              <label>
+                <input type="checkbox" name="deleteEvent" {{#if userProfile.permissions.deleteEvent}}checked=""{{/if}} {{#if user.permissions.superAdmin}}{{else}}onclick="return false;"{{/if}}>
+              </label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>editPermissions</td>
+          <td>Możliwość edycji uprawnień</td>
+          <td>
+            <div class="togglebutton">
+              <label>
+                <input type="checkbox" name="editPermissions" {{#if userProfile.permissions.editPermissions}}checked=""{{/if}} {{#if user.permissions.superAdmin}}{{else}}onclick="return false;"{{/if}}>
+              </label>
+            </div>
+          </td>
+        </tr>
+        <tr>
+          <td>superAdmin</td>
+          <td>Uprawnienia superAdmina</td>
+          <td>
+            <div class="togglebutton">
+              <label>
+                <input type="checkbox" name="superAdmin" {{#if userProfile.permissions.superAdmin}}checked=""{{/if}} {{#if user.permissions.superAdmin}}{{else}}onclick="return false;"{{/if}}>
+              </label>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="col-xs-12">
+      <button type="submit" class="btn btn-success pull-right">Submit</button>
+    </div>
+  </form>
+</div>
+<script>
+  $(function() {
+    $('#editPermissionsForm').submit(function(e) {
+      var data = {};
+      data.permissions = {}
+      data.permissions.adminPanel = $('input[type=checkbox][name=adminPanel]').is(':checked');
+      data.permissions.addUser = $('input[type=checkbox][name=addUser]').is(':checked');
+      data.permissions.addGame = $('input[type=checkbox][name=addGame]').is(':checked');
+      data.permissions.addEvent = $('input[type=checkbox][name=addEvent]').is(':checked');
+      data.permissions.addLiveGame = $('input[type=checkbox][name=addLiveGame]').is(':checked');
+      data.permissions.editUser = $('input[type=checkbox][name=editUser]').is(':checked');
+      data.permissions.editGame = $('input[type=checkbox][name=editGame]').is(':checked');
+      data.permissions.editEvent = $('input[type=checkbox][name=editEvent]').is(':checked');
+      data.permissions.editLiveGame = $('input[type=checkbox][name=editLiveGame]').is(':checked');
+      data.permissions.deleteUser = $('input[type=checkbox][name=deleteUser]').is(':checked');
+      data.permissions.deleteGame = $('input[type=checkbox][name=deleteGame]').is(':checked');
+      data.permissions.deleteEvent = $('input[type=checkbox][name=deleteEvent]').is(':checked');
+      data.permissions.editPermissions = $('input[type=checkbox][name=editPermissions]').is(':checked');
+      data.permissions.superAdmin = $('input[type=checkbox][name=superAdmin]').is(':checked');
+
+      $.ajax({
+        type: 'POST',
+        data: JSON.stringify(data),
+        contentType: 'application/json',
+        url: '/ap/editpermissions/{{userProfile._id}}',
+        success: function(value) {
+          admins.showSwal('success', value);
+        },
+        error: function(value) {
+          admins.showNotification('danger', value.responseText);
+        },
+      });
+    });
+  });
+</script>

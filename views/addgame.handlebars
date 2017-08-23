@@ -206,91 +206,90 @@
 <!-- end row -->
 
 <script>
-  $(function() {
-    $('#addGameForm').submit(function(e) {
-      // sendAjax();
-      var data = {};
-      data.teamname = $('input[name=name]').val();
-      data.teamlogo = $('input[name=logo]').val();
-      data.date = $('input[name=date]').val();
-      data.home = $('input[type=checkbox][name=home]').is(':checked');
-      data.event = $('#eventsTable').bootstrapTable('getAllSelections');
-      data.periods = {};
-      data.periods.first = {};
-      data.periods.first.our = $('input[name=firstOur]').val();
-      data.periods.first.opponent = $('input[name=firstOpponent]').val();
-      data.periods.second = {};
-      data.periods.second.our = $('input[name=secondOur]').val();
-      data.periods.second.opponent = $('input[name=secondOpponent]').val();
-      data.status = {};
-      data.periods.final = {};
-      data.periods.final.our = (+data.periods.first.our + +data.periods.second.our);
-      data.periods.final.opponent = (+data.periods.first.opponent + +data.periods.second.opponent);
-      if ($('input[name=thirdOur]').val() && $('input[name=thirdOpponent]').val()) {
-        data.periods.third = {};
-        data.periods.third.our = $('input[name=thirdOur]').val();
-        data.periods.third.opponent = $('input[name=thirdOpponent]').val();
-        data.periods.final.our += +data.periods.third.our;
-        data.periods.final.opponent += +data.periods.third.opponent;
-      }
-      if ($('input[name=overtimeOpponent]').val() && $('input[name=overtimeOur]').val()){
-        data.periods.overtime = {};
-        data.periods.overtime.our = $('input[name=overtimeOur]').val();
-        data.periods.overtime.opponent = $('input[name=overtimeOpponent]').val();
-        data.periods.final.our += +data.periods.overtime.our;
-        data.periods.final.opponent += +data.periods.overtime.opponent;
-        if ($('input[name=shootoutOpponent]').val() && $('input[name=shootoutOur]').val()){
-          data.periods.shootout = {};
-          data.periods.shootout.our = $('input[name=shootoutOur]').val();
-          data.periods.shootout.opponent = $('input[name=shootoutOpponent]').val();
-          data.periods.final.our += +data.periods.shootout.our;
-          data.periods.final.opponent += +data.periods.shootout.opponent;
-          if (data.periods.shootout.our > data.periods.shootout.opponent) {
-            data.status.shootoutWin = 1;
-          } else if (data.periods.shootout.our < data.periods.shootout.opponent) {
-            data.status.shootoutLose = 1;
-          }
-        } else {
-          if (data.periods.overtime.our > data.periods.overtime.opponent) {
-            data.status.overtimeWin = 1;
-          } else if (data.periods.overtime.out < data.periods.overtime.opponent) {
-            data.status.overtimeLose = 1;
-          }
+$(function() {
+  $('#addGameForm').submit(function(e) {
+    var data = {};
+    data.teamname = $('input[name=name]').val();
+    data.teamlogo = $('input[name=logo]').val();
+    data.date = $('input[name=date]').val();
+    data.home = $('input[type=checkbox][name=home]').is(':checked');
+    data.event = $('#eventsTable').bootstrapTable('getAllSelections');
+    data.periods = {};
+    data.periods.first = {};
+    data.periods.first.our = $('input[name=firstOur]').val();
+    data.periods.first.opponent = $('input[name=firstOpponent]').val();
+    data.periods.second = {};
+    data.periods.second.our = $('input[name=secondOur]').val();
+    data.periods.second.opponent = $('input[name=secondOpponent]').val();
+    data.status = {};
+    data.periods.final = {};
+    data.periods.final.our = (+data.periods.first.our + +data.periods.second.our);
+    data.periods.final.opponent = (+data.periods.first.opponent + +data.periods.second.opponent);
+    if ($('input[name=thirdOur]').val() && $('input[name=thirdOpponent]').val()) {
+      data.periods.third = {};
+      data.periods.third.our = $('input[name=thirdOur]').val();
+      data.periods.third.opponent = $('input[name=thirdOpponent]').val();
+      data.periods.final.our += +data.periods.third.our;
+      data.periods.final.opponent += +data.periods.third.opponent;
+    }
+    if ($('input[name=overtimeOpponent]').val() && $('input[name=overtimeOur]').val()){
+      data.periods.overtime = {};
+      data.periods.overtime.our = $('input[name=overtimeOur]').val();
+      data.periods.overtime.opponent = $('input[name=overtimeOpponent]').val();
+      data.periods.final.our += +data.periods.overtime.our;
+      data.periods.final.opponent += +data.periods.overtime.opponent;
+      if ($('input[name=shootoutOpponent]').val() && $('input[name=shootoutOur]').val()){
+        data.periods.shootout = {};
+        data.periods.shootout.our = $('input[name=shootoutOur]').val();
+        data.periods.shootout.opponent = $('input[name=shootoutOpponent]').val();
+        data.periods.final.our += +data.periods.shootout.our;
+        data.periods.final.opponent += +data.periods.shootout.opponent;
+        if (data.periods.shootout.our > data.periods.shootout.opponent) {
+          data.status.shootoutWin = 1;
+        } else if (data.periods.shootout.our < data.periods.shootout.opponent) {
+          data.status.shootoutLose = 1;
         }
       } else {
-        if (data.periods.final.our > data.periods.final.opponent) {
-          data.status.win = 1;
-        } else if (data.periods.final.our < data.periods.final.opponent) {
-          data.status.lose = 1;
-        } else {
-          data.status.draw = 1;
+        if (data.periods.overtime.our > data.periods.overtime.opponent) {
+          data.status.overtimeWin = 1;
+        } else if (data.periods.overtime.out < data.periods.overtime.opponent) {
+          data.status.overtimeLose = 1;
         }
       }
-      data.players = [];
-      players = $('#statsTable').bootstrapTable('getAllSelections');
-      jQuery.each(players, function(i, val) {
-        data.players.push({
-          playerID: val._id,
-          _id: val._id
-        });
-      });
-      $.ajax({
-        type: 'POST',
-        data: JSON.stringify(data),
-        contentType: 'application/json',
-        url: '/ap/addgame',
-        success: function(value) {
-          admins.showNotification('success', 'Poprawnie dodano mecz');
-        },
-        error: function(value) {
-          admins.showNotification('danger', value.responseText);
-        },
+    } else {
+      if (data.periods.final.our > data.periods.final.opponent) {
+        data.status.win = 1;
+      } else if (data.periods.final.our < data.periods.final.opponent) {
+        data.status.lose = 1;
+      } else {
+        data.status.draw = 1;
+      }
+    }
+    data.players = [];
+    players = $('#statsTable').bootstrapTable('getAllSelections');
+    jQuery.each(players, function(i, val) {
+      data.players.push({
+        playerID: val._id,
+        _id: val._id
       });
     });
+    $.ajax({
+      type: 'POST',
+      data: JSON.stringify(data),
+      contentType: 'application/json',
+      url: '/ap/addgame',
+      success: function(value) {
+        admins.showNotification('success', 'Poprawnie dodano mecz');
+      },
+      error: function(value) {
+        admins.showNotification('danger', value.responseText);
+      },
+    });
   });
-  // $(function () {
-  //   $('#datepicker').datepicker();
-  // });
+});
+// $(function () {
+//   $('#datepicker').datepicker();
+// });
 </script>
 
 <script src="/js/jquery.bootstrap.js" type="text/javascript"></script>

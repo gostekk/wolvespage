@@ -85,12 +85,12 @@
 
 <script>
 function goalsFormatter(value) {
-return '<a class="minus" nohref><i class="glyphicon glyphicon-minus-sign"></i></a> ' + value + ' <a class="plus" nohref><i class="glyphicon glyphicon-plus-sign"></i></a>';
+return {{#if user.permissions.editGame}}'<a class="minus" nohref><i class="glyphicon glyphicon-minus-sign"></i></a> ' + value + ' <a class="plus" nohref><i class="glyphicon glyphicon-plus-sign"></i></a>'{{else}}value{{/if}};
 }
 function pimsFormatter(value) {
-return '<a class="minus" nohref><i class="glyphicon glyphicon-minus-sign"></i></a> ' + value + ' <a class="2" nohref>2</a> <a class="4" nohref>4</a> <a class="5" nohref>5</a> <a class="10" nohref>10</a>';
+return {{#if user.permissions.editGame}}'<a class="minus" nohref><i class="glyphicon glyphicon-minus-sign"></i></a> ' + value + ' <a class="2" nohref>2</a> <a class="4" nohref>4</a> <a class="5" nohref>5</a> <a class="10" nohref>10</a>'{{else}}value{{/if}};
 }
-
+{{#if user.permissions.editGame}}
 function incGoals(row, value) {
 	var data = {};
 	data.value = value;
@@ -176,4 +176,5 @@ window.goalsEvents = {
 	admins.showSwal('refreshplayers');
 },
 };
+{{/if}}
 </script>
