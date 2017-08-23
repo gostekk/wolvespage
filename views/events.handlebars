@@ -12,8 +12,7 @@
                data-classes="table"
                data-search="true"
                data-show-refresh="true"
-               data-show-toggle="true"
-               data-show-columns="true"
+							 data-buttons-align="left"
                data-sort-name="season"
                data-sort-order="desc"
                data-url="/ap/events/?active=true">
@@ -44,10 +43,9 @@
                data-classes="table"
                data-search="true"
                data-show-refresh="true"
-               data-show-toggle="true"
-               data-show-columns="true"
                data-sort-name="season"
                data-sort-order="desc"
+							 data-buttons-align="left"
                data-url="/ap/events/?active=false">
             <thead>
             <tr>
@@ -74,18 +72,18 @@ function seasonFormatter(value) {
 }
 function actionFormatter(value, row, index) {
     return [
-        '<a class="like" href="" onclick="return false;" title="Like">',
+        '<button class="like btn btn-info btn-xs" href="" style="margin-top: 0px; margin-bottom: 0px" onclick="return false;" title="Like">',
         '<i class="glyphicon glyphicon-heart"></i>',
-        '</a>',
+        '</button>',
 				{{#if user.permissions.editEvent}}
-        '<a class="edit ml10" nohref onclick="return false;" title="Edit">',
+        '<button class="edit btn btn-success btn-xs" href="" style="margin-top: 0px; margin-bottom: 0px" onclick="return false;" title="Edit">',
         '<i class="glyphicon glyphicon-edit"></i>',
-        '</a>',
+        '</button>',
 				{{/if}}
 				{{#if user.permissions.deleteEvent}}
-        '<a class="remove ml10" href="" onclick="return false;" title="Remove">',
+        '<button class="remove btn btn-danger btn-xs" href="" style="margin-top: 0px; margin-bottom: 0px" onclick="return false;" title="Remove">',
         '<i class="glyphicon glyphicon-remove"></i>',
-        '</a>'
+        '</button>'
 				{{/if}}
     ].join('');
 }
