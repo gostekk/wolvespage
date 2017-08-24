@@ -156,6 +156,31 @@ router.post('/game/:id', ensureAuthenticated, function (req, res) {
   });
 });
 
+// Adding user to game
+// TODO: create button or something to add player
+router.get('/game/adduser/:id', ensureAuthenticated, function (req, res) {
+  if (req.user.permissions.editGame || req.user.permissions.superAdmin) {
+    User.findById(req.query.id, function (err, user) {
+      Game.findOneAndUpdate({ _id: req.params.id },
+      {
+        $push:
+        {
+          players:
+          {
+            playerID: user._id,
+            _id: user._id,
+          },
+        },
+      }, function (err, user) {
+        if (err) throw err;
+        res.status(200).send(true);
+      });
+    });
+  } else {
+    res.status(401);
+  }
+});
+
 // Inc/dec goals
 // TODO: goals can be minus degree value
 router.put('/game/:id', ensureAuthenticated, function (req, res) {
