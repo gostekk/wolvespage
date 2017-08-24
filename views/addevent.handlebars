@@ -61,8 +61,8 @@
       data.name = $('input[name=name]').val();
       data.shortname = $('input[name=shortname]').val();
       data.season = $('input[name=season]').val();
-      data.type = $('input[name=type]').val();
-      data.level = $('input[name=level]').val();
+      data.type = $( "input[type=radio][name=type]:checked" ).val();
+      data.level = $( "input[type=radio][name=level]:checked" ).val();
 
       $.ajax({
         type: 'POST',
