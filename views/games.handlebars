@@ -25,7 +25,7 @@
               <th data-field="teamlogo" data-formatter="teamlogoFormatter" data-sortable="true">Logo</th>
               <th data-field="eventID.shortname" data-sortable="true">K.Nazwa</th>
               <th data-field="eventID.level" data-sortable="true">Poziom</th>
-              <th data-field="date" data-sortable="true">Data spotkania</th>
+              <th data-field="date" data-formatter="dateFormatter" data-sortable="true">Data spotkania</th>
               <th data-field="action" data-formatter="actionFormatter" data-events="actionEvents">Action</th>
             </tr>
           </thead>
@@ -62,6 +62,9 @@ function gameFormatter(value) {
 }
 function teamlogoFormatter(value) {
     return '<img src="'  + value + '" style="height: 40px; width: 40px;">';
+}
+function dateFormatter(value) {
+	return moment(value).format('DD.MM.YYYY');
 }
 function actionFormatter(value, row, index) {
     return [
