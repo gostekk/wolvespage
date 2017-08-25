@@ -13,6 +13,7 @@
                data-search="true"
                data-show-refresh="true"
                data-show-toggle="true"
+							 data-row-style="rowStyle"
                data-show-columns="true"
                data-url="/ap/users">
             <thead>
@@ -33,6 +34,24 @@
 </div>
 
 <script>
+function rowStyle(row, index) {
+    var classes = ['active', 'success', 'info', 'warning', 'danger'];
+
+    if (row.permissions.superAdmin) {
+        return {
+          classes: classes[2]
+        };
+    } else if (row.permissions.adminPanel) {
+			return {
+				classes: classes[1]
+			};
+		} else if (!row.active) {
+			return {
+				classes: classes[3]
+			};
+		}
+    return {};
+}
 function idFormatter(value) {
     return '<a href="/profile/' + value + '">' + value + '</a>';
 }

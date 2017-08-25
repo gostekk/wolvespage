@@ -16,6 +16,7 @@
                data-show-columns="true"
                data-sort-name="date"
                data-sort-order="desc"
+							 data-row-style="rowStyle"
                data-url="/ap/games">
             <thead>
             <tr>
@@ -35,6 +36,24 @@
 </div>
 
 <script>
+function rowStyle(row, index) {
+    var classes = ['active', 'success', 'info', 'warning', 'danger'];
+
+    if (row.status.win || row.status.overtimeWin || row.status.shootoutWin) {
+        return {
+          classes: classes[1]
+        };
+    } else if (row.status.lose || row.status.overtimeLose || row.status.shootoutLose) {
+			return {
+				classes: classes[4]
+			};
+		} else if (row.status.draw) {
+			return {
+				classes: classes[3]
+			};
+		}
+    return {};
+}
 function idFormatter(value) {
     return '<a href="/ap/game/' + value + '">' + value + '</a>';
 }
@@ -46,16 +65,16 @@ function teamlogoFormatter(value) {
 }
 function actionFormatter(value, row, index) {
     return [
-        '<button class="like btn btn-info btn-xs" href="" style="margin-top: 0px; margin-bottom: 0px" onclick="return false;" title="Like">',
+        '<button class="like btn btn-info btn-xs btn-inline" href="" style="margin-top: 0px; margin-bottom: 0px" onclick="return false;" title="Like">',
         '<i class="glyphicon glyphicon-heart"></i>',
         '</button>',
 				{{#if user.permissions.editGame}}
-        '<button class="edit btn btn-success btn-xs" href="" style="margin-top: 0px; margin-bottom: 0px" onclick="return false;" title="Edit">',
+        '<button class="edit btn btn-success btn-xs btn-inline" href="" style="margin-top: 0px; margin-bottom: 0px" onclick="return false;" title="Edit">',
         '<i class="glyphicon glyphicon-edit"></i>',
         '</button>',
 				{{/if}}
 				{{#if user.permissions.deleteGame}}
-        '<button class="remove btn btn-danger btn-xs" href="" style="margin-top: 0px; margin-bottom: 0px" onclick="return false;" title="Remove">',
+        '<button class="remove btn btn-danger btn-xs btn-inline" href="" style="margin-top: 0px; margin-bottom: 0px" onclick="return false;" title="Remove">',
         '<i class="glyphicon glyphicon-remove"></i>',
         '</button>'
 				{{/if}}
