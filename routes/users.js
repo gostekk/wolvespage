@@ -4,6 +4,60 @@ var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 
 var User = require('../models/user');
+var Game = require('../models/game');
+var Event = require('../models/event');
+
+// Get Homepage
+router.get('/', function (req, res) {
+  Game.aggregate([
+    { $lookup: {
+      from: 'events',
+      localField: 'eventID',
+      foreignField: '_id',
+      as: 'event',
+    }, },
+    { $unwind: '$event' },
+    { $match: { 'event.level': 'Amator' } },
+    { $group:
+      {
+        _id: '1',
+        win: { $sum: '$status.win' },
+        lose: { $sum: '$status.lose' },
+        draw: { $sum: '$status.draw' },
+        overtimeWin: { $sum: '$status.overtimeWin' },
+        overtimeLose: { $sum: '$status.overtimeLose' },
+        shootoutWin: { $sum: '$status.shootoutWin' },
+        shootoutLose: { $sum: '$status.shootoutLose' },
+        goalsOur: { $sum: '$periods.final.our' },
+        goalsOpponent: { $sum: '$periods.final.opponent' },
+        goalsAvgOur: { $avg: '$periods.final.our' },
+        goalsAvgOpponent: { $avg: '$periods.final.opponent' },
+      }, },
+    ], function (err, teamStats) {
+    if (err) throw err;
+
+    Game.aggregate([
+      { $lookup: {
+        from: 'events',
+        localField: 'eventID',
+        foreignField: '_id',
+        as: 'event',
+      }, },
+      { $unwind: '$event' },
+      { $match: { 'event.level': 'Amator' } },
+      { $sort: { date: -1 }, },
+      { $limit: 5 },
+    ], function (err, last5) {
+      if (err) throw err;
+
+      //res.json(last5);
+      res.render('index', { title: 'Wolves page',
+                            layout: false,
+                            teamStats: teamStats[0],
+                            last5: last5, });
+    });
+  });
+});
 
 // 404
 router.get('/404', function (req, res) {
@@ -34,7 +88,7 @@ router.post('/login',
   { successRedirect: '/', fauilureRedirect: '/login' }),
 
   function (req, res) {
-    res.redirect('/');
+    res.redirect('/index1');
   }
 );
 

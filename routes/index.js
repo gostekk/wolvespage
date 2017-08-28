@@ -5,8 +5,8 @@ var User = require('../models/user');
 var Game = require('../models/game');
 
 // Get Homepage
-router.get('/', ensureAuthenticated, function (req, res) {
-  res.render('index', { title: 'Wolves page' });
+router.get('/index1', ensureAuthenticated, function (req, res) {
+  res.render('index1', { title: 'Wolves page' });
 });
 
 // Profile
