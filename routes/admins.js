@@ -84,6 +84,50 @@ router.post('/profile/:id', function (req, res) {
   });
 });
 
+// Statistics page
+router.get('/stats', ensureAuthenticated, function (req, res) {
+  res.render('stats', { layout: 'admin',
+                        navStats: true,
+                        title: 'Statystyka zawodników - Wolves page', });
+});
+
+// Statistics page POST
+router.post('/stats', ensureAuthenticated, function (req, res) {
+  Game.aggregate([
+    { $unwind: '$players' },
+    { $group: { _id: '$players._id',
+                playerID: { $first: '$players.playerID' },
+                gp: { $sum: 1 },
+                goals: { $sum: '$players.goals' },
+                assists: { $sum: '$players.assists' },
+                points: { $sum: { $add: ['$players.goals', '$players.assists'] } },
+                pim: { $sum: '$players.pim' }, }, },
+    { $lookup: {
+      from: 'users',
+      localField: '_id',
+      foreignField: '_id',
+      as: 'player',
+    }, },
+    { $unwind: '$player' },
+    { $project: {
+      _id: '$_id',
+      username: '$player.username',
+      name: '$player.name',
+      surname: '$player.surname',
+      shirtnumber: '$player.shirtnumber',
+      position: '$player.position',
+      gp: '$gp',
+      goals: '$goals',
+      assists: '$assists',
+      points: '$points',
+      pim: '$pim',
+    }, },
+  ], function (err, users) {
+    if (err) throw err;
+    res.json(users);
+  });
+});
+
 // Add user
 router.get('/adduser', ensureAuthenticated, function (req, res) {
   if (req.user.permissions.addUser || req.user.permissions.superAdmin) {

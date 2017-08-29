@@ -50,7 +50,13 @@
 					<li {{#if navProfile}} class="active" {{/if}}>
 						<a href="/ap/profile/{{user._id}}">
 							<i class="material-icons">person</i>
-							<p>Profile</p>
+							<p>Profil</p>
+						</a>
+					</li>
+					<li {{#if navStats}} class="active" {{/if}}>
+						<a href="/ap/stats">
+							<i class="material-icons">star</i>
+							<p>Statystyka ogólna</p>
 						</a>
 					</li>
 					{{#if user.permissions.addUser}}
