@@ -66,12 +66,12 @@ router.get('/404', function (req, res) {
 
 // Login
 router.get('/login', function (req, res) {
-  res.render('login', { layout: false });
+  res.render('login1', { layout: false });
 });
 
 // Login
 router.get('/login1', function (req, res) {
-  res.render('login1', { layout: false });
+  res.render('login', { layout: false });
 });
 
 // Logout
@@ -85,10 +85,10 @@ router.get('/logout', function (req, res) {
 // TODO: Message after succesful login
 router.post('/login',
   passport.authenticate('local',
-  { successRedirect: '/', fauilureRedirect: '/login' }),
+  { successRedirect: '/ap', fauilureRedirect: '/login' }),
 
   function (req, res) {
-    res.redirect('/index1');
+    res.redirect('/');
   }
 );
 

@@ -18,6 +18,72 @@ router.get('/admin', ensureAuthenticated, function (req, res) {
 
 //\\//\\//\\//\\  USERs //\\//\\//\\//\\
 
+// Profile
+router.get('/profile/:id', ensureAuthenticated, function (req, res) {
+  User.findById(req.params.id, function (err, userProfile) {
+    Game.aggregate([
+      { $unwind: '$players' },
+      { $match: { 'players._id': userProfile._id } },
+      { $group: { _id: '$players._id',
+                  gp: { $sum: 1 },
+                  goals: { $sum: '$players.goals' },
+                  assists: { $sum: '$players.assists' },
+                  points: { $sum: { $add: ['$players.goals', '$players.assists'] } },
+                  pim: { $sum: '$players.pim' },
+                  goalsAvg: { $avg: '$players.goals' },
+                  assistsAvg: { $avg: '$players.assists' },
+                  pointsAvg: { $avg: { $add: ['$players.goals', '$players.assists'] } }, }, },
+    ], function (err, userStats) {
+      if (err) throw err;
+      res.render('profileap', { layout: 'admin',
+                              userProfile: userProfile,
+                              userStats: userStats[0],
+                              navProfile: true,
+                              title: userProfile.username + ' - Wolves page', });
+    });
+  });
+});
+
+// Player seasons
+router.post('/profile/:id', function (req, res) {
+  User.findById(req.params.id, function (err, user) {
+    if (err) throw err;
+    Game.aggregate([
+      { $unwind: '$players' },
+      { $match: { 'players._id': user._id } },
+      { $group: { _id: '$eventID',
+                  gp: { $sum: 1 },
+                  goals: { $sum: '$players.goals' },
+                  assists: { $sum: '$players.assists' },
+                  points: { $sum: { $add: ['$players.goals', '$players.assists'] } },
+                  pim: { $sum: '$players.pim' }, }, },
+      { $lookup: {
+        from: 'events',
+        localField: '_id',
+        foreignField: '_id',
+        as: 'event',
+      }, },
+      { $unwind: '$event' },
+      { $project: {
+        _id: '$_id',
+        shortname: '$event.shortname',
+        season: '$event.season',
+        type: '$event.type',
+        level: '$event.level',
+        gp: '$gp',
+        goals: '$goals',
+        assists: '$assists',
+        points: '$points',
+        pim: '$pim',
+      }, },
+
+    ], function (err, eventStats) {
+      if (err) throw err;
+      res.json(eventStats);
+    });
+  });
+});
+
 // Add user
 router.get('/adduser', ensureAuthenticated, function (req, res) {
   if (req.user.permissions.addUser || req.user.permissions.superAdmin) {

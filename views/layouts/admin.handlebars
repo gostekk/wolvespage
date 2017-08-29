@@ -47,6 +47,12 @@
 							<p>Dashboard</p>
 						</a>
 					</li>
+					<li {{#if navProfile}} class="active" {{/if}}>
+						<a href="/ap/profile/{{user._id}}">
+							<i class="material-icons">person</i>
+							<p>Profile</p>
+						</a>
+					</li>
 					{{#if user.permissions.addUser}}
 					<li {{#if navAdduser}} class="active" {{/if}}>
 						<a href="/ap/adduser">

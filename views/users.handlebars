@@ -116,10 +116,10 @@ function deleteUser(value) {
 {{/if}}
 window.actionEvents = {
   'click .profile': function (e, value, row, index) {
-    window.location.href = "/profile/" + row._id;
+    window.location.href = "/ap/profile/" + row._id;
   },
   'click .like': function (e, value, row, index) {
-    window.location.href = "/profile/" + row._id;
+    window.location.href = "/ap/profile/" + row._id;
   },
 	{{#if user.permissions.editUser}}
   'click .edit': function (e, value, row, index) {

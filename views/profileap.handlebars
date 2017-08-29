@@ -1,0 +1,126 @@
+<div class="row">
+  <div class="col-md-12">
+    <div class="card">
+      <div class="card-header" data-background-color="purple">
+        <h4 class="title">Podstawowe informacje</h4>
+      </div>
+      <div class="card-content">
+          <div class="row">
+            <div class="col-md-6">
+              <div class="form-group label-floating">
+                <label class="control-label">Imie</label>
+                <input id="name" type="text" value="{{userProfile.name}}" name="name" class="form-control" disabled>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group label-floating">
+                <label class="control-label">Nazwisko</label>
+                <input id="surname" type="text" value="{{userProfile.surname}}" name="surname" class="form-control" disabled>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group label-floating">
+                <label class="control-label">Numer zawodnika</label>
+                <input id="shirtnumber" type="number" value="{{userProfile.shirtnumber}}" name="shirtnumber" class="form-control" disabled>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group label-floating">
+                <label class="control-label">Pozycja</label>
+                <input id="position" type="text" value="{{userProfile.position}}" name="position" class="form-control" disabled>
+              </div>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header" data-background-color="purple">
+        <h4 class="title">Statystyka ogólna</h4>
+      </div>
+      <div class="card-content">
+          <div class="row">
+            <div class="col-md-12">
+              <table class="table">
+                <thead class="text-primary">
+                  <th>Sezon</th>
+                  <th>GP</th>
+                  <th>G</th>
+                  <th>A</th>
+                  <th>P</th>
+                  <th>PIM</th>
+                  <th>GPG</th>
+                  <th>APG</th>
+                  <th>PPG</th>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>
+                      Razem
+                    </td>
+                    <td>
+                      {{userStats.gp}}
+                    </td>
+                    <td>
+                      {{userStats.goals}}
+                    </td>
+                    <td>
+                      {{userStats.assists}}
+                    </td>
+                    <td>
+                      {{userStats.points}}
+                    </td>
+                    <td>
+                      {{userStats.pim}}
+                    </td>
+                    <td>
+                      {{userStats.goalsAvg}}
+                    </td>
+                    <td>
+                      {{userStats.assistsAvg}}
+                    </td>
+                    <td>
+                      {{userStats.pointsAvg}}
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <div class="clearfix"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-header" data-background-color="purple">
+        <h4 class="title">Statystyka sezonowa - {{userProfile.name}} {{userProfile.surname}}</h4>
+      </div>
+      <div class="card-content">
+          <div class="row">
+            <table id="seasonsTable"
+                   data-toggle="table"
+                   data-method="post"
+                   data-classes="table"
+                   data-url="/ap/profile/{{userProfile._id}}">
+                <thead>
+                <tr>
+                  <th data-field="_id" data-formatter="idFormatter" data-visible="false">ID</th>
+                  <th data-field="season" data-sortable="true">Sezon</th>
+                  <th data-field="shortname" data-sortable="true">Liga</th>
+                  <th data-field="type" data-sortable="true">Typ</th>
+                  <th data-field="level" data-sortable="true">Poziom</th>
+                  <th data-field="gp" data-sortable="true">GP</th>
+                  <th data-field="goals" data-sortable="true">G</th>
+                  <th data-field="assists" data-sortable="true">A</th>
+                  <th data-field="points" data-sortable="true">P</th>
+                  <th data-field="pim" data-sortable="true">PIM</th>
+                </tr>
+              </thead>
+            </table>
+          </div>
+          <div class="clearfix"></div>
+      </div>
+    </div>
+  </div>
+</div>
