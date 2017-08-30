@@ -40,15 +40,18 @@ function rowStyle(row, index) {
 
     if (row.status.win || row.status.overtimeWin || row.status.shootoutWin) {
         return {
-          classes: classes[1]
+          classes: classes[1],
+					css: {"color": "blue","box-shadow": "0 -1px 0 #CCC"}
         };
     } else if (row.status.lose || row.status.overtimeLose || row.status.shootoutLose) {
 			return {
-				classes: classes[4]
+				classes: classes[4],
+				css: {"color": "blue","box-shadow": "0 -1px 0 #CCC"}
 			};
 		} else if (row.status.draw) {
 			return {
-				classes: classes[3]
+				classes: classes[3],
+				css: {"color": "blue","box-shadow": "0 -1px 0 #CCC"}
 			};
 		}
     return {};

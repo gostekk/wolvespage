@@ -36,7 +36,7 @@
 	  <div class="sidebar" data-color="purple" data-image="/img/sidebar-1.jpg">
 			<div class="logo">
 				<a href="/ap" class="simple-text">
-					Wolves Page
+					Wolves Tychy
 				</a>
 			</div>
 			<div class="sidebar-wrapper">
@@ -67,12 +67,14 @@
 						</a>
 					</li>
 					{{/if}}
-					<li {{#if navUsers}} class="active" {{/if}}>
-						<a href="/ap/users">
-							<i class="material-icons">people</i>
-							<p>Lista użytkowników</p>
-						</a>
-					</li>
+					{{#if user.permissions.adminPanel}}
+						<li {{#if navUsers}} class="active" {{/if}}>
+							<a href="/ap/users">
+								<i class="material-icons">people</i>
+								<p>Lista użytkowników</p>
+							</a>
+						</li>
+					{{/if}}
 					{{#if user.permissions.editUser}}
 					<li {{#if navInactiveusers}} class="active" {{/if}}>
 						<a href="/ap/users?show=inactive">
@@ -128,15 +130,9 @@
 					<div class="collapse navbar-collapse">
 						<ul class="nav navbar-nav navbar-right">
 							<li>
-								<a href="/ap" class="dropdown-toggle">
-									<i class="material-icons">dashboard</i>
-									<p class="hidden-lg hidden-md">Dashboard</p>
-								</a>
-							</li>
-							<li>
-								<a href="/" class="dropdown-toggle">
+								<a href="/logout" class="dropdown-toggle">
 	 							   <i class="material-icons">change_history</i>
-	 							   <p class="hidden-lg hidden-md">Back to page</p>
+	 							   <p class="hidden-lg hidden-md">Logout</p>
 	 						   </a>
 							</li>
 						</ul>

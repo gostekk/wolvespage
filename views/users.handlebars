@@ -38,16 +38,24 @@ function rowStyle(row, index) {
 
     if (row.permissions.superAdmin) {
         return {
-          classes: classes[2]
+          classes: classes[2],
+					css: {"color": "blue","box-shadow": "0 -1px 0 #CCC"}
         };
     } else if (row.permissions.adminPanel) {
 			return {
-				classes: classes[1]
+				classes: classes[1],
+				css: {"color": "blue","box-shadow": "0 -1px 0 #CCC"}
 			};
 		} else if (!row.active) {
 			return {
-				classes: classes[3]
+				classes: classes[4],
+				css: {"color": "blue","box-shadow": "0 -1px 0 #CCC"}
 			};
+		} else {
+			return {
+				classes: classes[3],
+				css: {"color": "blue","box-shadow": "0 -1px 0 #CCC"}
+			}
 		}
     return {};
 }

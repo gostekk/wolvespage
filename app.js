@@ -10,7 +10,6 @@ var LocalStrategy = require('passport-local').Strategy;
 var mongodb = require('mongodb');
 var mongoose = require('mongoose');
 var config = require('./config/database');
-var moment = require('moment');
 
 // Connect to database
 mongoose.connect(config.database, {
@@ -19,7 +18,6 @@ mongoose.connect(config.database, {
 
 var db = mongoose.connection;
 
-var routes = require('./routes/index');
 var admins = require('./routes/admins');
 var users = require('./routes/users');
 
@@ -75,7 +73,6 @@ app.use(function (req, res, next) {
   next();
 });
 
-app.use('/', routes);
 app.use('/ap', admins);
 app.use('/', users);
 

@@ -7,19 +7,19 @@ var Game = require('../models/game');
 var Event = require('../models/event');
 
 // Admin panel
-router.get('/', ensureAuthenticated, function (req, res) {
+router.get('/', ensureIsAuthenticated, function (req, res) {
   res.render('admin', { layout: 'admin', navAdmin: true, title: 'Admin - Wolves page' });
 });
 
 // Admin
-router.get('/admin', ensureAuthenticated, function (req, res) {
+router.get('/admin', ensureIsAuthenticated, function (req, res) {
   res.render('admin', { layout: 'admin', navAdmin: true, title: 'Admin - Wolves page' });
 });
 
 //\\//\\//\\//\\  USERs //\\//\\//\\//\\
 
 // Profile
-router.get('/profile/:id', ensureAuthenticated, function (req, res) {
+router.get('/profile/:id', ensureIsAuthenticated, function (req, res) {
   User.findById(req.params.id, function (err, userProfile) {
     Game.aggregate([
       { $unwind: '$players' },
@@ -45,7 +45,7 @@ router.get('/profile/:id', ensureAuthenticated, function (req, res) {
 });
 
 // Player seasons
-router.post('/profile/:id', function (req, res) {
+router.post('/profile/:id', ensureIsAuthenticated, function (req, res) {
   User.findById(req.params.id, function (err, user) {
     if (err) throw err;
     Game.aggregate([
@@ -85,14 +85,14 @@ router.post('/profile/:id', function (req, res) {
 });
 
 // Statistics page
-router.get('/stats', ensureAuthenticated, function (req, res) {
+router.get('/stats', ensureIsAuthenticated, function (req, res) {
   res.render('stats', { layout: 'admin',
                         navStats: true,
                         title: 'Statystyka zawodników - Wolves page', });
 });
 
 // Statistics page POST
-router.post('/stats', ensureAuthenticated, function (req, res) {
+router.post('/stats', ensureIsAuthenticated, function (req, res) {
   Game.aggregate([
     { $unwind: '$players' },
     { $group: { _id: '$players._id',
@@ -240,18 +240,18 @@ router.get('/addgame1', ensureAuthenticated, function (req, res) {
 });
 
 // Games
-router.get('/games', ensureAuthenticated, function (req, res) {
+router.get('/games', ensureIsAuthenticated, function (req, res) {
   res.render('games', { layout: 'admin', navGames: true, title: 'Mecze - Wolves Page' });
 });
 
-router.post('/games', ensureAuthenticated, function (req, res) {
+router.post('/games', ensureIsAuthenticated, function (req, res) {
   Game.find({}).populate('eventID').exec(function (err, games) {
     res.json(games);
   });
 });
 
 // Game overview
-router.get('/game/:id', ensureAuthenticated, function (req, res) {
+router.get('/game/:id', ensureIsAuthenticated, function (req, res) {
   Game.findById(req.params.id).populate('eventID').exec(function (err, gameOverview) {
     res.render('game', { layout: 'admin',
                         navGame: true,
@@ -260,7 +260,7 @@ router.get('/game/:id', ensureAuthenticated, function (req, res) {
   });
 });
 
-router.post('/game/:id', ensureAuthenticated, function (req, res) {
+router.post('/game/:id', ensureIsAuthenticated, function (req, res) {
   Game.findById(req.params.id).populate('players.playerID').exec(function (err, gameOverview) {
     res.json(gameOverview.players);
   });
@@ -374,7 +374,7 @@ router.get('/addevent', ensureAuthenticated, function (req, res) {
 });
 
 // Event page
-router.get('/event/:id', ensureAuthenticated, function (req, res) {
+router.get('/event/:id', ensureIsAuthenticated, function (req, res) {
   Event.findById(req.params.id, function (err, eventOverview) {
     res.render('event', { layout: 'admin',
                         navEvent: true,
@@ -383,7 +383,7 @@ router.get('/event/:id', ensureAuthenticated, function (req, res) {
   });
 });
 
-router.post('/event/:id', ensureAuthenticated, function (req, res) {
+router.post('/event/:id', ensureIsAuthenticated, function (req, res) {
   Event.findById(req.params.id, function (err, eventValue) {
     Game.aggregate([
       { $unwind: '$players' },
@@ -424,11 +424,11 @@ router.post('/event/:id', ensureAuthenticated, function (req, res) {
 });
 
 // Events
-router.get('/events', ensureAuthenticated, function (req, res) {
+router.get('/events', ensureIsAuthenticated, function (req, res) {
   res.render('events', { layout: 'admin', navEvents: true, title: 'Rozgrywki - Wolves Page' });
 });
 
-router.post('/events', ensureAuthenticated, function (req, res) {
+router.post('/events', ensureIsAuthenticated, function (req, res) {
   if (req.query.active == 'true') {
     Event.find({ active: true }, function (err, events) {
       res.json(events);
@@ -745,6 +745,14 @@ router.post('/addevent', ensureAuthenticated, function (req, res) {
     res.status(401).send('Brak odpowiednich uprawnień !');
   }
 });
+
+function ensureIsAuthenticated(req, res, next) {
+  if (req.isAuthenticated()) {
+    return next();
+  } else {
+    res.redirect('/login');
+  }
+}
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) {
