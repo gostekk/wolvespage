@@ -10,7 +10,7 @@ var Event = require('../models/event');
 // Get Homepage
 
 router.get('/', function (req, res) {
-  /*
+
   Game.aggregate([
     { $lookup: {
       from: 'events',
@@ -59,8 +59,8 @@ router.get('/', function (req, res) {
                             last5: last5, });
     });
   });
-  */
-  res.redirect('/ap');
+
+  //res.redirect('/stats');
 });
 
 // 404
