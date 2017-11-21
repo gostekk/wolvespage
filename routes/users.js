@@ -7,10 +7,13 @@ var User = require('../models/user');
 var Game = require('../models/game');
 var Event = require('../models/event');
 
+/************************************/
+/**********  GET REQUEST  **********/
+/************************************/
+
 // Get Homepage
-
 router.get('/', function (req, res) {
-
+  /*
   Game.aggregate([
     { $lookup: {
       from: 'events',
@@ -58,9 +61,152 @@ router.get('/', function (req, res) {
                             teamStats: teamStats[0],
                             last5: last5, });
     });
-  });
+  });*/
 
-  //res.redirect('/stats');
+  res.redirect('/stats');
+});
+
+// Statistics page
+router.get('/stats', function (req, res) {
+  res.render('stats', { navStats: true,
+                        title: 'Statystyka zawodników - Wolves page', });
+});
+
+// Games
+router.get('/games', function (req, res) {
+  res.render('games', { navGames: true, title: 'Mecze - Wolves Page' });
+});
+
+// Game overview
+router.get('/game/:id', function (req, res) {
+  Game.findById(req.params.id).populate('eventID').exec(function (err, gameOverview) {
+    res.render('game', { navGame: true,
+                        title: 'Mecz - Wolves Page',
+                        gameOverview: gameOverview, });
+  });
+});
+
+// Events
+router.get('/events', function (req, res) {
+  res.render('events', { navEvents: true, title: 'Rozgrywki - Wolves Page' });
+});
+
+// Event page
+router.get('/event/:id', function (req, res) {
+  Event.findById(req.params.id, function (err, eventOverview) {
+    res.render('event', { navEvent: true,
+                        title: 'Rozgrywka - Wolves Page',
+                        eventOverview: eventOverview, });
+  });
+});
+
+/************************************/
+/**********  POST REQUEST  **********/
+/************************************/
+
+// Statistics page POST
+router.post('/stats', function (req, res) {
+  Game.aggregate([
+    { $unwind: '$players' },
+    { $group: { _id: '$players._id',
+                playerID: { $first: '$players.playerID' },
+                gp: { $sum: 1 },
+                goals: { $sum: '$players.goals' },
+                assists: { $sum: '$players.assists' },
+                points: { $sum: { $add: ['$players.goals', '$players.assists'] } },
+                pim: { $sum: '$players.pim' }, }, },
+    { $lookup: {
+      from: 'users',
+      localField: '_id',
+      foreignField: '_id',
+      as: 'player',
+    }, },
+    { $unwind: '$player' },
+    { $project: {
+      _id: '$_id',
+      username: '$player.username',
+      name: '$player.name',
+      surname: '$player.surname',
+      shirtnumber: '$player.shirtnumber',
+      position: '$player.position',
+      gp: '$gp',
+      goals: '$goals',
+      assists: '$assists',
+      points: '$points',
+      pim: '$pim',
+    }, },
+  ], function (err, users) {
+    if (err) throw err;
+    res.json(users);
+  });
+});
+
+// GAMES page POST
+router.post('/games', function (req, res) {
+  Game.find({}).populate('eventID').exec(function (err, games) {
+    res.json(games);
+  });
+});
+
+// GAME page POST
+router.post('/game/:id', function (req, res) {
+  Game.findById(req.params.id).populate('players.playerID').exec(function (err, gameOverview) {
+    res.json(gameOverview.players);
+  });
+});
+
+// EVENTS page POST
+router.post('/events', function (req, res) {
+  if (req.query.active == 'true') {
+    Event.find({ active: true }, function (err, events) {
+      res.json(events);
+    });
+  } else if (req.query.active == 'false') {
+    Event.find({ active: false }, function (err, events) {
+      res.json(events);
+    });
+  }
+});
+
+// EVENT page POST
+router.post('/event/:id', function (req, res) {
+  Event.findById(req.params.id, function (err, eventValue) {
+    Game.aggregate([
+      { $unwind: '$players' },
+      { $match: { eventID: eventValue._id } },
+      { $group: { _id: '$players._id',
+                  playerID: { $first: '$players.playerID' },
+                  gp: { $sum: 1 },
+                  goals: { $sum: '$players.goals' },
+                  assists: { $sum: '$players.assists' },
+                  points: { $sum: { $add: ['$players.goals', '$players.assists'] } },
+                  pim: { $sum: '$players.pim' }, }, },
+      { $lookup: {
+        from: 'users',
+        localField: '_id',
+        foreignField: '_id',
+        as: 'player',
+      }, },
+      { $unwind: '$player' },
+      { $project: {
+        _id: '$_id',
+        username: '$player.username',
+        name: '$player.name',
+        surname: '$player.surname',
+        shirtnumber: '$player.shirtnumber',
+        position: '$player.position',
+        gp: '$gp',
+        goals: '$goals',
+        assists: '$assists',
+        points: '$points',
+        pim: '$pim',
+      }, },
+    ], function (err, eventStats) {
+
+      if (err) throw err;
+      res.json(eventStats);
+    });
+  });
 });
 
 // 404

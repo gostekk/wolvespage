@@ -14,7 +14,7 @@
 							 data-buttons-align="left"
                data-sort-name="season"
                data-sort-order="desc"
-               data-url="/ap/events/?active=true">
+               data-url="/events/?active=true">
             <thead>
             <tr>
               <th data-field="_id" data-formatter="idFormatter" data-visible="false">ID</th>
@@ -44,7 +44,7 @@
                data-sort-name="season"
                data-sort-order="desc"
 							 data-buttons-align="left"
-               data-url="/ap/events/?active=false">
+               data-url="/events/?active=false">
             <thead>
             <tr>
               <th data-field="_id" data-formatter="idFormatter" data-visible="false">ID</th>
@@ -63,7 +63,7 @@
 
 <script>
 function idFormatter(value) {
-    return '<a href="/ap/event/' + value + '">' + value + '</a>';
+    return '<a href="/event/' + value + '">' + value + '</a>';
 }
 function seasonFormatter(value) {
     return '<a class="event" href="" onclick="return false;" title="Event">' + value + '</a>';
@@ -140,12 +140,24 @@ function activeChangeEvent(value) {
 }
 {{/if}}
 window.actionEvents = {
+	{{#if user}}
   'click .event': function (e, value, row, index) {
     window.location.href = "/ap/event/" + row._id;
   },
+	{{else}}
+	'click .event': function (e, value, row, index) {
+		window.location.href = "/event/" + row._id;
+	},
+	{{/if}}
+	{{#if user}}
   'click .like': function (e, value, row, index) {
     window.location.href = "/ap/event/" + row._id;
   },
+	{{else}}
+	'click .like': function (e, value, row, index) {
+		window.location.href = "/event/" + row._id;
+	},
+	{{/if}}
 	{{#if user.permissions.editEvent}}
   'click .edit': function (e, value, row, index) {
     //alert('You click edit icon, row: ' + JSON.stringify(row));

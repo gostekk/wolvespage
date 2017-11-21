@@ -16,7 +16,7 @@
                data-sort-name="date"
                data-sort-order="desc"
 							 data-row-style="rowStyle"
-               data-url="/ap/games">
+               data-url="/games">
             <thead>
             <tr>
               <th data-field="_id" data-formatter="idFormatter" data-visible="false">ID</th>
@@ -57,7 +57,7 @@ function rowStyle(row, index) {
     return {};
 }
 function idFormatter(value) {
-    return '<a href="/ap/game/' + value + '">' + value + '</a>';
+    return '<a href="/game/' + value + '">' + value + '</a>';
 }
 function gameFormatter(value) {
     return '<a class="game" href="" onclick="return false;" title="Game">' + value + '</a>';
@@ -109,12 +109,24 @@ function deleteGame(value) {
 }
 {{/if}}
 window.actionEvents = {
+	{{#if user}}
   'click .game': function (e, value, row, index) {
     window.location.href = "/ap/game/" + row._id;
   },
+	{{else}}
+	'click .game': function (e, value, row, index) {
+    window.location.href = "/game/" + row._id;
+  },
+	{{/if}}
+	{{#if user}}
   'click .like': function (e, value, row, index) {
     window.location.href = "/ap/game/" + row._id;
   },
+	{{else}}
+	'click .like': function (e, value, row, index) {
+		window.location.href = "/game/" + row._id;
+	},
+	{{/if}}
 	{{#if user.permissions.editGame}}
   'click .edit': function (e, value, row, index) {
     console.log('obj');

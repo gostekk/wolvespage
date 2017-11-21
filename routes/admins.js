@@ -91,43 +91,6 @@ router.get('/stats', ensureIsAuthenticated, function (req, res) {
                         title: 'Statystyka zawodników - Wolves page', });
 });
 
-// Statistics page POST
-router.post('/stats', ensureIsAuthenticated, function (req, res) {
-  Game.aggregate([
-    { $unwind: '$players' },
-    { $group: { _id: '$players._id',
-                playerID: { $first: '$players.playerID' },
-                gp: { $sum: 1 },
-                goals: { $sum: '$players.goals' },
-                assists: { $sum: '$players.assists' },
-                points: { $sum: { $add: ['$players.goals', '$players.assists'] } },
-                pim: { $sum: '$players.pim' }, }, },
-    { $lookup: {
-      from: 'users',
-      localField: '_id',
-      foreignField: '_id',
-      as: 'player',
-    }, },
-    { $unwind: '$player' },
-    { $project: {
-      _id: '$_id',
-      username: '$player.username',
-      name: '$player.name',
-      surname: '$player.surname',
-      shirtnumber: '$player.shirtnumber',
-      position: '$player.position',
-      gp: '$gp',
-      goals: '$goals',
-      assists: '$assists',
-      points: '$points',
-      pim: '$pim',
-    }, },
-  ], function (err, users) {
-    if (err) throw err;
-    res.json(users);
-  });
-});
-
 // Add user
 router.get('/adduser', ensureAuthenticated, function (req, res) {
   if (req.user.permissions.addUser || req.user.permissions.superAdmin) {
@@ -244,12 +207,6 @@ router.get('/games', ensureIsAuthenticated, function (req, res) {
   res.render('games', { layout: 'admin', navGames: true, title: 'Mecze - Wolves Page' });
 });
 
-router.post('/games', ensureIsAuthenticated, function (req, res) {
-  Game.find({}).populate('eventID').exec(function (err, games) {
-    res.json(games);
-  });
-});
-
 // Game overview
 router.get('/game/:id', ensureIsAuthenticated, function (req, res) {
   Game.findById(req.params.id).populate('eventID').exec(function (err, gameOverview) {
@@ -257,12 +214,6 @@ router.get('/game/:id', ensureIsAuthenticated, function (req, res) {
                         navGame: true,
                         title: 'Mecz - Wolves Page',
                         gameOverview: gameOverview, });
-  });
-});
-
-router.post('/game/:id', ensureIsAuthenticated, function (req, res) {
-  Game.findById(req.params.id).populate('players.playerID').exec(function (err, gameOverview) {
-    res.json(gameOverview.players);
   });
 });
 
@@ -383,61 +334,9 @@ router.get('/event/:id', ensureIsAuthenticated, function (req, res) {
   });
 });
 
-router.post('/event/:id', ensureIsAuthenticated, function (req, res) {
-  Event.findById(req.params.id, function (err, eventValue) {
-    Game.aggregate([
-      { $unwind: '$players' },
-      { $match: { eventID: eventValue._id } },
-      { $group: { _id: '$players._id',
-                  playerID: { $first: '$players.playerID' },
-                  gp: { $sum: 1 },
-                  goals: { $sum: '$players.goals' },
-                  assists: { $sum: '$players.assists' },
-                  points: { $sum: { $add: ['$players.goals', '$players.assists'] } },
-                  pim: { $sum: '$players.pim' }, }, },
-      { $lookup: {
-        from: 'users',
-        localField: '_id',
-        foreignField: '_id',
-        as: 'player',
-      }, },
-      { $unwind: '$player' },
-      { $project: {
-        _id: '$_id',
-        username: '$player.username',
-        name: '$player.name',
-        surname: '$player.surname',
-        shirtnumber: '$player.shirtnumber',
-        position: '$player.position',
-        gp: '$gp',
-        goals: '$goals',
-        assists: '$assists',
-        points: '$points',
-        pim: '$pim',
-      }, },
-    ], function (err, eventStats) {
-
-      if (err) throw err;
-      res.json(eventStats);
-    });
-  });
-});
-
 // Events
 router.get('/events', ensureIsAuthenticated, function (req, res) {
   res.render('events', { layout: 'admin', navEvents: true, title: 'Rozgrywki - Wolves Page' });
-});
-
-router.post('/events', ensureIsAuthenticated, function (req, res) {
-  if (req.query.active == 'true') {
-    Event.find({ active: true }, function (err, events) {
-      res.json(events);
-    });
-  } else if (req.query.active == 'false') {
-    Event.find({ active: false }, function (err, events) {
-      res.json(events);
-    });
-  }
 });
 
 // Activate/Deactivate event
