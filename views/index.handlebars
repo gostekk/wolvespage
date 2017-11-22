@@ -1,93 +1,82 @@
-  <!-- Contact Section -->
-  <section id="contact" class="content-section text-center">
+<!-- Contact Section -->
+<section id="contact" class="content-section text-center">
     <div class="row">
-      <div class="col-lg-8 mx-auto">
-        <h2>Statystyka Amatorów</h2>
         <!-- Stats of amateur team -->
-        <div class="stats col-md-12">
-          <!-- Stats of amateur team -->
-          <table>
-            <tr>
-              <td>Wygrane</td>
-              <td>{{teamStats.win}}</td>
-
-            </tr>
-            <tr>
-              <td>Przegrane</td>
-              <td>{{teamStats.lose}}</td>
-
-            </tr>
-            <tr>
-              <td>Remisy</td>
-              <td>{{teamStats.draw}}</td>
-
-            </tr>
-            <tr>
-              <td>WygranePoDogrywce</td>
-              <td>{{teamStats.overtimeWin}}</td>
-
-            </tr>
-            <tr>
-              <td>PrzegranePoDogrywce</td>
-              <td>{{teamStats.overtimeLose}}</td>
-
-            </tr>
-            <tr>
-              <td>WygranePoKarnych</td>
-              <td>{{teamStats.shootoutWin}}</td>
-
-            </tr>
-            <tr>
-              <td>PrzegranePoKarnych</td>
-              <td>{{teamStats.shootoutLose}}</td>
-
-            </tr>
-            <tr>
-              <td>Zdobyte bramki</td>
-              <td>{{teamStats.goalsOur}}</td>
-
-            </tr>
-            <tr>
-              <td>Stracone bramki</td>
-              <td>{{teamStats.goalsOpponent}}</td>
-
-            </tr>
-            <tr>
-              <td>Średnio zdobytych bramek</td>
-              <td>{{teamStats.goalsAvgOur}}</td>
-
-            </tr>
-            <tr>
-              <td>Średnio straconych bramek</td>
-              <td>{{teamStats.goalsAvgOpponent}}</td>
-
-            </tr>
-          </table>
+        <div class="col-md-6" style='vertical-align: middle'>
+            <h1>Amatorzy</h1>
         </div>
-        <div class="last5 col-md-12">
-          <table class="table">
-            <thead class="text-primary">
-              <th>Data</th>
-              <th>Przeciwnik</th>
-              <th>logo</th>
-              <th>liga</th>
-              <th>sezon</th>
-              <th>Wynik</th>
+        <div class="col-md-6">
+            <!-- Stats of amateur team -->
+            <table class='table'>
+                <tr>
+                    <td class='col-md-6'>Wygrane</td>
+                    <td class='col-md-6' style='font-weight:bold;'>{{teamStats.win}}</td>
+                </tr>
+                <tr>
+                    <td class='col-md-6'>Przegrane</td>
+                    <td class='col-md-6' style='font-weight:bold;'>{{teamStats.lose}}</td>
+                </tr>
+                <tr>
+                    <td class='col-md-6'>Remisy</td>
+                    <td class='col-md-6' style='font-weight:bold;'>{{teamStats.draw}}</td>
+                </tr>
+                <tr>
+                    <td class='col-md-6'>WygranePoDogrywce</td>
+                    <td class='col-md-6' style='font-weight:bold;'>{{teamStats.overtimeWin}}</td>
+                </tr>
+                <tr>
+                    <td class='col-md-6'>PrzegranePoDogrywce</td>
+                    <td class='col-md-6' style='font-weight:bold;'>{{teamStats.overtimeLose}}</td>
+                </tr>
+                <tr>
+                    <td class='col-md-6'>WygranePoKarnych</td>
+                    <td class='col-md-6' style='font-weight:bold;'>{{teamStats.shootoutWin}}</td>
+                </tr>
+                <tr>
+                    <td class='col-md-6'>PrzegranePoKarnych</td>
+                    <td class='col-md-6' style='font-weight:bold;'>{{teamStats.shootoutLose}}</td>
+                </tr>
+                <tr>
+                    <td class='col-md-6'>Zdobyte bramki</td>
+                    <td class='col-md-6' style='font-weight:bold;'>{{teamStats.goalsOur}}</td>
+                </tr>
+                <tr>
+                    <td class='col-md-6'>Stracone bramki</td>
+                    <td class='col-md-6' style='font-weight:bold;'>{{teamStats.goalsOpponent}}</td>
+                </tr>
+                <tr>
+                    <td class='col-md-6'>Średnio zdobytych bramek</td>
+                    <td class='col-md-6' style='font-weight:bold;'>{{teamStats.goalsAvgOur}}</td>
+                </tr>
+                <tr>
+                    <td class='col-md-6'>Średnio straconych bramek</td>
+                    <td class='col-md-6' style='font-weight:bold;'>{{teamStats.goalsAvgOpponent}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table">
+            <thead class="th-center text-primary">
+                <th style='font-weight:bold;'>Data</th>
+                <th style='font-weight:bold;'>Przeciwnik</th>
+                <th style='font-weight:bold;'>logo</th>
+                <th style='font-weight:bold;'>liga</th>
+                <th style='font-weight:bold;'>sezon</th>
+                <th style='font-weight:bold;'>Wynik</th>
             </thead>
             <tbody>
-              {{#each last5}}
-              <tr>
-                <td><img onload="moment({{this.date}}).format('DD.MM.YYYY')"</td>
-                <td>{{this.teamname}}</td>
-                <td><img src="{{this.teamlogo}}" style="height: 40px; width: 40px;"></td>
-                <td>{{this.event.shortname}}</td>
-                <td>{{this.event.season}}</td>
-                <td>{{this.periods.final.our}}:{{this.periods.final.opponent}}</td>
-              </tr>
-              {{/each}}
+                {{#each last5}}
+                <tr>
+                    <td><img onload="moment({{this.date}}).format('DD.MM.YYYY')"></td>
+                    <td>{{this.teamname}}</td>
+                    <td><img src="{{this.teamlogo}}" style="height: 40px; width: 40px;"></td>
+                    <td>{{this.event.shortname}}</td>
+                    <td>{{this.event.season}}</td>
+                    <td>{{this.periods.final.our}}:{{this.periods.final.opponent}}</td>
+                </tr>
+                {{/each}}
             </tbody>
-          </table>
-        </div>
-      </div>
+        </table>
     </div>
-  </section>
+</section>
