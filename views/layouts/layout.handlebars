@@ -41,6 +41,12 @@
 			</div>
 			<div class="sidebar-wrapper">
 				<ul class="nav">
+					<li {{#if navStart}} class="active" {{/if}}>
+						<a href="/">
+							<i class="material-icons">home</i>
+							<p>Strona Główna</p>
+						</a>
+					</li>
 					<li {{#if navStats}} class="active" {{/if}}>
 						<a href="/stats">
 							<i class="material-icons">star</i>

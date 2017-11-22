@@ -13,7 +13,6 @@ var Event = require('../models/event');
 
 // Get Homepage
 router.get('/', function (req, res) {
-  /*
   Game.aggregate([
     { $lookup: {
       from: 'events',
@@ -57,13 +56,13 @@ router.get('/', function (req, res) {
 
       //res.json(last5);
       res.render('index', { title: 'Wolves page',
-                            layout: false,
+                            navStart: true,
                             teamStats: teamStats[0],
                             last5: last5, });
     });
-  });*/
+  });
 
-  res.redirect('/stats');
+  //res.redirect('/stats');
 });
 
 // Statistics page
