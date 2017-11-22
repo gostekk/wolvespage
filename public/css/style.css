@@ -727,3 +727,7 @@ body.swal2-iosfix {
   100% {
     -webkit-transform: rotate(360deg);
             transform: rotate(360deg); } }
+
+thead.th-center th{
+  text-align: center !important;
+}
