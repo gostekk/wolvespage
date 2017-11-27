@@ -54,15 +54,57 @@ router.get('/', function (req, res) {
     ], function (err, last5) {
       if (err) throw err;
 
-      //res.json(last5);
-      res.render('index', { title: 'Wolves page',
-                            navStart: true,
-                            teamStats: teamStats[0],
-                            last5: last5, });
+      Game.aggregate([
+        { $lookup: {
+          from: 'events',
+          localField: 'eventID',
+          foreignField: '_id',
+          as: 'event',
+        }, },
+        { $unwind: '$event' },
+        { $match: { 'event.level': '2 liga' } },
+        { $group:
+          {
+            _id: '1',
+            win: { $sum: '$status.win' },
+            lose: { $sum: '$status.lose' },
+            draw: { $sum: '$status.draw' },
+            overtimeWin: { $sum: '$status.overtimeWin' },
+            overtimeLose: { $sum: '$status.overtimeLose' },
+            shootoutWin: { $sum: '$status.shootoutWin' },
+            shootoutLose: { $sum: '$status.shootoutLose' },
+            goalsOur: { $sum: '$periods.final.our' },
+            goalsOpponent: { $sum: '$periods.final.opponent' },
+            goalsAvgOur: { $avg: '$periods.final.our' },
+            goalsAvgOpponent: { $avg: '$periods.final.opponent' },
+          }, },
+        ], function (err, teamStats2) {
+        if (err) throw err;
+
+        Game.aggregate([
+          { $lookup: {
+            from: 'events',
+            localField: 'eventID',
+            foreignField: '_id',
+            as: 'event',
+          }, },
+          { $unwind: '$event' },
+          { $match: { 'event.level': '2 liga' } },
+          { $sort: { date: -1 }, },
+          { $limit: 5 },
+        ], function (err, last52) {
+          if (err) throw err;
+
+          res.render('index', { title: 'Wolves page',
+                                navStart: true,
+                                teamStats: teamStats[0],
+                                last5: last5,
+                                teamStats2: teamStats2[0],
+                                last52: last52,});
+        });
+      });
     });
   });
-
-  //res.redirect('/stats');
 });
 
 // Statistics page
