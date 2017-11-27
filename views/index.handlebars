@@ -69,11 +69,11 @@
                 {{#each last5}}
                 <tr>
                     <td><img onload="moment({{this.date}}).format('DD.MM.YYYY')"></td>
+                    <td>{{this.periods.final.our}}:{{this.periods.final.opponent}}</td>
                     <td>{{this.teamname}}</td>
                     <td><img src="{{this.teamlogo}}" style="height: 40px; width: 40px;"></td>
                     <td>{{this.event.shortname}}</td>
                     <td>{{this.event.season}}</td>
-                    <td>{{this.periods.final.our}}:{{this.periods.final.opponent}}</td>
                 </tr>
                 {{/each}}
             </tbody>
@@ -151,11 +151,11 @@
                 {{#each last52}}
                 <tr>
                     <td><img onload="moment({{this.date}}).format('DD.MM.YYYY')"></td>
+                    <td>{{this.periods.final.our}}:{{this.periods.final.opponent}}</td>
                     <td>{{this.teamname}}</td>
                     <td><img src="{{this.teamlogo}}" style="height: 40px; width: 40px;"></td>
                     <td>{{this.event.shortname}}</td>
                     <td>{{this.event.season}}</td>
-                    <td>{{this.periods.final.our}}:{{this.periods.final.opponent}}</td>
                 </tr>
                 {{/each}}
             </tbody>
