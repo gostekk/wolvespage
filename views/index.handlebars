@@ -1,207 +1,82 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-  <title>Wolves Tychy</title>
-
-  <!-- Bootstrap core CSS -->
-  <link href="/css/bootstrap.css" rel="stylesheet" />
-
-
-  <!-- Custom fonts for this template -->
-  <link href="http://maxcdn.bootstrapcdn.com/font-awesome/latest/css/font-awesome.min.css" rel="stylesheet">
-  <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css">
-  <link href='https://fonts.googleapis.com/css?family=Cabin:700' rel='stylesheet' type='text/css'>
-
-  <!-- Custom styles for this template -->
-  <link href="/css/grayscale.css" rel="stylesheet">
-  <link href="/css/animate.css" rel="stylesheet">
-  <link rel="stylesheet" href="/css/bootstrap-table.css">
-  <script src="/js/jquery-3.1.0.min.js" type="text/javascript"></script>
-  <script src="/js/jquery-ui.min.js" type="text/javascript"></script>
-
-</head>
-
-<body id="page-top">
-
-  <!-- Navigation -->
-  <nav class="navbar navbar-expand-lg navbar-light fixed-top" id="mainNav">
-    <div class="container">
-      <a class="navbar-brand js-scroll-trigger" href="#page-top">Wolves Tychy</a>
-      <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
-          Menu
-          <i class="fa fa-bars"></i>
-        </button>
-      <div class="collapse navbar-collapse" id="navbarResponsive">
-        <ul class="navbar-nav ml-auto">
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#about">O drużynie</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#download">Amatorzy</a>
-          </li>
-          <!--
-          <li class="nav-item">
-            <a class="nav-link js-scroll-trigger" href="#contact">Contact</a>
-          </li>
-        -->
-        </ul>
-      </div>
-    </div>
-  </nav>
-
-  <!-- Intro Header -->
-  <header class="masthead">
-    <div class="intro-body">
-    </div>
-  </header>
-
-  <!-- About Section -->
-  <section id="about" class="content-section text-center">
-    <div class="container">
-      <div class="row">
-        <div class="col-lg-8 mx-auto animated fadeInDown">
-          <h2>O nas</h2>
-          <p>AMATORSKA DRUŻNA HOKEJOWA, występująca w II lidze grupy południowej PLH, w Śląskiej Lidze Amatorskiej, w Mistrzostwach Polski Amatorów na lodzie.</p>
-          <ul class="list-inline banner-social-buttons">
-            <li class="list-inline-item">
-              <a href="https://www.facebook.com/STHWolvesTychy/" class="btn btn-default btn-lg">
-                  <i class="fa fa-facebook fa-fw"></i>
-                  <span class="network-name">Facebook</span>
-                </a>
-            </li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Download Section -->
-  <section id="download" class="download-section content-section text-center">
-    <div class="container">
-      <div class="col-lg-8 mx-auto" style="margin-top: 100px; background:rgba(0,0,0,0.5); border-radius:10px;">
-        <h2>AMATORZY</h2>
-        <p>Sekcja amatorska utworzona w 2016 roku uczestnicząca w śląskiej amatorskiej lidze hokeja oraz corocznych mistrzostwach polski amatorów.</p>
-      </div>
-    </div>
-  </section>
-
-  <!-- Contact Section -->
-  <section id="contact" class="content-section text-center">
+<!-- Contact Section -->
+<section id="contact" class="content-section text-center">
     <div class="row">
-      <div class="col-lg-8 mx-auto">
-        <h2>Statystyka Amatorów</h2>
         <!-- Stats of amateur team -->
-        <div class="stats col-md-12">
-          <!-- Stats of amateur team -->
-          <table>
-            <tr>
-              <td>Wygrane</td>
-              <td>{{teamStats.win}}</td>
-
-            </tr>
-            <tr>
-              <td>Przegrane</td>
-              <td>{{teamStats.lose}}</td>
-
-            </tr>
-            <tr>
-              <td>Remisy</td>
-              <td>{{teamStats.draw}}</td>
-
-            </tr>
-            <tr>
-              <td>WygranePoDogrywce</td>
-              <td>{{teamStats.overtimeWin}}</td>
-
-            </tr>
-            <tr>
-              <td>PrzegranePoDogrywce</td>
-              <td>{{teamStats.overtimeLose}}</td>
-
-            </tr>
-            <tr>
-              <td>WygranePoKarnych</td>
-              <td>{{teamStats.shootoutWin}}</td>
-
-            </tr>
-            <tr>
-              <td>PrzegranePoKarnych</td>
-              <td>{{teamStats.shootoutLose}}</td>
-
-            </tr>
-            <tr>
-              <td>Zdobyte bramki</td>
-              <td>{{teamStats.goalsOur}}</td>
-
-            </tr>
-            <tr>
-              <td>Stracone bramki</td>
-              <td>{{teamStats.goalsOpponent}}</td>
-
-            </tr>
-            <tr>
-              <td>Średnio zdobytych bramek</td>
-              <td>{{teamStats.goalsAvgOur}}</td>
-
-            </tr>
-            <tr>
-              <td>Średnio straconych bramek</td>
-              <td>{{teamStats.goalsAvgOpponent}}</td>
-
-            </tr>
-          </table>
+        <div class="col-md-6" style='vertical-align: middle'>
+            <h1>Amatorzy</h1>
         </div>
-        <div class="last5 col-md-12">
-          <table class="table">
-            <thead class="text-primary">
-              <th>Data</th>
-              <th>Przeciwnik</th>
-              <th>logo</th>
-              <th>liga</th>
-              <th>sezon</th>
-              <th>Wynik</th>
+        <div class="col-md-6">
+            <!-- Stats of amateur team -->
+            <table class='table'>
+                <tr>
+                    <td class='col-md-6'>Wygrane</td>
+                    <td class='col-md-6' style='font-weight:bold;'>{{teamStats.win}}</td>
+                </tr>
+                <tr>
+                    <td class='col-md-6'>Przegrane</td>
+                    <td class='col-md-6' style='font-weight:bold;'>{{teamStats.lose}}</td>
+                </tr>
+                <tr>
+                    <td class='col-md-6'>Remisy</td>
+                    <td class='col-md-6' style='font-weight:bold;'>{{teamStats.draw}}</td>
+                </tr>
+                <tr>
+                    <td class='col-md-6'>WygranePoDogrywce</td>
+                    <td class='col-md-6' style='font-weight:bold;'>{{teamStats.overtimeWin}}</td>
+                </tr>
+                <tr>
+                    <td class='col-md-6'>PrzegranePoDogrywce</td>
+                    <td class='col-md-6' style='font-weight:bold;'>{{teamStats.overtimeLose}}</td>
+                </tr>
+                <tr>
+                    <td class='col-md-6'>WygranePoKarnych</td>
+                    <td class='col-md-6' style='font-weight:bold;'>{{teamStats.shootoutWin}}</td>
+                </tr>
+                <tr>
+                    <td class='col-md-6'>PrzegranePoKarnych</td>
+                    <td class='col-md-6' style='font-weight:bold;'>{{teamStats.shootoutLose}}</td>
+                </tr>
+                <tr>
+                    <td class='col-md-6'>Zdobyte bramki</td>
+                    <td class='col-md-6' style='font-weight:bold;'>{{teamStats.goalsOur}}</td>
+                </tr>
+                <tr>
+                    <td class='col-md-6'>Stracone bramki</td>
+                    <td class='col-md-6' style='font-weight:bold;'>{{teamStats.goalsOpponent}}</td>
+                </tr>
+                <tr>
+                    <td class='col-md-6'>Średnio zdobytych bramek</td>
+                    <td class='col-md-6' style='font-weight:bold;'>{{teamStats.goalsAvgOur}}</td>
+                </tr>
+                <tr>
+                    <td class='col-md-6'>Średnio straconych bramek</td>
+                    <td class='col-md-6' style='font-weight:bold;'>{{teamStats.goalsAvgOpponent}}</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div class="row">
+        <table class="table">
+            <thead class="th-center text-primary">
+                <th style='font-weight:bold;'>Data</th>
+                <th style='font-weight:bold;'>Przeciwnik</th>
+                <th style='font-weight:bold;'>logo</th>
+                <th style='font-weight:bold;'>liga</th>
+                <th style='font-weight:bold;'>sezon</th>
+                <th style='font-weight:bold;'>Wynik</th>
             </thead>
             <tbody>
-              {{#each last5}}
-              <tr>
-                <td><img onload="moment({{this.date}}).format('DD.MM.YYYY')"</td>
-                <td>{{this.teamname}}</td>
-                <td><img src="{{this.teamlogo}}" style="height: 40px; width: 40px;"></td>
-                <td>{{this.event.shortname}}</td>
-                <td>{{this.event.season}}</td>
-                <td>{{this.periods.final.our}}:{{this.periods.final.opponent}}</td>
-              </tr>
-              {{/each}}
+                {{#each last5}}
+                <tr>
+                    <td><img onload="moment({{this.date}}).format('DD.MM.YYYY')"></td>
+                    <td>{{this.teamname}}</td>
+                    <td><img src="{{this.teamlogo}}" style="height: 40px; width: 40px;"></td>
+                    <td>{{this.event.shortname}}</td>
+                    <td>{{this.event.season}}</td>
+                    <td>{{this.periods.final.our}}:{{this.periods.final.opponent}}</td>
+                </tr>
+                {{/each}}
             </tbody>
-          </table>
-        </div>
-      </div>
+        </table>
     </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <div class="container text-center">
-      <p>Copyright &copy; Wolves Tychy 2017</p>
-    </div>
-  </footer>
-
-  <!--   Core JS Files  <script src="vendor/popper/popper.min.js"></script> -->
-  <script src="/js/bootstrap-table.js"></script>
-  <script src="/js/bootstrap-table-en-US.js"></script>
-	<script src="/js/bootstrap.js" type="text/javascript"></script>
-
-  <!-- Plugin JavaScript <script src="vendor/jquery-easing/jquery.easing.min.js"></script>-->
-
-
-  <!-- Custom scripts for this template -->
-  <script src="js/grayscale.min.js"></script>
-
-</body>
-
-</html>
+</section>
