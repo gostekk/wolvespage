@@ -58,17 +58,15 @@
     <div class="row">
         <table class="table">
             <thead class="th-center text-primary">
-                <th style='font-weight:bold;'>Data</th>
-                <th style='font-weight:bold;'>Przeciwnik</th>
-                <th style='font-weight:bold;'>logo</th>
-                <th style='font-weight:bold;'>liga</th>
-                <th style='font-weight:bold;'>sezon</th>
-                <th style='font-weight:bold;'>Wynik</th>
+              <th style='font-weight:bold;'>Wynik</th>
+              <th style='font-weight:bold;'>Przeciwnik</th>
+              <th style='font-weight:bold;'>logo</th>
+              <th style='font-weight:bold;'>liga</th>
+              <th style='font-weight:bold;'>sezon</th>
             </thead>
             <tbody>
                 {{#each last5}}
                 <tr>
-                    <td><img onload="moment({{this.date}}).format('DD.MM.YYYY')"></td>
                     <td>{{this.periods.final.our}}:{{this.periods.final.opponent}}</td>
                     <td>{{this.teamname}}</td>
                     <td><img src="{{this.teamlogo}}" style="height: 40px; width: 40px;"></td>
@@ -140,17 +138,15 @@
     <div class="row">
         <table class="table">
             <thead class="th-center text-primary">
-                <th style='font-weight:bold;'>Data</th>
+                <th style='font-weight:bold;'>Wynik</th>
                 <th style='font-weight:bold;'>Przeciwnik</th>
                 <th style='font-weight:bold;'>logo</th>
                 <th style='font-weight:bold;'>liga</th>
                 <th style='font-weight:bold;'>sezon</th>
-                <th style='font-weight:bold;'>Wynik</th>
             </thead>
             <tbody>
                 {{#each last52}}
                 <tr>
-                    <td><img onload="moment({{this.date}}).format('DD.MM.YYYY')"></td>
                     <td>{{this.periods.final.our}}:{{this.periods.final.opponent}}</td>
                     <td>{{this.teamname}}</td>
                     <td><img src="{{this.teamlogo}}" style="height: 40px; width: 40px;"></td>
